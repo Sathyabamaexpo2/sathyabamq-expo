@@ -23,9 +23,9 @@ const AddDoc = async (req, res) => {
       return res.status(400).json({ message: "Passwords do not match!" });
     }
 
-    if (password.length > 10) {
-      return res.status(400).json({ message: "Password exceeds max length of 10 characters!" });
-    }
+    // if (password.length >=10) {
+    //   return res.status(400).json({ message: "Password exceeds max length of 10 characters!" });
+    // }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 

@@ -4,8 +4,8 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const cors=require('cors');
 
-dotenv.config(); // Load .env variables
-connectDB(); // Connect to MongoDB
+dotenv.config(); 
+connectDB(); 
 
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(express.json());
  
 
 app.use(cors({
-    origin: 'http://localhost:5173', // The port your React frontend is running on
+    origin: 'http://localhost:5173', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));

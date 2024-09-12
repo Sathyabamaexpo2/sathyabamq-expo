@@ -49,34 +49,6 @@ const HandleRedirect=()=>{
     });
     return () => typed.destroy();
   }, []);
-
-  useEffect(() => {
-    const progressRing = progressRingRef.current;
-    const progressText = progressTextRef.current;
-
-    if (progressRing && progressText) {
-      const totalProgress = 64;
-      const totalDuration = 2000;
-      const frameDuration = 1000 / 60;
-      const totalFrames = Math.round(totalDuration / frameDuration);
-      let currentFrame = 0;
-
-      const animateProgress = () => {
-        currentFrame++;
-        const progress = Math.min(totalProgress * (currentFrame / totalFrames), totalProgress);
-        const offset = 251.2 - (251.2 * (progress / 100));
-        if (progressRing) progressRing.style.strokeDashoffset = offset;
-        if (progressText) progressText.textContent = `${Math.round(progress)}`;
-
-        if (currentFrame < totalFrames) {
-          requestAnimationFrame(animateProgress);
-        }
-      };
-
-      animateProgress();
-    }
-  }, []);
-
   return (
     <>
       <div className="header-div">

@@ -28,7 +28,7 @@ const DocSchema = new mongoose.Schema({
    password: {
     type: String,
     required: true,
-    maxlength: 10,
+    // maxlength: 10,
   },
   image:{
     filename:String,
