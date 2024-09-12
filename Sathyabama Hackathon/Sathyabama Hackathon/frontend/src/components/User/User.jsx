@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './User.css';
 import profile from '../../assets/messi-ronaldo-fb.jpg';
+import axios from 'axios'; 
 
 const User = () => {
+
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const appointments = [
     {
       id: 1,
@@ -65,12 +71,11 @@ const User = () => {
       const startDay = new Date(selectedDate.getFullYear(), currentMonth, 1).getDay();
       const calendarDays = [];
 
-      // Fill empty slots before the first day
+      // Fill empty slots before the first days
       for (let i = 0; i < (startDay + 6) % 7; i++) {
         calendarDays.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
       }
 
-      // Fill the days of the month
       daysInMonth.forEach((day) => {
         const isWeekend = (startDay + day - 1) % 7 === 5 || (startDay + day - 1) % 7 === 6;
         calendarDays.push(
@@ -90,8 +95,6 @@ const User = () => {
     return (
       <div className='appointments-container'>
         <h2>Doctor's Appointments</h2>
-
-        {/* Calendar Section */}
         <div className="calendar-box">
           <div className="calendar-header">
             <h2>{selectedDate.toLocaleString('default', { month: 'long' })}</h2>
@@ -139,86 +142,161 @@ const User = () => {
     );
   };  
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Get the JWT token
+  
+        const response = await axios.get('http://localhost:5000/api/user/getdata', {
+          headers: {
+            'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
+          },
+        });
+
+        setUserData(response.data.Msg);
+      } 
+      catch (err) {
+        console.error('Error fetching user data:', err); 
+        setError('Error fetching user data');
+      } 
+      finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchUserData();
+  }, []);
+  
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+
+  const calculateBMI = (weight, height) => {
+    const heightInMeters = height / 100;
+    const bmi = weight / (heightInMeters * heightInMeters);
+    return bmi.toFixed(2); 
+  };
+
+  const calculateBMR = (weight, height, age, gender) => {
+    if (gender === 'male') {
+      return 10 * weight + 6.25 * height - 5 * age + 5;
+    } else {
+      return 10 * weight + 6.25 * height - 5 * age - 161;
+    }
+  };
+
+  const calculateMacros = (calories) => {
+    const carbCalories = calories * 0.50;
+    const proteinCalories = calories * 0.30;
+    const fatCalories = calories * 0.20; 
+
+    const carbs = (carbCalories / 4).toFixed(0);
+    const protein = (proteinCalories / 4).toFixed(0);
+    const fats = (fatCalories / 9).toFixed(0);
+
+    return { carbs, protein, fats };
+  };
+
+  const calculateCalories = (bmr) => {
+    const weightLossCalories = bmr - 500;
+    const weightGainCalories = bmr + 500; 
+    return { weightLossCalories, weightGainCalories };
+  };
+
+  const bmi = userData ? calculateBMI(userData.weight, userData.height) : 'N/A';
+
+  const bmr = userData ? calculateBMR(userData.weight, userData.height, userData.age, userData.gender) : 0;
+
+  const { weightLossCalories, weightGainCalories } = calculateCalories(bmr);
+
+  const weightLossMacros = calculateMacros(weightLossCalories);
+  const weightGainMacros = calculateMacros(weightGainCalories);
+
   return (
     <div className="user-main-container">
       <div className="user-left">
         <h2>MedX</h2>
       </div>
 
-    <div className="user-right-container">
-      <div className="user-center">
-      <div className="user-profile">
-          <div className="user-card">
-            <div className="user-img-container">
-              <img src={profile} alt="Profile" />
-            </div>
-            <h2 className='card-username'>Username</h2>
-            <div className="patient-details">
-              <div className="patient-profile">
-                <h2>24</h2>
-                <span>Years</span>
-                <h2>185cm</h2>
-                <span>Height</span>
+      <div className="user-right-container">
+        <div className="user-center">
+          <div className="user-profile">
+            <div className="user-card">
+              <div className="user-img-container">
+                <img src={profile} alt="Profile" />
               </div>
-              <div className="patient-profile">
-                <h2>A+</h2>
-                <span>Blood</span>
-                <h2>91Kg</h2>
-                <span>Weight</span>
+              <h2 className="card-username">{userData.name}</h2>
+              <div className="patient-details">
+                <div className="patient-profile">
+                  <h2>{userData.age}</h2>
+                  <span>Years</span>
+                  <h2>{userData.height}cm</h2>
+                  <span>Height</span>
+                </div>
+                <div className="patient-profile">
+                  <h2>{userData.bloodgroup}</h2>
+                  <span>Blood</span>
+                  <h2>{userData.weight}Kg</h2>
+                  <span>Weight</span>
+                </div>
               </div>
             </div>
-          </div>
 
+           
             <div className="activity-top">
+            <div className="user-section">
+                    <h3>Weight-Loss</h3>
+                    <h3>Weight-Gain</h3>
+            </div>
               <table>
                 <tbody>
-                  <div className="user-section">
-                  <h3>Weight-Loss</h3>
-                  <h3>Weight-Gain</h3>
-                  </div>
                   <tr>
-                    <td>Calories: 2200</td>
-                    <td>Calories: 3000</td>
+                    <td>Calories: {weightLossCalories}</td>
+                    <td>Calories: {weightGainCalories}</td>
                   </tr>
                   <tr>
-                    <td>Carbs: 120g</td>
-                    <td>Carbs: 180g</td>
+                    <td>Carbs:{weightLossMacros.carbs}g</td>
+                    <td>Carbs:{weightGainMacros.carbs}g</td>
                   </tr>
                   <tr>
-                    <td>Protein: 140g</td>
-                    <td>Protein: 130g</td>
+                    <td>Protein: {weightLossMacros.protein}g</td>
+                    <td>Protein: {weightGainMacros.protein}g</td>
                   </tr>
                   <tr>
-                    <td>Fats: 80g</td>
-                    <td>Fats: 85g</td>
+                    <td>Fats:{weightLossMacros.fats}g</td>
+                    <td>Fats:{weightGainMacros.fats}g</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-        <div className="activity-bottom">
-                <div className="bmi-det-div">
-                    <div className="bmi-l">
-                       <h2>BMI</h2>
-                       <h2>21</h2>
-                    </div>
-            <div  className="bmi-r">
-                 <h5><span>&lt;18: Low</span></h5>
-                 <h5><span>18-24: Normal</span></h5>
-                 <h5><span>&gt;24: High</span></h5>
+          <div className="activity-bottom">
+            <div className="bmi-det-div">
+              <div className="bmi-l">
+                <h2>BMI</h2>
+                <h2>{bmi}</h2>
+              </div>
+              <div className="bmi-r">
+                <h5><span>&lt;18: Low</span></h5>
+                <h5><span>18-24: Normal</span></h5>
+                <h5><span>&gt;24: High</span></h5>
+              </div>
             </div>
-           </div>
-            </div>
-      </div>
+          </div>
+        </div>
 
-      <div className="user-right">
-        <CalendarAppointments/>
+        <div className="user-right">
+          <CalendarAppointments />
+        </div>
       </div>
-      </div>
-   </div>
+    </div>
   );
 };
-
 
 export default User;
