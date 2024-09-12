@@ -14,10 +14,16 @@
     display: flex;
     align-items: center;
     justify-content: center; /* Ensure the form stays centered */
+<<<<<<< HEAD
     width:80%;
     height:90vh;
     margin: auto;
     margin-left: 250px;
+=======
+    width:70%;
+    height: 80vh;
+    margin-left: 400px;
+>>>>>>> 71aa42fcf9e8afc632c7a15cdfca12f86ce255a2
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 15px;
     border: 1px solid #ece; /* Corrected typo */
