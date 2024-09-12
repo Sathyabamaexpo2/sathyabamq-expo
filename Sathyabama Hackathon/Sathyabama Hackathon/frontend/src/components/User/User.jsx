@@ -140,27 +140,27 @@ const User = () => {
   };
 
   return (
-    <div className="main-container">
-      <div className="left">
+    <div className="user-main-container">
+      <div className="user-left">
         <h2>MedX</h2>
       </div>
 
-    <div className="right-container">
-      <div className="center">
-      <div className="profile">
-          <div className="card">
-            <div className="img-container">
+    <div className="user-right-container">
+      <div className="user-center">
+      <div className="user-profile">
+          <div className="user-card">
+            <div className="user-img-container">
               <img src={profile} alt="Profile" />
             </div>
             <h2>Username</h2>
             <div className="patient-details">
-              <div className="details">
+              <div className="patient-profile">
                 <h2>24</h2>
                 <span>Years</span>
                 <h2>185cm</h2>
                 <span>Height</span>
               </div>
-              <div className="details">
+              <div className="patient-profile">
                 <h2>A+</h2>
                 <span>Blood</span>
                 <h2>91Kg</h2>
@@ -172,7 +172,7 @@ const User = () => {
             <div className="activity-top">
               <table>
                 <tbody>
-                  <div className="section">
+                  <div className="user-section">
                   <h3>Weight-Loss</h3>
                   <h3>Weight-Gain</h3>
                   </div>

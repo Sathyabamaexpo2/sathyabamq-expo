@@ -13,9 +13,9 @@
     display: flex;
     align-items: center;
     justify-content: center; /* Ensure the form stays centered */
-    width:80%;
+    width:70%;
     height: 80vh;
-    margin-left: 300px;
+    margin-left: 400px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 15px;
     border: 1px solid #ece; /* Corrected typo */
