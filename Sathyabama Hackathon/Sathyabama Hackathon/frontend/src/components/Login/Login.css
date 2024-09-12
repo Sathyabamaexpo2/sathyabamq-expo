@@ -1,49 +1,47 @@
 .login-popup {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-left: 30px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 999;
-}
+    display: grid;
 
+}
 .login-popup-title p{
     font-size: x-small;
 }
-
-.main-container {
+.main-container{
     display: flex;
     align-items: center;
-    justify-content: center; /* Ensure the form stays centered */
-    width:80%;
     height: 80vh;
     margin-left: 300px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 15px;
-    border: 1px solid #ece; /* Corrected typo */
-    overflow: hidden; /* Prevent content overflow */
+    border: 1px soild black;
 }
-
-.sideimage img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.sideimage img{
+    width:100%;
+    height: 512px;
+    object-fit: fill;
     border-radius: 15px;
 }
-
-.sideimage {
-    display: flex;
-    width: 50%;
-    height: 100%; 
+.sideimage{
+  display: flex;  
+  width: 45%;
+  height:80vh;
 }
 
-.login-popup-container {
+.login-popup-container{
     place-self: center;
-    width: 90%; /* Use a flexible width to prevent overflow */
-    max-width: 400px; /* Limit the maximum width */
-    color: #808080;
+    width:max(23vw,330px);
+    color:#808080;
+    /* background-color: rgba(0, 0, 0, 0.6);  */
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 20px 25px; /* Adjusted padding to give more space */
+    gap:25px;
+    padding:25px 30px;
     border-radius: 8px;
     font-size: 14px;
     animation: fadeIn 0.5s;
@@ -69,40 +67,23 @@
 .login-popup-inputs{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    gap:30px;
 }
-
-.login-popup-inputs input {
-    outline: none;
-    border: 1px solid #c9c9c9;
+.login-popup-inputs input{
+    outline:none;
+    border:1px solid #c9c9c9;
     padding: 10px;
-    width:60%;
-    font-size: 14px; 
-}
-.signup{
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 10px;
-    margin-left:18px;
+    border-radius: 14px;
 }
 
-.signup-log-div{
-    position: relative;
-    left:88px
-}
-
-.signup-log-div button{
+.login-popup-container button{
+    border:none;
     padding:10px;
-    border-radius: 10px;
-    width:50%;
+    border-radius: 40px;
     color:white;
     background-color:hsla(197, 100%, 36%, 0.986);
-    display: flex;
-    justify-content: center;
     font-size: 15px;
 }
-
 .login-popup-container p span{
     color:tomato;
     font-weight: 500;
