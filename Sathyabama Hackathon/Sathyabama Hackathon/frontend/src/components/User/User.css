@@ -1,33 +1,32 @@
-.main-container {
+.user-main-container {
     display: flex; 
     width: 98vw;
-    margin: auto;
-    height: 95vh;
+    background-color: #546e7a;
+    height: 65vh;
   }
   
-  .left {
+  .user-left {
     width: 15%;
     height: 95vh;
     margin-left: 25px;
     display: flex;
-    border-right: 1px solid black; 
+
   }
   
-  .center {
-    width: 65%; 
+  .user-center{
+    width: 60%; 
     height: 95vh;
     display: flex;
     align-items: center;
     flex-direction: column;
-    border-right: 1px solid black;
   }
   
-  .right-container{
+  .user-right-container{
     width:80%;
   }
   
   
-  .right {
+  .user-right {
     width: 25%;
     height: 100%;
     display: flex;
@@ -35,24 +34,26 @@
     flex-direction: column;
   }
   
-  .profile {
+  .user-profile {
     display: flex;
     flex-direction: row;
-    justify-content: start;
-    margin: 40px;
+    justify-content: center;
+    /* margin: 40px; */
+    width:100% ;
   }
   
-  .card {
+  .user-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%; /* Ensure it takes the available width */
+    width: 60%; /* Ensure it takes the available width */
     padding: 20px;
     border: 1px solid #e0e0e0;
+    font-size: medium;
     border-radius: 20px;
     height: 85%;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-    margin-top: -20px;
+    margin-top: -30px;
     max-width: 400px; /* You can set a max width for better control */
   }
   
@@ -65,20 +66,20 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 100%; 
-    height: 75%;
+    width:100%; 
+    height:40%;
     margin-top:-10px;
   }
   
-  .details {
-    min-width: 100px; /* Control the minimum size */
+  .patient-profile {
+    max-width: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
   
-  .img-container img {
+  .user-img-container img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -95,7 +96,7 @@
     width: 50%; 
     padding: 20px; 
     margin-top: -20px; 
-    height: 90%;
+    height: 70%;
     border-radius: 15px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
@@ -105,7 +106,7 @@
     align-items: start;
   }
   
-  .section{
+  .user-section{
     display: flex;
     justify-content: space-between;
     gap: 30px;
@@ -145,14 +146,14 @@
   
   .appointments-container{  
     padding: 15px;
-    position: absolute; /* Absolute positioning */
-    right:85px;
+    position: absolute; 
+    right:55px;
     top: 5px; 
     background-color: #f5f8ff;
     border-radius: 15px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     margin-bottom: 20px;
-    width: 380px;
+    width: 300px;
     border: 1px solid #d1d9e6;
   }
   
@@ -161,6 +162,8 @@
     background-color: #ffffff;
     border-radius: 10px;
     border: 1px solid #e0e0e0;
+    height: 300px;
+    width: 100%;
     max-width: min-content;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   }
@@ -169,28 +172,30 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 255px;
     margin-bottom: 10px;
   }
   
   .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    width: 10px;
     grid-gap: 8px;
     text-align: center;
   }
   
-  .calendar-weekdays .calendar-day {
+  .calendar-weekdays .calendar-days {
     font-weight: bold;
+    width: 10%;
     color: #546e7a;
     width: 10px;
     
   }
   
-  .calendar-day {
+  .calendar-days {
     padding: 10px;
     background-color: #ffffff;
     border: 1px solid #d1d9e6;
+    width: 95%;
     border-radius: 5px;
     color: #2c3e50;
   }
@@ -206,6 +211,8 @@
     justify-content: space-between;
     padding: 10px;
     margin-top: 10px;
+    width: 92%;
+    height:50px;
     border-radius: 10px;
     color: white;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
