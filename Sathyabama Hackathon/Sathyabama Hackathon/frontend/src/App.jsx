@@ -4,6 +4,7 @@ import Login from './components/Login/Login';
 import Doctorside from './components/Doctor-side';
 import Details from './components/Details';
 import User from "./components/User/User.jsx";
+
 const App = () => {
   return (
     <Router>

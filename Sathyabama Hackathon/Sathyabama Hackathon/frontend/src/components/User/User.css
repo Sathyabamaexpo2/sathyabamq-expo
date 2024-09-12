@@ -1,18 +1,9 @@
+.user-main-container {
+  display: flex; 
+  width: 100vw;
+  height: 100vh;
+}
 
-  .user-main-container {
-    display: flex; 
-    width: 98vw;
-    background-color: #546e7a;
-    height: 65vh;
-  }
-  
-  .user-left {
-    width: 15%;
-    height: 95vh;
-    margin-left: 25px;
-    display: flex;
-
-  }
 .user-left {
   width: 15%;
   height: 95vh;
@@ -24,7 +15,7 @@
 .user-center{
   width: 60%; 
   height: 100vh;
-  margin-top: 40px;
+  margin-top: 70px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -33,7 +24,6 @@
 .user-right-container{
   width:80%;
 }
-
 
 .user-right {
   width: 25%;
@@ -60,28 +50,28 @@
   border: 1px solid #e0e0e0;
   font-size: medium;
   border-radius: 20px;
-  height: 85%;
+  height: 70%;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   margin-top: -30px;
   max-width: 400px; /* You can set a max width for better control */
 }
 
-.card h2{
+.user-card-username{
   margin-top: -5px;
 }
 
 .patient-details {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   flex-wrap: wrap;
-  justify-content: space-between;
   width:100%; 
   height:40%;
   margin-top:-10px;
 }
 
 .patient-profile {
-  max-width: 40px;
+  margin-top: -20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,72 +89,116 @@
 .activity-top {
   margin-left: 20px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
   gap: 30px;
   border: 1px solid #e0e0e0;
-  width: 50%; 
-  padding: 20px; 
-  margin-top: -20px; 
-  height: 70%;
+  width: 50%;
+  padding: 20px;
+  margin-top: -25px;
+  height: 69%;
   border-radius: 15px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .activity-top table {
-  gap: 10px;
-  align-items: start;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.user-section{
+.activity-top table td {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+}
+
+.user-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   gap: 30px;
+  margin-bottom: -20px;
 }
 
 .activity-bottom {
   display: flex;
   flex-direction: column;
   border: 1px solid #e0e0e0;
-  padding: 20px;
-  width: 50%;
-  height: 30%;
-  margin-top: -45px;
+  padding: 10px;
+  width: 30%;
+  height: 15%;
+  margin-top: -110px;
   border-radius: 15px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-.bmi-det-div{
+.bmi-det-div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-.bmi-l{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 30px;
-  gap: 15px;
+  align-items: center; /* Centers items vertically */
+  padding: 10px 0;
 }
 
-.bmi-r{
+.bmi-l {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2px; /* Reduce the gap between "BMI" and the value */
+  margin-left: 10px;
+}
+
+.bmi-l h2 {
+  margin: 0;
+}
+
+.bmi-r {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns text to the left */
   margin-right: 10px;
+  gap: 2px; /* Reduce the gap between the text in the right div */
 }
 
-.appointments-container{  
+.bmi-r h5 {
+  margin: 0;
+}
+
+.bmi-r span {
+  font-size: 14px;
+}
+
+.appointments-container {  
   padding: 15px;
-  position: absolute; 
-  right:55px;
-  top: 5px; 
+  position: absolute;
+  overflow-y: scroll;
+  right: 55px;
+  top: 20px;
   background-color: #f5f8ff;
   border-radius: 15px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   margin-bottom: 20px;
-  width: 300px;
+  width: 400px;
+  height: 600px;
   border: 1px solid #d1d9e6;
+  scroll-behavior: smooth; 
 }
+.appointments-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.appointments-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.appointments-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.appointments-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 
 .calendar-box {
   padding: 20px;
@@ -180,14 +214,16 @@
 .calendar-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 255px;
+  align-items: center;  
+  width: 350px;
   margin-bottom: 10px;
 }
 
 .calendar-grid {
   display: grid;
+  margin-bottom: 90px;
   grid-template-columns: repeat(7, 1fr);
+  width: 300px;
   grid-gap: 8px;
   text-align: center;
 }
@@ -198,231 +234,16 @@
   color: #546e7a;
   width: 10px;
   
-
-  .user-right {
-    width: 25%;
-    height: 100%;
-    display: flex;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .user-profile {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    /* margin: 40px; */
-    width:100% ;
-  }
-  
-  .user-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 60%; /* Ensure it takes the available width */
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    font-size: medium;
-    border-radius: 20px;
-    height: 70%;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-    margin-top: -30px;
-    max-width: 400px; /* You can set a max width for better control */
-  }
-  
-  .user-card-username{
-    margin-top: -5px;
-  }
-  
-  .patient-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
-    width:100%; 
-    height:40%;
-    margin-top:-10px;
-  }
-  
-  .patient-profile {
-    margin-top: -20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  
-  .user-img-container img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-top: -8px;
-  }
-  
-  .activity-top {
-    margin-left: 20px;
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    border: 1px solid #e0e0e0;
-    width: 50%; 
-    padding: 20px; 
-    margin-top: -25px;
-    height: 69%;
-    border-radius: 15px;
-  }
-  
-  .activity-top table {
-    gap: 10px;
-    align-items: start;
-  }
-  
-  .user-section{
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-  }
-  
-  .activity-bottom {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #e0e0e0;
-    padding: 10px;
-    width: 30%;
-    height: 15%;
-    margin-top: -110px;
-    border-radius: 15px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-
-.bmi-det-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center; /* Centers items vertically */
-    padding: 10px 0;
-}
-
-.bmi-l {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px; /* Reduce the gap between "BMI" and the value */
-    margin-left: 10px;
-}
-
-.bmi-l h2 {
-    margin: 0;
-}
-
-.bmi-r {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Aligns text to the left */
-    margin-right: 10px;
-    gap: 2px; /* Reduce the gap between the text in the right div */
-}
-
-.bmi-r h5 {
-    margin: 0;
-}
-
-.bmi-r span {
-    font-size: 14px;
-}
-  
-.appointments-container{  
-    padding: 15px;
-    position: absolute; 
-    right:55px;
-    top: 5px; 
-    background-color: #f5f8ff;
-    border-radius: 15px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    margin-bottom: 20px;
-    width: 300px;
-    border: 1px solid #d1d9e6;
-  }
-  
-  .calendar-box {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    border: 1px solid #e0e0e0;
-    height: 300px;
-    width: 100%;
-    max-width: min-content;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  }
-  
-  .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 255px;
-    margin-bottom: 10px;
-  }
-  
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-gap: 8px;
-    text-align: center;
-  }
-  
-  .calendar-weekdays .calendar-days {
-    font-weight: bold;
-    width: 10%;
-    color: #546e7a;
-    width: 10px;
-    
-  }
-  
-  .calendar-days {
-    padding: 10px;
-    background-color: #ffffff;
-    border: 1px solid #d1d9e6;
-    width: 95%;
-    border-radius: 5px;
-    color: #2c3e50;
-  }
-  
-  .calendar-day.weekend {
-    background-color: #fce4ec;
-    color: #d32f2f;
-    font-weight: bold;
-  }
-  
-  .appointment-card {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    margin-top: 10px;
-    width: 92%;
-    height:50px;
-    border-radius: 10px;
-    color: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  }
-  
-  .appointment-details {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .appointment-time {
-    display: flex;
-    align-items: center;
-  }
-
 }
 
 .calendar-days {
   padding: 10px;
   background-color: #ffffff;
   border: 1px solid #d1d9e6;
-  width: 95%;
+  width: 75%;
+  height: 210px;
+  position: absolute;
+  top: 110px;
   border-radius: 5px;
   color: #2c3e50;
 }
@@ -439,7 +260,7 @@
   padding: 10px;
   margin-top: 10px;
   width: 92%;
-  height:50px;
+  height:70px;
   border-radius: 10px;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -454,4 +275,3 @@
   display: flex;
   align-items: center;
 }
-

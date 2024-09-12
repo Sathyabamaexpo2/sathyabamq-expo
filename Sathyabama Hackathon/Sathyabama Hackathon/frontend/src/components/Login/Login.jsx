@@ -96,8 +96,6 @@ const Login = ({ setShowLogin }) => {
     }
   }, [doc]);
 
-  console.log(doc);
-
   return (
     <>
       <ToastContainer />
