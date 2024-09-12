@@ -7,7 +7,14 @@ import User from './components/User/User';
 
 const App = () => {
   return (
-    <User/>
+    <Router>
+      <Routes>
+        <Route path="/"element={<Login/>}/>
+        <Route path="/userpage" element={<User/>} /> 
+        <Route path="/doctor" element={<Doctorside />} /> 
+        <Route path="/details" element={<Details />} /> 
+      </Routes>
+    </Router>
   );
 }
 

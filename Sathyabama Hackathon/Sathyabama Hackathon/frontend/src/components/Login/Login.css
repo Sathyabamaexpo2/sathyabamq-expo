@@ -3,33 +3,35 @@
     justify-content: center;
     align-items: center;
     z-index: 999;
+    margin: auto;
 }
 
 .login-popup-title p{
     font-size: x-small;
 }
 
-.main-container {
+.login-main-container {
     display: flex;
     align-items: center;
     justify-content: center; /* Ensure the form stays centered */
     width:80%;
-    height: 80vh;
-    margin-left: 300px;
+    height:90vh;
+    margin: auto;
+    margin-left: 250px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 15px;
     border: 1px solid #ece; /* Corrected typo */
     overflow: hidden; /* Prevent content overflow */
 }
 
-.sideimage img {
+.user-sideimage img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 15px;
 }
 
-.sideimage {
+.user-sideimage {
     display: flex;
     width: 50%;
     height: 100%; 
@@ -118,3 +120,67 @@
 .login-popup-conditon input{
     margin-top:0;
 }
+
+.signup-doc {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-left: 18px;
+    margin-top: -20px;
+  }
+  
+  .file-input-container {
+    grid-column: span 2;
+  }
+  
+  .custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: black;
+    border: 1px soild black;
+    border-radius: 4px;
+  }
+  
+
+  span {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+
+.doc-signup-button{
+    display: inline-block;
+    padding: 10px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    width: 30%;
+    color: #fff;
+    background-color: #007bff; 
+    border: none;
+    border-radius: 2px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .doc-signup-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .doc-signup-button:active {
+    background-color: #004085; 
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .title-contain  h2{
+    text-align: center;
+  }
+
+  .title-contain p{
+    text-align: center;
+    font-size:medium;
+    margin-top: -12px;
+  }

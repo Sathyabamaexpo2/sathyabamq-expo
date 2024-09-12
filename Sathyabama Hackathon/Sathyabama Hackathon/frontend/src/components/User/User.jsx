@@ -137,7 +137,7 @@ const User = () => {
         </div>
       </div>
     );
-  };
+  };  
 
   return (
     <div className="user-main-container">
@@ -152,7 +152,7 @@ const User = () => {
             <div className="user-img-container">
               <img src={profile} alt="Profile" />
             </div>
-            <h2>Username</h2>
+            <h2 className='card-username'>Username</h2>
             <div className="patient-details">
               <div className="patient-profile">
                 <h2>24</h2>
@@ -212,7 +212,7 @@ const User = () => {
             </div>
       </div>
 
-      <div className="right">
+      <div className="user-right">
         <CalendarAppointments/>
       </div>
       </div>
