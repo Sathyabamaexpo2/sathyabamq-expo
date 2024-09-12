@@ -1,12 +1,18 @@
-import React from 'react'
-import Login from './components/Login/Login'
-
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './components/Login/Login';
+import Doctorside from './components/Doctor-side';
+import Details from './components/Details';
 const App = () => {
   return (
-    <div>
-      <Login/>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} /> 
+        <Route path="/doctor" element={<Doctorside />} /> 
+        <Route path="/details" element={<Details />} /> 
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
