@@ -98,7 +98,7 @@ const HandleRedirect=()=>{
             <div className="det-doc">
             <div className="prof"><img src={profile} alt="" width={100} /></div>
                 <label>Name:Dr.Harish Viswanath</label>
-                <label>Hospital Name:Mridhullah Heart Clinic</label>
+                <label>Hospital Name:Harvard Heart Clinic</label>
                 <label>Position:Heart Surgeon</label>
                 <button className='button-31' onClick={HandleProff}>Close</button>
             </div>

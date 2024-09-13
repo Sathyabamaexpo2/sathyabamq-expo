@@ -149,7 +149,7 @@ const User = () => {
   
         const response = await axios.get('http://localhost:5000/api/user/getdata', {
           headers: {
-            'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
+            'Authorization': `Bearer ${token}`,
           },
         });
 
@@ -216,11 +216,23 @@ const User = () => {
 
   const weightLossMacros = calculateMacros(weightLossCalories);
   const weightGainMacros = calculateMacros(weightGainCalories);
+ 
+  const getHealthRisk = (bmi) => {
+    if (bmi < 18) {
+      return { risk: 'Underweight', color: '#FFD700' }; 
+    } else if (bmi >= 18 && bmi < 24) {
+      return { risk: 'Normal', color: '#32CD32' }; 
+    } else if (bmi >= 24) {
+      return { risk: 'At Risk of Obesity', color: '#FF6347' };
+    }
+  };
+  
 
   return (
     <div className="user-main-container">
       <div className="user-left">
         <h2>MedX</h2>
+        <button className='button-31'>Logout</button>
       </div>
 
       <div className="user-right-container">
@@ -228,9 +240,9 @@ const User = () => {
           <div className="user-profile">
             <div className="user-card">
               <div className="user-img-container">
-                <img src={profile} alt="Profile" />
+                <img src={profile} alt="Profile"/>
               </div>
-              <h2 className="card-username">{userData.name}</h2>
+              <h2 className="user-card-username">{userData.name}</h2>
               <div className="patient-details">
                 <div className="patient-profile">
                   <h2>{userData.age}</h2>
@@ -249,10 +261,10 @@ const User = () => {
 
            
             <div className="activity-top">
-            <div className="user-section">
+             <div className="user-section">
                     <h3>Weight-Loss</h3>
                     <h3>Weight-Gain</h3>
-            </div>
+             </div>
               <table>
                 <tbody>
                   <tr>
@@ -275,21 +287,61 @@ const User = () => {
               </table>
             </div>
           </div>
-
-          <div className="activity-bottom">
+        
+         <div className="activity-bottom">
+           <div className="bmi">
             <div className="bmi-det-div">
               <div className="bmi-l">
                 <h2>BMI</h2>
                 <h2>{bmi}</h2>
               </div>
               <div className="bmi-r">
-                <h5><span>&lt;18: Low</span></h5>
-                <h5><span>18-24: Normal</span></h5>
-                <h5><span>&gt;24: High</span></h5>
+                 <h5><span>&lt;18: Low</span></h5>
+                 <h5><span>18-24: Normal</span></h5>
+                 <h5><span>&gt;24: High</span></h5>
               </div>
             </div>
           </div>
-        </div>
+
+          <div className="recommendation-box">
+                <div className="recommendation-header">
+                   <h3>Health Risk Indicators</h3>
+                </div>
+                <div className="recommendation-content">
+                    {bmi < 18 ? (
+                    <div className="icon-recommendation">
+                         <img src="/icons/underweight.png" alt="Underweight" />
+                         <p>Underweight: Risk of Nutrient Deficiency</p>
+                    </div>
+                     ) : bmi >= 18 && bmi <= 24 ? (
+                <div className="icon-recommendation">
+                     <img src="/icons/normal-weight.png" alt="Normal Weight" />
+                     <p>Normal Weight: Keep up the good work!</p>
+                     </div>
+                 ) : bmi > 24 && bmi <= 29 ? (
+                <div className="icon-recommendation">
+                   <img src="/icons/overweight.png" alt="Overweight" />
+                   <p>Overweight: Watch out for Hypertension and Diabetes</p>
+                 </div>
+                ) : bmi >= 30 ? (
+                 <div className="icon-recommendation">
+                    <img src="/icons/obesity.png" alt="Obesity" />
+                    <p>Obesity: High Risk of Heart Disease</p>
+                 </div>
+               ) : null}
+
+              {userData.age >= 40 ? (
+              <div className="icon-recommendation">
+                  <img src="/icons/age-risk.png" alt="Age Risk" />
+                  <p>Age 40+: Higher Risk for Cardiovascular Diseases</p>
+              </div>
+              ) : null}
+            </div>
+          </div>
+
+          </div>
+      </div>
+      
 
         <div className="user-right">
           <CalendarAppointments />
