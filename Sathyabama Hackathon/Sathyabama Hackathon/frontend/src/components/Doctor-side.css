@@ -1,68 +1,155 @@
-.display-progress {
-    display: flex;
-    padding: 20px;
-    position: absolute;
-    top:100px;
-    border-radius: 12px;
-    margin-top: 20px;
-  }
+.doc-nav-Lcont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:40px;
+  width: 100%;
+}
+.doc-search-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:20px;
+  position: relative;
+  padding-bottom: 20px;
+  width: 90%;
+}
+.main-top{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  gap: 90px;
+  flex-direction: row;
+}
+.main-bottom{
+  display: flex;
+  flex-direction: row;
+}
+.whole-cont {
+  display: flex;
+  flex-direction: column; 
+  /* background: linear-gradient(135deg, #E0EAFC, #CFDEF3); */
+  background-color: rgb(255, 255, 255);
+  width: 100vw;
+  height: 100vh; 
+  overflow: hidden; 
+}
+.input-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.doc-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.typed-anim-cont{
+  display: flex;
+  flex-direction: row;
+}
+.doc-greet-text{
+  display: flex;
+  position: static;
+  flex-direction: column;
+  top:20px;
+  justify-content: center;
+  
+}
+.logout-btn-div{
+  display: flex;
+  position: absolute;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  bottom: 0;
+}
   .prof {
     display: flex;
     justify-content: center;
+    position: relative;
+    top:29px;
+    left: 50px;
     align-items: center;
     border: 2px solid #e0e0e0;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     background-color: #f9f9f9;
     object-fit: fill;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 }
 #prof-2{
     width: 50px;
     height: 50px;
 }
-
-.list-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Two columns per line */
-    gap: 20px;
-    padding: 20px 0;
-    overflow-x: auto; 
-    position: relative;
-    top: 280px;
+.other-btn-div{
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  gap:30px;
 }
+.other-btn{
+  background: none;
+  border: none  ;
+  border-radius: none;
+  outline: none;
+  /* border-bottom: 1px solid black; */
 
-
-.list-div-Card {
-    display: flex;
-    flex-direction: column;
-    border: none;
-    border-radius: 12px;
-    gap: 10px;
-    width: 220px;
-    height: 300px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-.list-div-Card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+.doc-pat-count{
+  display: flex;
+  position: relative;
+  top:10px;
+  background: linear-gradient(135deg, #538cf7, #c2d7f6);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px 10px 10px  ;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  height: 170px;
+  border-radius: 15px;
+  color: #ffffff;
+}
+.other-btn:focus {
+  outline: none;  
+  border: none;   
+  box-shadow: none; 
+}
+.other-btn:hover{
+  color: rgb(238, 95, 23);
 }
 aside{
     display: flex;
-    flex-direction: row;
-    gap:40px
+    gap:40px;
+    width: 20%;
+    height: 560px;
 }
-  .txt-div{
-    display: flex;
-    position: absolute;
-    top:150px;
-    flex-direction: row;
-  }
+
+main{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap:100px;
+  height: 100vh;
+}
+.doc-greet{
+  display: flex;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: center;
+  gap:140px;
+  border-radius: 20px;
+  color: white;
+  background-color:rgb(79, 145, 250);
+  left: 80px;
+  top:10px;
+  width: 60%;
+  height: 28%;
+}
   .toggle-prof-div{
     position: fixed; 
     top: 0;
@@ -84,141 +171,26 @@ aside{
         border-radius: 20px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);  
         width: 30%;
-        height: 60%;   
+        height: 70%;   
     }
-  .count
-  {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    align-items: center;
-    border-radius: 20px;
-    padding: 15px 15px 15px 15px;
-    width: 100%;
-    height: 400px;
-    margin-left: 500px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  }
-  .count:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
   .main-content-DS{
     display: flex;
     margin-left: 40px;
-  }
-  .right-container {
-    display: flex;
-    flex-direction: column;
     position: absolute;
-    background-color: #ffffff;
-    overflow-y: auto;
-    overflow-x: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 35%;
-    height: 100%;
-    padding: 20px;
-    border-radius: 10px;
-    right: 0;
-    top: 100px;
-    gap: 20px;
-    scroll-behavior: smooth;
-}
+    top:120px;
+    width: 100%;
+    height: 80vh;
+  }
 #doc-prof-btn{
     background: none;
     border: none;
 
 }
-.right-container::-webkit-scrollbar {
-    width: 8px;
-}
 
-.right-container::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-}
-
-.right-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-.appoin-btn{
-    background: none;
-    border: none;
-}
-.appoin-btn img{
-    width: 40px;
-    height: 40px;
-}
-.appion-div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    height: 80px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    margin-bottom: 10px;
-}
-
-  .progress-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .progress-header {
-    margin-bottom: 15px;
-  }
   .welcome-div{
     display: flex;
-    flex-direction: row;
-  }
-  .progress-header p {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  .progress-bar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .progress-ring-wrapper {
-    width: 100px;
-    height: 100px;
-    position: relative;
-  }
-  
-  .progress-ring-svg {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
     width: 100%;
     height: 100%;
   }
-  
-  .progress-bg {
-    stroke: #ddd;
-  }
-  
-  .progress-ring {
-    stroke: #fbbf24; 
-    transition: stroke-dashoffset 0.6s ease;
-  }
-  
-  .progress-text {
-    fill: #fbbf24; 
-    font-weight: bold;
-  }
-  
-  #para-prog {
-    color: #9c9c9c; 
-  }
-  
