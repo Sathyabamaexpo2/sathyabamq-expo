@@ -4,6 +4,7 @@ import './nav.css';
 import {useLocation,useNavigate} from "react-router-dom"
 import Typed from 'typed.js';
 import pat from "../assets/pat.png";
+import search from "../assets/search .png";
 import check from "../assets/check.png"
 import profile from "../assets/profile.png"
 import multiplication from "../assets/multiplication.png"
@@ -51,39 +52,73 @@ const HandleRedirect=()=>{
   }, []);
   return (
     <>
-      <div className="header-div">
+    <div className="whole-cont">
+    <div className="header-div">
         <header>
           <nav>
-            <h1>MedX</h1>
+            <div className="doc-nav-Lcont">
+            <div className="doc-title"><h2>MedX</h2></div>
+            <div className="doc-search-div">
             <input type="text" placeholder='Search' />
+            <img src={search} alt="" width={20} height={20} className='input-icon '/>
+            </div>
+            </div>
           </nav>
-          <button className='button-31' onClick={HandleRedirectionLogout}>Logout</button>
           <button id='doc-prof-btn'onClick={HandleProff}><img src={profile} alt="" width={50} height={50}/></button>
         </header>
       </div>
 
       <div className="main-content-DS">
+        <aside>
         <div className="welcome-div">
-          <div className="txt-div">
-          <h2>Welcome,</h2>
-          <h2 className="typed-text"></h2>
+          <div className="other-btn-div">
+          <button className='other-btn'>theme</button>
+          <button className='other-btn'>Chat</button>
+          <button className='other-btn'>appointment</button>
           </div>
-          <div className="list-container">
-          {List.map((item, index) => (
-              <div key={index} className="list-div-Card">
-                  <div className="prof">
-                    <img src={pat} alt="" width={90}/>
-                  </div>
-                <label>Name :{item.Name}</label>
-                <label>Age :{item.Age}</label>
-                <label>Height :{item.Height}</label>
-                <label>Weight :{item.Weight}</label>
-                <button className='button-31' onClick={HandleRedirect}>View in detail</button>
-              </div>))}
-          </div>
+        <div className="logout-btn-div"> <button className='button-31' onClick={HandleRedirectionLogout}>Logout</button></div>
         </div>
+        </aside>
+        <main>
+          <div className="main-top">
+          <div className="doc-greet">
+            <div className="prof">
+              <img src={profile} alt="" width={125}/>
+            </div>
+            <div className="doc-greet-text">
+              <div className="typed-anim-cont">
+              <h2>Welcome,</h2>
+              <h2 className="typed-text"></h2>
+              </div>
+              <p id='desig'>Heart Surgeon</p>
+            </div>
+          </div>
+          <div className="doc-pat-count">
+              <h2>Total patient's </h2><h3>100</h3>
+            </div>
+          </div>
+          {/* <div className="main-bottom">
+          <div className="list-container">
+  {List.map((item, index) => (
+    <div key={index} className="product-card">
+      <div className="prof">
+        <img src={pat} alt={item.Name} width={90} />
+      </div>
+      <div className="product-info">
+        <h3 className="product-title">Name: {item.Name}</h3>
+        <p>Age: {item.Age}</p>
+        <p>Height: {item.Height}</p>
+        <p>Weight: {item.Weight}</p>
+        <button className="add-to-cart-btn" onClick={HandleRedirect}>View in Detail</button>
+      </div>
+    </div>
+  ))}
+</div>
 
-        <div className="right-container">
+          </div> */}
+        </main>
+   
+        {/* <div className="right-container">
           <aside>
             <h2>Appointments.</h2>
             <h2>Total Slots:<span>10</span></h2>
@@ -93,10 +128,10 @@ const HandleRedirect=()=>{
                 <div className="prof" id='prof-2'><img src={pat} alt="" width={60}/></div> <p>{item.Name}</p> <p>Time:{item.Time} </p> <button className='appoin-btn'><img src={check} alt="" /></button ><button className='appoin-btn'><img src={multiplication} alt="" /></button>
             </div>
           ))}
-        </div>
+        </div> */}
         {Toggle&&(<div className="toggle-prof-div">
             <div className="det-doc">
-            <div className="prof"><img src={profile} alt="" width={100} /></div>
+            <div className="prof-det"><img src={profile} alt="" width={125} /></div>
                 <label>Name:Dr.Harish Viswanath</label>
                 <label>Hospital Name:Harvard Heart Clinic</label>
                 <label>Position:Heart Surgeon</label>
@@ -104,6 +139,7 @@ const HandleRedirect=()=>{
             </div>
         </div>)}
       </div>
+    </div>
     </>
   );
 };

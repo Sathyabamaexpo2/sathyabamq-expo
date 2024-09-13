@@ -220,9 +220,11 @@
 .calendar-box {
   padding: 20px;
   background-color: #ffffff;
+  position: sticky;
+  top: 0;
   border-radius: 10px;
   border: 1px solid #e0e0e0;
-  height: 300px;
+  height: 310px;
   width: 100%;
   max-width: min-content;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -238,7 +240,7 @@
 
 .calendar-grid {
   display: grid;
-  margin-bottom: 90px;
+  margin-bottom: 190px;
   grid-template-columns: repeat(7, 1fr);
   width: 300px;
   grid-gap: 8px;
@@ -257,6 +259,7 @@
   padding: 10px;
   background-color: #ffffff;
   border: 1px solid #d1d9e6;
+  margin-left: 20px;
   width: 75%;
   height: 210px;
   position: absolute;
