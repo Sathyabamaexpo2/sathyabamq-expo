@@ -13,14 +13,14 @@ const User = () => {
     {
       id: 1,
       type: "Dentist",
-      doctor: "Dr. Gloria Curtis",
+      doctor: "Robert",  // Or whatever doctor's name should be here
       time: "10:00 AM",
       color: "#A083FF",
     },
     {
       id: 2,
       type: "Cardiologist",
-      doctor: "Dr. Craig Geidt",
+      doctor: "Dr. Gloria Curtis",  // Correct doctor for this type
       time: "12:00 PM",
       color: "#67A6FF",
     },
@@ -30,15 +30,18 @@ const User = () => {
       doctor: "Dr. Erin Herwitz",
       time: "04:00 PM",
       color: "#F9CC5C",
-    },
-    {
-      id: 4,
-      type: "Traumatologist",
-      doctor: "Dr. Terry Aminoff",
-      time: "07:00 PM",
-      color: "#FF6F91",
-    },
+    }
+    
+    
   ];
+
+
+  appointments.sort((a, b) => {
+    const timeA = new Date(`1970/01/01 ${a.time}`);
+    const timeB = new Date(`1970/01/01 ${b.time}`);
+    return timeA - timeB;
+  });
+  
 
   const CalendarAppointments = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -94,8 +97,9 @@ const User = () => {
 
     return (
       <div className='appointments-container'>
-
-        <div className="calendar-box">
+        <div className="calendar-container">
+        <h3>Doctor Appointments</h3>
+          <div className="calendar-box">
           <div className="calendar-header">
             <h2>{selectedDate.toLocaleString('default', { month: 'long' })}</h2>
             <select onChange={handleMonthChange} value={currentMonth}>
@@ -119,6 +123,7 @@ const User = () => {
           {/* Days of the Month */}
           <div className="calendar-grid calendar-days">{renderCalendarDays()}</div>
         </div>
+        </div> 
 
         {/* Appointments Section */}
         <div className="appointments-list">
@@ -138,7 +143,9 @@ const User = () => {
             </div>
           ))}
         </div>
+        <button className='appointments-button'>View More Appointments</button>
       </div>
+      
     );
   };  
 
@@ -261,47 +268,42 @@ const User = () => {
 
            
             <div className="activity-top">
-             <div className="user-section">
-                    <h3>Weight-Loss</h3>
-                    <h3>Weight-Gain</h3>
+            <div className="weight-container">
+              <div className="weight-column">
+                <h4>Weight-Loss</h4>
+                <p>Calories:{weightLossCalories}</p>
+                <p>Carbs:{weightLossMacros.carbs}g</p>
+                <p>Protein: {weightLossMacros.protein}g</p>
+               <p>Fats: 26g</p>
              </div>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Calories: {weightLossCalories}</td>
-                    <td>Calories: {weightGainCalories}</td>
-                  </tr>
-                  <tr>
-                    <td>Carbs:{weightLossMacros.carbs}g</td>
-                    <td>Carbs:{weightGainMacros.carbs}g</td>
-                  </tr>
-                  <tr>
-                    <td>Protein: {weightLossMacros.protein}g</td>
-                    <td>Protein: {weightGainMacros.protein}g</td>
-                  </tr>
-                  <tr>
-                    <td>Fats:{weightLossMacros.fats}g</td>
-                    <td>Fats:{weightGainMacros.fats}g</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="weight-column">
+                   <h4>Weight-Gain</h4>
+                   <p>Calories: {weightGainCalories}g</p>
+                   <p>Carbs:{weightGainMacros.carbs}g</p>
+                   <p>Protein:{weightLossMacros.fats}g</p>
+                   <p>Fats:{weightGainMacros.fats}g</p>
+              </div>
+            </div>
+
             </div>
           </div>
         
          <div className="activity-bottom">
-           <div className="bmi">
-            <div className="bmi-det-div">
-              <div className="bmi-l">
-                <h2>BMI</h2>
-                <h2>{bmi}</h2>
-              </div>
-              <div className="bmi-r">
-                 <h5><span>&lt;18: Low</span></h5>
-                 <h5><span>18-24: Normal</span></h5>
-                 <h5><span>&gt;24: High</span></h5>
-              </div>
-            </div>
-          </div>
+         <div className="bmi">
+             <div className="bmi-det-div">
+                <div className="bmi-l">
+                  <h2>BMI</h2>
+                  <div className={`bmi-circle ${bmi >= 18 && bmi <= 24 ? 'bmi-normal' : 'bmi-high'}`}>
+                     {bmi}
+                  </div>
+                </div>
+                <div className="bmi-r">
+                   <h5><span>&lt;18: Low</span></h5>
+                   <h5><span>18-24: Normal</span></h5>
+                   <h5><span>&gt;24: High</span></h5>
+                </div>
+             </div>
+         </div>
 
           <div className="recommendation-box">
                 <div className="recommendation-header">
@@ -310,30 +312,30 @@ const User = () => {
                 <div className="recommendation-content">
                     {bmi < 18 ? (
                     <div className="icon-recommendation">
-                         <img src="/icons/underweight.png" alt="Underweight" />
-                         <p>Underweight: Risk of Nutrient Deficiency</p>
+                         <img src="/icons/underweight.png" />
+                         <p>Risk of Nutrient Deficiency</p>
                     </div>
                      ) : bmi >= 18 && bmi <= 24 ? (
                 <div className="icon-recommendation">
                      <img src="/icons/normal-weight.png" alt="Normal Weight" />
-                     <p>Normal Weight: Keep up the good work!</p>
+                     <p>Keep up the good work!</p>
                      </div>
                  ) : bmi > 24 && bmi <= 29 ? (
                 <div className="icon-recommendation">
                    <img src="/icons/overweight.png" alt="Overweight" />
-                   <p>Overweight: Watch out for Hypertension and Diabetes</p>
+                   <p>Watch out for Hypertension and Diabetes</p>
                  </div>
                 ) : bmi >= 30 ? (
                  <div className="icon-recommendation">
                     <img src="/icons/obesity.png" alt="Obesity" />
-                    <p>Obesity: High Risk of Heart Disease</p>
+                    <p>High Risk of Heart Disease</p>
                  </div>
                ) : null}
 
               {userData.age >= 40 ? (
               <div className="icon-recommendation">
                   <img src="/icons/age-risk.png" alt="Age Risk" />
-                  <p>Age 40+: Higher Risk for Cardiovascular Diseases</p>
+                  <p>Higher Risk for Cardiovascular Diseases</p>
               </div>
               ) : null}
             </div>
