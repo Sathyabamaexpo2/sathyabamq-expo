@@ -5,6 +5,10 @@ import {useLocation,useNavigate} from "react-router-dom"
 import Typed from 'typed.js';
 import pat from "../assets/pat.png";
 import search from "../assets/search .png";
+import chat from "../assets/chat.png";
+import theme from "../assets/theme.png";
+import appoin from "../assets/appoinment.png";
+import power from "../assets/power-button.png"
 import check from "../assets/check.png"
 import profile from "../assets/profile.png"
 import multiplication from "../assets/multiplication.png"
@@ -15,28 +19,28 @@ const Doctorside = () => {
   const Navi=useLocation();
   const Navigate=useNavigate();
   const [Toggle,setToggle]=useState(false);
+  const[Appoin,setToggleAppoinment]=useState(false)
   const HandleRedirectionLogout=()=>{
     Navigate('/');
  }
   const List=[{
     Name:"Lijo",
     Age:20,
-    Height:"165CM",
-    Weight:"75Kg"
+    Id:"123D"
   },{ Name:"Navii",
     Age:20,
-    Height:"185CM",
-    Weight:"75Kg"},
+    Id:"123C"},
     { Name:"Harish",
         Age:20,
-        Height:"170CM",
-        Weight:"69Kg"},
+        Id:"123B"},
         { Name:"Harrsha",
             Age:20,
-            Height:"160CM",
-            Weight:"59Kg"}]
+          Id:"123A"}]
 const HandleProff=()=>{
     setToggle(!Toggle);
+}
+const HandleApponment=()=>{
+  setToggleAppoinment(!Appoin)
 }
 const HandleRedirect=()=>{
     Navigate('/details');
@@ -72,11 +76,11 @@ const HandleRedirect=()=>{
         <aside>
         <div className="welcome-div">
           <div className="other-btn-div">
-          <button className='other-btn'>theme</button>
-          <button className='other-btn'>Chat</button>
-          <button className='other-btn'>appointment</button>
+          <div className="btn-img"><img src={theme} alt="" width={40} height={40}/><button className='other-btn' onClick={HandleApponment}>theme</button></div>
+          <div className="btn-img"><img src={chat} alt="" width={40} height={40}/><button className='other-btn'>Chat</button></div>
+          <div className="btn-img"><img src={appoin} alt="" width={40} height={40}/><button className='other-btn'>appointment</button></div>
           </div>
-        <div className="logout-btn-div"> <button className='button-31' onClick={HandleRedirectionLogout}>Logout</button></div>
+        <div className="logout-btn-div"><img src={power} alt="" width={40} height={40}/> <button className='button-31' id='lout' onClick={HandleRedirectionLogout}>Logout</button></div>
         </div>
         </aside>
         <main>
@@ -97,38 +101,21 @@ const HandleRedirect=()=>{
               <h2>Total patient's </h2><h3>100</h3>
             </div>
           </div>
-          {/* <div className="main-bottom">
+          <div className="main-bottom">
           <div className="list-container">
-  {List.map((item, index) => (
-    <div key={index} className="product-card">
-      <div className="prof">
-        <img src={pat} alt={item.Name} width={90} />
-      </div>
-      <div className="product-info">
-        <h3 className="product-title">Name: {item.Name}</h3>
-        <p>Age: {item.Age}</p>
-        <p>Height: {item.Height}</p>
-        <p>Weight: {item.Weight}</p>
-        <button className="add-to-cart-btn" onClick={HandleRedirect}>View in Detail</button>
-      </div>
-    </div>
-  ))}
-</div>
-
-          </div> */}
-        </main>
-   
-        {/* <div className="right-container">
-          <aside>
-            <h2>Appointments.</h2>
-            <h2>Total Slots:<span>10</span></h2>
-          </aside>
-          {Appointments.map((item,index)=>(
-            <div key={index} className="appion-div">
-                <div className="prof" id='prof-2'><img src={pat} alt="" width={60}/></div> <p>{item.Name}</p> <p>Time:{item.Time} </p> <button className='appoin-btn'><img src={check} alt="" /></button ><button className='appoin-btn'><img src={multiplication} alt="" /></button>
-            </div>
-          ))}
-        </div> */}
+          {List.map((item, index) => (
+              <div key={index} className="list-div-Card">
+                  <div className="prof2">
+                    <img src={pat} alt="" width={90}/>
+                  </div>
+                <label>Name :{item.Name}</label>
+                <label>Age :{item.Age}</label>
+                <label>Patient's Id:{item.Id}</label>
+                <button className='button-31' id='view' onClick={HandleRedirect}>View in detail</button>
+              </div>))}
+          </div>
+          </div>
+</main>
         {Toggle&&(<div className="toggle-prof-div">
             <div className="det-doc">
             <div className="prof-det"><img src={profile} alt="" width={125} /></div>
@@ -138,6 +125,23 @@ const HandleRedirect=()=>{
                 <button className='button-31' onClick={HandleProff}>Close</button>
             </div>
         </div>)}
+        {Appointments.map((item, index) => (
+  Appoin && (
+    <div key={index} className="appion-div">
+      <div className="prof" id='prof-2'>
+        <img src={pat} alt={item.Name} width={60} />
+      </div>
+      <p>{item.Name}</p>
+      <p>Time: {item.Time}</p>
+      <button className='appoin-btn'>
+        Accept
+      </button>
+      <button className='appoin-btn'>
+        Decline
+      </button>
+    </div>
+  )
+))}
       </div>
     </div>
     </>

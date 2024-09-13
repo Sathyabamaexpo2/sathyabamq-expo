@@ -17,12 +17,15 @@
 .main-top{
   display: flex;
   width: 100%;
-  height: 100vh;
-  gap: 90px;
+  height: 250px;
+  gap: 80px;
   flex-direction: row;
 }
 .main-bottom{
   display: flex;
+  background-color: #342828;
+  width: 100%;
+  height: 100%;
   flex-direction: row;
 }
 .whole-cont {
@@ -82,6 +85,10 @@
     object-fit: fill;
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 }
+.btn-img{
+  display: flex;
+  gap: 20px;
+}
 #prof-2{
     width: 50px;
     height: 50px;
@@ -89,17 +96,30 @@
 .other-btn-div{
   display: flex;
   flex-direction: column;
-  padding-left: 40px;
-  gap:30px;
+  gap:50px;
 }
 .other-btn{
   background: none;
   border: none  ;
   border-radius: none;
   outline: none;
+  color: rgb(0, 0, 0);
   /* border-bottom: 1px solid black; */
 
 }
+#lout {
+  background: none;
+  color: #342828;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+#lout:hover {
+  color: rgb(254, 120, 59);
+  border: none;
+  border-bottom: 2px solid #000000;
+}
+
 .doc-pat-count{
   display: flex;
   position: relative;
@@ -107,10 +127,10 @@
   background: linear-gradient(135deg, #538cf7, #c2d7f6);
   flex-direction: column;
   justify-content: center;
+  padding: 10px 10px 10px 10px;
   align-items: center;
-  padding: 10px 10px 10px 10px  ;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  height: 170px;
+  height: 180px;
   border-radius: 15px;
   color: #ffffff;
 }
@@ -121,6 +141,8 @@
 }
 .other-btn:hover{
   color: rgb(238, 95, 23);
+  border-bottom: 2px solid #000000;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 aside{
     display: flex;
@@ -145,12 +167,12 @@ main{
   border-radius: 20px;
   color: white;
   background-color:rgb(79, 145, 250);
-  left: 80px;
+  left: 50px;
   top:10px;
-  width: 60%;
-  height: 28%;
+  width: 70%;
+  height: 100%;
 }
-  .toggle-prof-div{
+  .toggle-prof-div,.appion-div{
     position: fixed; 
     top: 0;
     left: 0;
@@ -186,11 +208,83 @@ main{
     border: none;
 
 }
-
   .welcome-div{
     display: flex;
+    justify-content: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding-top:50px;
     border-radius: 15px;
     width: 100%;
     height: 100%;
   }
+  .main-bottom {
+    display: flex;
+    flex-direction: row;
+    margin-left: 40px;
+    top:250px;
+    background-color: #ffffff; 
+  }
+  .list-container{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom:60px;
+    justify-content: center;
+    flex-direction: row;
+    gap:40px;
+    width: 90%;
+  }
+  #view,.appoin-btn{
+    color: white;
+    border-radius: 30px;
+    background-color: #538cf7;
+  }
+  #view:focus{
+    outline: none;
+  }
+  .list-div-Card {
+    display: flex;
+    flex-direction: column;
+    color: rgb(166, 166, 166);
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 40%;
+    height: 280px;
+    border-radius: 15px;
+    
+  background: linear-gradient(135deg, #e7eefc, #dbe8f9); /* Transparent background */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px); /* Blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Soft white border */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .list-div-Card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
+    opacity: 0.4;
+    pointer-events: none; 
+    z-index: 1;
+  }
+  
+  .list-div-Card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .list-div-Card * {
+    position: relative;
+    z-index: 2; 
+  }
+  
+ 
