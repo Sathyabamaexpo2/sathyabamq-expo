@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './User.css';
 import profile from '../../assets/messi-ronaldo-fb.jpg';
 import axios from 'axios'; 
+import theme from "../../assets/theme.png";
+import chat from "../../assets/chat.png";
+import power from "../../assets/power-button.png";
 
 const User = () => {
 
@@ -10,31 +13,25 @@ const User = () => {
   const [error, setError] = useState(null);
 
   const appointments = [
-    {
-      id: 1,
+    { 
       type: "Dentist",
-      doctor: "Robert",  // Or whatever doctor's name should be here
+      doctor: "Robert",
       time: "10:00 AM",
-      color: "#A083FF",
+      color: "rgb(160, 131, 255)",
     },
-    {
-      id: 2,
+    { 
       type: "Cardiologist",
-      doctor: "Dr. Gloria Curtis",  // Correct doctor for this type
+      doctor: "Dr. Gloria Curtis",
       time: "12:00 PM",
-      color: "#67A6FF",
+      color: "rgb(103, 166, 255)",
     },
     {
-      id: 3,
       type: "Oculist",
       doctor: "Dr. Erin Herwitz",
       time: "04:00 PM",
-      color: "#F9CC5C",
+      color: "rgb(249, 204, 92)",
     }
-    
-    
   ];
-
 
   appointments.sort((a, b) => {
     const timeA = new Date(`1970/01/01 ${a.time}`);
@@ -127,22 +124,22 @@ const User = () => {
 
         {/* Appointments Section */}
         <div className="appointments-list">
-          {appointments.map((appointment) => (
-            <div
-              key={appointment.id}
-              className="appointment-card"
-              style={{ backgroundColor: appointment.color }}
-            >
-              <div className="appointment-details">
-                <h3>{appointment.type}</h3>
-                <p>{appointment.doctor}</p>
-              </div>
-              <div className="appointment-time">
-                <p>{appointment.time}</p>
-              </div>
-            </div>
-          ))}
+               {appointments.map((appointment, index) => (
+        <div
+          key={index}
+          className="appointment-card"
+          style={{ backgroundColor: appointment.color }}
+        >
+          <div className="appointment-details">
+            <p>{appointment.doctor}</p>
+            <h3>{appointment.type}</h3>
+          </div>
+          <div className="appointment-time">
+            <p>{appointment.time}</p>
+          </div>
         </div>
+      ))}
+    </div>
         <button className='appointments-button'>View More Appointments</button>
       </div>
       
@@ -201,13 +198,14 @@ const User = () => {
     const carbCalories = calories * 0.50;
     const proteinCalories = calories * 0.30;
     const fatCalories = calories * 0.20; 
-
-    const carbs = (carbCalories / 4).toFixed(0);
-    const protein = (proteinCalories / 4).toFixed(0);
-    const fats = (fatCalories / 9).toFixed(0);
-
+  
+    const carbs = Math.round(carbCalories / 4);
+    const protein = Math.round(proteinCalories / 4);
+    const fats = Math.round(fatCalories / 9);
+  
     return { carbs, protein, fats };
   };
+  
 
   const calculateCalories = (bmr) => {
     const weightLossCalories = bmr - 500;
@@ -215,14 +213,12 @@ const User = () => {
     return { weightLossCalories, weightGainCalories };
   };
 
-  const bmi = userData ? calculateBMI(userData.weight, userData.height) : 'N/A';
+const bmi = userData ? calculateBMI(userData.weight, userData.height) : 'N/A';
+const bmr = userData ? calculateBMR(userData.weight, userData.height, userData.age, userData.gender) : 0;
+const { weightLossCalories, weightGainCalories } = calculateCalories(bmr);
+const weightLossMacros = calculateMacros(weightLossCalories);
+const weightGainMacros = calculateMacros(weightGainCalories);
 
-  const bmr = userData ? calculateBMR(userData.weight, userData.height, userData.age, userData.gender) : 0;
-
-  const { weightLossCalories, weightGainCalories } = calculateCalories(bmr);
-
-  const weightLossMacros = calculateMacros(weightLossCalories);
-  const weightGainMacros = calculateMacros(weightGainCalories);
  
   const getHealthRisk = (bmi) => {
     if (bmi < 18) {
@@ -233,13 +229,22 @@ const User = () => {
       return { risk: 'At Risk of Obesity', color: '#FF6347' };
     }
   };
+
+  const totalWeightLossMacros = weightLossMacros.protein + weightLossMacros.carbs + weightLossMacros.fats;
+  const totalWeightGainMacros = weightGainMacros.protein + weightGainMacros.carbs + weightGainMacros.fats;
+  
+
   
 
   return (
     <div className="user-main-container">
       <div className="user-left">
         <h2>MedX</h2>
-        <button className='button-31'>Logout</button>
+        <div className="user-left-div">
+           <div className="btn-img"><img src={theme} alt="" width={40} height={40}/><button className='other-btn'>theme</button></div>
+           <div className="btn-img"><img src={chat} alt="" width={40} height={40}/><button className='other-btn'>Chat</button></div>
+        </div>
+        <div className="logout-btn-div"><img src={power} alt="" width={40} height={40}/> <button className='button-31' id='lout'>Logout</button></div>
       </div>
 
       <div className="user-right-container">
@@ -251,7 +256,7 @@ const User = () => {
               </div>
               <h2 className="user-card-username">{userData.name}</h2>
               <div className="patient-details">
-                <div className="patient-profile">
+                <div className="patient-profile" id="patient-pro">
                   <h2>{userData.age}</h2>
                   <span>Years</span>
                   <h2>{userData.height}cm</h2>
@@ -268,31 +273,10 @@ const User = () => {
 
            
             <div className="activity-top">
-            <div className="weight-container">
-              <div className="weight-column">
-                <h4>Weight-Loss</h4>
-                <p>Calories:{weightLossCalories}</p>
-                <p>Carbs:{weightLossMacros.carbs}g</p>
-                <p>Protein: {weightLossMacros.protein}g</p>
-               <p>Fats: 26g</p>
-             </div>
-              <div className="weight-column">
-                   <h4>Weight-Gain</h4>
-                   <p>Calories: {weightGainCalories}g</p>
-                   <p>Carbs:{weightGainMacros.carbs}g</p>
-                   <p>Protein:{weightLossMacros.fats}g</p>
-                   <p>Fats:{weightGainMacros.fats}g</p>
-              </div>
-            </div>
-
-            </div>
-          </div>
-        
-         <div className="activity-bottom">
-         <div className="bmi">
-             <div className="bmi-det-div">
+             <div className="bmi">
+               <div className="bmi-det-div">
                 <div className="bmi-l">
-                  <h2>BMI</h2>
+                  <h4>BMI</h4>
                   <div className={`bmi-circle ${bmi >= 18 && bmi <= 24 ? 'bmi-normal' : 'bmi-high'}`}>
                      {bmi}
                   </div>
@@ -340,8 +324,56 @@ const User = () => {
               ) : null}
             </div>
           </div>
-
+            </div>
           </div>
+
+<div className="calories-card">
+  <div className="card-section">
+    <div className="card-title">
+      <h4>Weight Loss</h4>
+      <p>Total Calories: {weightLossCalories} Cal/day</p>
+    </div>
+  
+      <div className="macro-details">
+        <p>Protein:{weightLossMacros.protein}g</p>
+        <div className="progress-bar" style={{ width: '34%', backgroundColor: '#f0932b' }}></div>
+      </div>
+
+      <div className="macro-details">
+        <p>Carbs: {weightLossMacros.carbs}g</p>
+        <div className="progress-bar" style={{ width: '56%', backgroundColor: '#6ab04c' }}></div>
+      </div>
+
+      <div className="macro-details">
+        <p>Fats: {weightLossMacros.fats}g</p>
+        <div className="progress-bar" style={{ width: '10%', backgroundColor: '#eb4d4b' }}></div>
+      </div>
+    </div>
+   
+  <div className="card-section">
+    <div className="card-title">
+      <h4>Weight Gain</h4>
+      <p>Total Calories: {weightGainCalories} Cal/day</p>
+    </div>
+
+  
+      <div className="macro-details">
+        <p>Protein: {((weightGainMacros.protein / totalWeightGainMacros) * 100).toFixed(0)}%</p>
+        <div className="progress-bar" style={{ width: '34%', backgroundColor: 'rgb(160, 131, 255)' }}></div>
+      </div>
+
+      <div className="macro-details">
+        <p>Carbs: {((weightGainMacros.carbs / totalWeightGainMacros) * 100).toFixed(0)}%</p>
+        <div className="progress-bar" style={{ width: '56%', backgroundColor: 'rgb(103, 166, 255)' }}></div>
+      </div>
+
+      <div className="macro-details">
+        <p>Fats: {((weightGainMacros.fats / totalWeightGainMacros) * 100).toFixed(0)}%</p>
+        <div className="progress-bar" style={{ width: '10%', backgroundColor: 'rgb(249, 204, 92)' }}></div>
+      </div>
+    </div>
+
+      </div>
       </div>
       
 

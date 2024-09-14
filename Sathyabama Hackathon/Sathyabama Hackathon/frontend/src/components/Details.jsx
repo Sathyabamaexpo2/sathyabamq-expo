@@ -18,9 +18,9 @@ const Details = () => {
         <>
             <div className="details-container">
                 <nav className="navbar">
-                    <h1>
+                    <h1 style={{fontSize:"26px"}}>
                         <button className="back" onClick={HandleRedirection}>
-                            <img src={back} alt="Back" width={40} />
+                            <img src={back} alt="Back" width={20} height={20} />
                         </button>
                         MedX
                     </h1>

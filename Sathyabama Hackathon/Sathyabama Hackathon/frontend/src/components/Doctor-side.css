@@ -110,21 +110,19 @@
 #lout {
   background: none;
   color: #342828;
-  border-bottom: 2px solid transparent;
-  transition: color 0.3s ease, border-bottom 0.3s ease;
+  width: 80%;
 }
 
 #lout:hover {
   color: rgb(254, 120, 59);
   border: none;
-  border-bottom: 2px solid #000000;
 }
 
 .doc-pat-count{
   display: flex;
   position: relative;
   top:10px;
-  background: linear-gradient(135deg, #538cf7, #c2d7f6);
+  background: #ffffff;
   flex-direction: column;
   justify-content: center;
   padding: 10px 10px 10px 10px;
@@ -132,7 +130,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   height: 180px;
   border-radius: 15px;
-  color: #ffffff;
+  color: lightgray;
 }
 .other-btn:focus {
   outline: none;  
@@ -141,8 +139,6 @@
 }
 .other-btn:hover{
   color: rgb(238, 95, 23);
-  border-bottom: 2px solid #000000;
-  transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 aside{
     display: flex;
@@ -166,7 +162,7 @@ main{
   gap:140px;
   border-radius: 20px;
   color: white;
-  background-color:rgb(79, 145, 250);
+  background-color:rgb(160, 131, 255);
   left: 50px;
   top:10px;
   width: 70%;
@@ -237,7 +233,7 @@ main{
   #view,.appoin-btn{
     color: white;
     border-radius: 30px;
-    background-color: #538cf7;
+    background-color:rgb(160, 131, 255);
   }
   #view:focus{
     outline: none;
@@ -252,8 +248,6 @@ main{
     width: 40%;
     height: 280px;
     border-radius: 15px;
-    
-  background: linear-gradient(135deg, #e7eefc, #dbe8f9); /* Transparent background */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px); /* Blur effect */
     -webkit-backdrop-filter: blur(10px); /* Safari support */
