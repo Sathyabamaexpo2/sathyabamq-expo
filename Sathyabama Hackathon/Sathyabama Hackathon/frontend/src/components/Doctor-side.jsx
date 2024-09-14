@@ -76,9 +76,9 @@ const HandleRedirect=()=>{
         <aside>
         <div className="welcome-div">
           <div className="other-btn-div">
-          <div className="btn-img"><img src={theme} alt="" width={40} height={40}/><button className='other-btn' onClick={HandleApponment}>theme</button></div>
+          <div className="btn-img"><img src={theme} alt="" width={40} height={40}/><button className='other-btn'>theme</button></div>
           <div className="btn-img"><img src={chat} alt="" width={40} height={40}/><button className='other-btn'>Chat</button></div>
-          <div className="btn-img"><img src={appoin} alt="" width={40} height={40}/><button className='other-btn'>appointment</button></div>
+          <div className="btn-img"><img src={appoin} alt="" width={40} height={40}/><button className='other-btn'onClick={HandleApponment}>appointment</button></div>
           </div>
         <div className="logout-btn-div"><img src={power} alt="" width={40} height={40}/> <button className='button-31' id='lout' onClick={HandleRedirectionLogout}>Logout</button></div>
         </div>
@@ -125,25 +125,26 @@ const HandleRedirect=()=>{
                 <button className='button-31' onClick={HandleProff}>Close</button>
             </div>
         </div>)}
-        {Appointments.map((item, index) => (
-  Appoin && (
-    <div key={index} className="appion-div">
-      <div className="prof" id='prof-2'>
-        <img src={pat} alt={item.Name} width={60} />
-      </div>
+        {Appoin && Appointments.map((item, index) => (
+  <div key={index} className="appion-div">
+    <div className="prof3">
+      <img src={pat} alt={item.Name} width={60} />
+    </div>
+    <div className="appion-content">
       <p>{item.Name}</p>
       <p>Time: {item.Time}</p>
-      <button className='appoin-btn'>
-        Accept
-      </button>
-      <button className='appoin-btn'>
-        Decline
-      </button>
     </div>
-  )
+    <div className="button-group">
+      <button className="appoin-btn">Accept</button>
+      <button className="appoin-btn decline">Decline</button>
+      <button className="close-btn" onClick={HandleApponment}>✕</button> 
+    </div>
+  </div>
 ))}
+
+</div>
+
       </div>
-    </div>
     </>
   );
 };

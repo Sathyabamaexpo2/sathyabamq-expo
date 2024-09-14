@@ -25,7 +25,6 @@ const Details = () => {
                         MedX
                     </h1>
                 </nav>
-
                 <div className="left-container2">
                     <div className="Det-prof">
                         <img src={pat} alt="Profile" />
