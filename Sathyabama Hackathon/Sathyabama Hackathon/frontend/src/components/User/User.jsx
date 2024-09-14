@@ -94,6 +94,7 @@ const User = () => {
 
     return (
       <div className='appointments-container'>
+        <div className="calendar">
         <div className="calendar-container">
         <h3>Doctor Appointments</h3>
           <div className="calendar-box">
@@ -121,7 +122,7 @@ const User = () => {
           <div className="calendar-grid calendar-days">{renderCalendarDays()}</div>
         </div>
         </div> 
-
+        </div>
         {/* Appointments Section */}
         <div className="appointments-list">
                {appointments.map((appointment, index) => (
@@ -239,12 +240,15 @@ const weightGainMacros = calculateMacros(weightGainCalories);
   return (
     <div className="user-main-container">
       <div className="user-left">
-        <h2>MedX</h2>
+         <div className="user-left-title">
+         <h2>MedX</h2>
+         </div>
+
         <div className="user-left-div">
-           <div className="btn-img"><img src={theme} alt="" width={40} height={40}/><button className='other-btn'>theme</button></div>
+           <div className="btn-img"><img src={theme} alt="" width={40} height={40}/><button className='other-btn'>Theme</button></div>
            <div className="btn-img"><img src={chat} alt="" width={40} height={40}/><button className='other-btn'>Chat</button></div>
         </div>
-        <div className="logout-btn-div"><img src={power} alt="" width={40} height={40}/> <button className='button-31' id='lout'>Logout</button></div>
+        <div className="logout-btn-div" style={{marginLeft:"-30px"}}><img src={power} alt="" width={40} height={40}/> <button className='button-31' id='lout'>Logout</button></div>
       </div>
 
       <div className="user-right-container">
@@ -282,9 +286,9 @@ const weightGainMacros = calculateMacros(weightGainCalories);
                   </div>
                 </div>
                 <div className="bmi-r">
-                   <h5><span>&lt;18: Low</span></h5>
-                   <h5><span>18-24: Normal</span></h5>
-                   <h5><span>&gt;24: High</span></h5>
+                <h5><span>&lt;18: Low 🧍‍♂️🍏</span></h5>
+                <h5><span>18-24: Normal ✅💪</span></h5>
+                <h5><span>&gt;24: High ⚠️🍔</span></h5>
                 </div>
              </div>
          </div>
@@ -328,7 +332,7 @@ const weightGainMacros = calculateMacros(weightGainCalories);
           </div>
 
 <div className="calories-card">
-  <div className="card-section">
+  <div className="card-section-1">
     <div className="card-title">
       <h4>Weight Loss</h4>
       <p>Total Calories: {weightLossCalories} Cal/day</p>
@@ -336,21 +340,27 @@ const weightGainMacros = calculateMacros(weightGainCalories);
   
       <div className="macro-details">
         <p>Protein:{weightLossMacros.protein}g</p>
-        <div className="progress-bar" style={{ width: '34%', backgroundColor: '#f0932b' }}></div>
+        <div className="progress-bar"> 
+        <span style={{ width: '50%', backgroundColor: 'rgb(160, 131, 255)' }}></span>
+        </div>
       </div>
 
       <div className="macro-details">
         <p>Carbs: {weightLossMacros.carbs}g</p>
-        <div className="progress-bar" style={{ width: '56%', backgroundColor: '#6ab04c' }}></div>
+        <div className="progress-bar">
+        <span style={{ width: '68%', backgroundColor: 'rgb(103, 166, 255)' }}></span> 
+        </div>
       </div>
 
       <div className="macro-details">
-        <p>Fats: {weightLossMacros.fats}g</p>
-        <div className="progress-bar" style={{ width: '10%', backgroundColor: '#eb4d4b' }}></div>
+        <p className='fats'>Fats: {weightLossMacros.fats}g</p>
+        <div className="progress-bar">
+        <span style={{ width: '35%', backgroundColor: 'rgb(249, 204, 92)' }}></span>
+        </div>
       </div>
     </div>
    
-  <div className="card-section">
+  <div className="card-section-2">
     <div className="card-title">
       <h4>Weight Gain</h4>
       <p>Total Calories: {weightGainCalories} Cal/day</p>
@@ -358,18 +368,24 @@ const weightGainMacros = calculateMacros(weightGainCalories);
 
   
       <div className="macro-details">
-        <p>Protein: {((weightGainMacros.protein / totalWeightGainMacros) * 100).toFixed(0)}%</p>
-        <div className="progress-bar" style={{ width: '34%', backgroundColor: 'rgb(160, 131, 255)' }}></div>
+        <p>Protein: {weightGainMacros.protein}g</p>
+        <div className="progress-bar">
+          <span style={{ width: '35%', backgroundColor: 'rgb(160, 131, 255)' }}></span>
+          </div>
       </div>
 
       <div className="macro-details">
-        <p>Carbs: {((weightGainMacros.carbs / totalWeightGainMacros) * 100).toFixed(0)}%</p>
-        <div className="progress-bar" style={{ width: '56%', backgroundColor: 'rgb(103, 166, 255)' }}></div>
+        <p>Carbs: {weightGainMacros.carbs}g</p>
+        <div className="progress-bar">
+        <span style={{ width: '68%', backgroundColor: 'rgb(103, 166, 255)' }}></span> 
+        </div>
       </div>
 
       <div className="macro-details">
-        <p>Fats: {((weightGainMacros.fats / totalWeightGainMacros) * 100).toFixed(0)}%</p>
-        <div className="progress-bar" style={{ width: '10%', backgroundColor: 'rgb(249, 204, 92)' }}></div>
+        <p className='fats'>Fats: {weightGainMacros.fats}g</p>
+        <div className="progress-bar">
+        <span style={{ width: '35%', backgroundColor: 'rgb(249, 204, 92)' }}></span>
+        </div>
       </div>
     </div>
 

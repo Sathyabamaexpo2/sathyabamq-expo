@@ -7,11 +7,17 @@
 .user-left{
   width:15%;
   height: 95vh;
-  margin-left: 45px;
   display: flex;
   flex-direction: column;
-  align-items:normal;
+  align-items:center;
   justify-content: space-between;
+}
+
+.user-left-title{
+  display: flex;
+  justify-content: center;
+  width:100%;
+  border-bottom: 1px solid black;
 }
 
 .user-left-div{
@@ -23,7 +29,6 @@
 }
 
 .user-left button{
-  height: 5%;
   width: 50%;
 
 }
@@ -41,7 +46,7 @@
 
 .user-right-container{
   width:100%;
-  background: #f5f8ff;
+  background: rgb(232, 225, 255);
 }
 
 .user-right {
@@ -70,10 +75,10 @@
   font-size: medium;
   border-radius: 20px;
   height: 62%;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #d1d9e6;
   background-color: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  margin-top: -30px;
+  margin-top: -40px;
   max-width: 400px;
 }
 
@@ -104,7 +109,7 @@
 .patient-profile span {
   font-size: 14px;
   margin-top: -15px;
-  margin-left: -2px;/* Adjust the font size for the span text */
+  margin-left: -2px;
 }
 
 
@@ -124,7 +129,7 @@
   gap: 30px;
   width: 50%;
   padding: 20px;
-  margin-top: -50px;
+  margin-top: -60px;
   margin-left: -20px;
   height:35%;
   border-radius: 15px;
@@ -143,50 +148,66 @@
   width: 70%;
   height:30%;
   background-color: #fff;
-  align-items: center;
   border-radius: 15px;
   padding: 20px;
   margin-right:80px;
   font-size: small;
   margin-top: -130px;
+  border: 1px solid #d1d9e6;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-top: -15px;
   margin-bottom: -10px;
 }
 
-.card-section{
+.card-title h4{
+  margin-top:30px ;
+}
+
+.card-section-1,.card-section-2{
   display: flex;
   flex-direction: column;
   justify-content: center;
   width:90%;
+  height: 100%;
 }
 
+.card-section-1{
+  border-right: 1px solid black;
+}
 
 .macro-details{
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-left: 10px;
 }
 
 .macro-details p{
     padding-right:15px;
 }
 
+.fats{
+  margin-right: 14px;
+}
+
 .progress-bar {
   height: 8px;
   border-radius: 4px;
-  background-color: #dcdde1;
-  width: 100%; /* Adjust the width accordingly */
+  background-color:lightgray;
+  width: 34%; 
 }
 
 .progress-bar span {
   display: block;
   height: 100%;
   border-radius: 4px;
+  margin-left:-10px;
 }
 
 .bmi {
@@ -194,7 +215,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items:center;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #d1d9e6;
   padding: 20px;
   padding-bottom:70px;
   width:58%;
@@ -215,7 +236,7 @@
   align-items: center;
   font-size: 16px;
   font-weight: bold;
-  margin-top: -10px;
+  margin-top: -14px;
   color: black;
 }
 
@@ -236,7 +257,7 @@
   align-items: center;
   padding: 10px 0;
   margin-top:-20px;
-  gap: 30px; /* Add a gap between left and right sections */
+  gap: 40px; 
 }
 
 
@@ -268,35 +289,40 @@
   font-size: 14px;
 }
 
-.appointments-container {  
+.appointments-container{  
   padding: 10px;
   position: absolute;
+  display: flex;
+  flex-direction: column;
   right: 15px;
   top: 15px;
   background-color: #f5f8ff;
   border-radius: 15px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   margin-bottom: 20px;
   width: 350px; 
   height: 580px;
-  border: 1px solid #d1d9e6;
-  scroll-behavior: smooth; 
+}
+
+.calendar{
+  display: flex;
+  justify-content: center;
 }
 
 .calendar-container {
-  padding: 15px; /* Reduce padding */
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
   background-color: #ffffff;
   border-radius: 10px;
-  border: 1px solid #e0e0e0;
-  height: max-content; /* Reduce height */
-  width: 320px; /* Reduce width */
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  height: max-content; 
+  width: 320px; 
 }
 
 
 .calendar-container  h3{
   margin-top: -10px;
 }
+
 
 .calendar-header {
   display: flex;
@@ -307,7 +333,7 @@
 
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Ensure 7 columns for each day */
+  grid-template-columns: repeat(7, 1fr); 
   grid-gap: 5px;
   text-align: center;
   padding-bottom: 20px;
@@ -348,6 +374,7 @@
   padding: 10px; /* Reduce padding */
   margin-top: 10px;
   width: 90%;
+  margin-left: 3px;
   height: 50px; /* Reduce height */
   border-radius: 10px;
   color: white; 
@@ -386,10 +413,11 @@
   border-radius: 10px;
   padding:20px;
   width: 58%;
-  height:max-content;
+  height:80%;
   background-color: #fff;
   margin-left: 6px;
   font-size: small;
+  margin-top: -12px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
@@ -402,8 +430,9 @@
 .recommendation-content {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
+
 
 .icon-recommendation {
   display: flex;
