@@ -50,39 +50,40 @@ const Details = () => {
 
                 <div className="right-container2">
                     <div className="Treatment-det">
+                        
                         <div className="Tret">
-                            <h2>Treatment & Tablets</h2>
-                            <h3>Diagnosis: Fever</h3>
-                            <h3>Treatment Duration: 2 days</h3>
-                            <h3>Treatments Taken: Blood test, General Medication</h3>
-                            <h3>Next Visit: None</h3>
+                            <h2>Treatment</h2>
+                            <p>Diagnosis: Fever</p>
+                            <p>Treatment Duration: 2 days</p>
+                            <p>Treatments Taken: Blood test, General Medication</p>
+                            <p>Next Visit: None</p>
                         </div>
                         <div className="sep-div"></div>
                         <div className="Tabet">
-                            <h3>Medicines: Paracetamol, Aspirin</h3>
-                            <h3>Injections: Paracetamol</h3>
-                            <h3>Admitted: 
+                            <h2>Tablets</h2>
+                            <p>Medicines: Paracetamol, Aspirin</p>
+                            <p>Injections: Paracetamol</p>
+                            <p>Admitted: 
                                 <select>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
-                                </select>
-                            </h3>
-                            <h3>Surgery: 
+                                </select></p>
+                            <p>Surgery: 
                                 <select>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
-                                </select>
-                            </h3>
+                                </select></p>
                         </div>
                     </div>
-                    <div className="Total-Payment">
-                            <h2>Total:$100</h2>
-                        </div>
+
                     <div className="btn-div">
                     <button className="button-31" id="view" onClick={handlePopup}>
                         View Prescription
                     </button>
-                    <button className="button-31">Remove</button>
+                    <button className="button-31" id="remove">Remove</button>
+                    <div className="Total-Payment">
+                            <h2>Total:$100</h2>
+                        </div>
                     </div>
                 </div>
 

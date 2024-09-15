@@ -1,7 +1,7 @@
 import React from 'react'
 import loginimage1 from "../../assets/loginimage1.jpeg";
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 const Login2 = () => {
     
@@ -13,10 +13,6 @@ const Login2 = () => {
         Lic_No: "",
         Hospital_Name: "",
         Specialized: "",
-        gender: "",
-        bloodgroup: "",
-        height: "",
-        weight: "",
         email: "",
         password: "",
         Confirm_password: "",
@@ -27,8 +23,6 @@ const Login2 = () => {
         navigate('/');
      }
    
-
-      
       const onChangeHandler = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -84,7 +78,7 @@ const Login2 = () => {
     >
       Sign in as a User
     </a>
-
+    
           </form>
         </div>
       </div>

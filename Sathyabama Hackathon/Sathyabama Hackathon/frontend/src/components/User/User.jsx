@@ -30,7 +30,8 @@ const User = () => {
       doctor: "Dr. Erin Herwitz",
       time: "04:00 PM",
       color: "rgb(249, 204, 92)",
-    }
+    },
+
   ];
 
   appointments.sort((a, b) => {
@@ -96,7 +97,7 @@ const User = () => {
       <div className='appointments-container'>
         <div className="calendar">
         <div className="calendar-container">
-        <h3>Doctor Appointments</h3>
+        <h3 style={{fontSize:"22px"}}>Doctor Appointments</h3>
           <div className="calendar-box">
           <div className="calendar-header">
             <h2>{selectedDate.toLocaleString('default', { month: 'long' })}</h2>
@@ -298,34 +299,39 @@ const weightGainMacros = calculateMacros(weightGainCalories);
                    <h3>Health Risk Indicators</h3>
                 </div>
                 <div className="recommendation-content">
-                    {bmi < 18 ? (
-                    <div className="icon-recommendation">
-                         <img src="/icons/underweight.png" />
-                         <p>Risk of Nutrient Deficiency</p>
-                    </div>
-                     ) : bmi >= 18 && bmi <= 24 ? (
-                <div className="icon-recommendation">
-                     <img src="/icons/normal-weight.png" alt="Normal Weight" />
-                     <p>Keep up the good work!</p>
-                     </div>
-                 ) : bmi > 24 && bmi <= 29 ? (
-                <div className="icon-recommendation">
-                   <img src="/icons/overweight.png" alt="Overweight" />
-                   <p>Watch out for Hypertension and Diabetes</p>
-                 </div>
-                ) : bmi >= 30 ? (
-                 <div className="icon-recommendation">
-                    <img src="/icons/obesity.png" alt="Obesity" />
-                    <p>High Risk of Heart Disease</p>
-                 </div>
-               ) : null}
+                {
+    bmi < 18 ? (
+        <div className="icon-recommendation">
+            <span role="img" aria-label="underweight">⚠️</span> {/* Underweight warning icon */}
+            <p>Risk of Nutrient Deficiency</p>
+        </div>
+    ) : bmi >= 18 && bmi <= 24 ? (
+        <div className="icon-recommendation">
+            <span role="img" aria-label="healthy">✅</span> {/* Healthy weight checkmark */}
+            <p>Keep up the good work!</p>
+        </div>
+    ) : bmi > 24 && bmi <= 29 ? (
+        <div className="icon-recommendation">
+            <span role="img" aria-label="overweight">⚠️</span> {/* Overweight caution */}
+            <p>Watch out for Hypertension and Diabetes</p>
+        </div>
+    ) : bmi >= 30 ? (
+        <div className="icon-recommendation">
+            <span role="img" aria-label="obesity">🚨</span> {/* Obesity warning */}
+            <p>High Risk of Heart Disease</p>
+        </div>
+    ) : null
+}
 
-              {userData.age >= 40 ? (
-              <div className="icon-recommendation">
-                  <img src="/icons/age-risk.png" alt="Age Risk" />
-                  <p>Higher Risk for Cardiovascular Diseases</p>
-              </div>
-              ) : null}
+{
+    userData.age >= 40 ? (
+        <div className="icon-recommendation">
+            <span role="img" aria-label="age risk">⚠️</span> {/* Age-related caution */}
+            <p>Higher Risk for Cardiovascular Diseases</p>
+        </div>
+    ) : null
+}
+
             </div>
           </div>
             </div>

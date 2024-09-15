@@ -205,7 +205,7 @@ const Login = ({ setShowLogin }) => {
                       />
                       <div className="file-input-container">
                         <label htmlFor="file-upload" className="custom-file-upload">
-                          Attach Certificate
+                          Upload profile-pic
                         </label>
                         <input
                           id="file-upload"
@@ -213,6 +213,7 @@ const Login = ({ setShowLogin }) => {
                           name="Image"
                           onChange={onChangeHandler}
                           style={{ display: "none" }}
+                          required
                         />
                         <span>{data.Image ? data.Image.name : "No file chosen"}</span>
                       </div>
@@ -302,7 +303,7 @@ const Login = ({ setShowLogin }) => {
   <>
     <a
       className="doc-signup-button"
-      onClick={handleRedirection} // Corrected this part
+      onClick={handleRedirection}
       style={{ marginTop: "-15px" }}
     >
       Sign in as a Doctor
