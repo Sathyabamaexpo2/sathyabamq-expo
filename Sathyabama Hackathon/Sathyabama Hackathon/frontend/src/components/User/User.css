@@ -17,7 +17,6 @@
   display: flex;
   justify-content: center;
   width:100%;
-  border-bottom: 1px solid black;
 }
 
 .user-left-div{
@@ -151,7 +150,7 @@
   border-radius: 15px;
   padding: 20px;
   margin-right:80px;
-  font-size: small;
+  font-size: x-small;
   margin-top: -130px;
   border: 1px solid #d1d9e6;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
@@ -300,9 +299,11 @@
   border-radius: 15px;
   margin-bottom: 20px;
   width: 350px; 
-  height: 580px;
+  height: 640px;
 }
-
+.user-center{
+  margin-left: 60px;
+}
 .calendar{
   display: flex;
   justify-content: center;
@@ -415,7 +416,6 @@
   width: 58%;
   height:80%;
   background-color: #fff;
-  margin-left: 6px;
   font-size: small;
   margin-top: -12px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -469,7 +469,24 @@
 .calendar-header-day{
   margin-top: -10px;
 }
+.calendar-header select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+.calendar-header select:hover {
+  background-color: #eaeaea;
+}
+
+.calendar-header select:focus {
+  outline: none;
+  border-color: #f994d7;
+}
 .appointments-button{
     padding:5px;
     padding-top: 20px;
