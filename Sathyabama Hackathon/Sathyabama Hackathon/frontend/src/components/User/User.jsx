@@ -151,7 +151,7 @@ const User = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('token'); // Get the JWT token
+        const token = localStorage.getItem('token'); 
   
         const response = await axios.get('http://localhost:5000/api/user/getdata', {
           headers: {
