@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import loginimage1 from "../../assets/loginimage1.jpeg";
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ setShowLogin }) => {
   const [currstate, setCurrState] = useState("Login");
+  const navigate = useNavigate();
   const [doc, setDoc] = useState(false);
   const [text, setText] = useState("");
   const [data, setData] = useState({
@@ -26,7 +27,7 @@ const Login = ({ setShowLogin }) => {
     Image: null,
   });
 
-  const navigate = useNavigate(); // Initialize navigate
+
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -95,6 +96,10 @@ const Login = ({ setShowLogin }) => {
       setText("Doctor");
     }
   }, [doc]);
+
+  const handleRedirection=()=>{
+     navigate('/doclogin');
+  }
 
   return (
     <>
@@ -294,25 +299,35 @@ const Login = ({ setShowLogin }) => {
               </p>
             </div>
             {currstate === "Login" ? (
-              <p>
-                Create a new account?
-                <span onClick={() => setCurrState("Sign-Up")}>Click here</span>
-              </p>
-            ) : (
-              <>
-                <a
-                  className="doc-signup-button"
-                  onClick={() => setDoc((prev) => !prev)}
-                  style={{ marginTop: "-15px" }}
-                >
-                  Sign in as a {text}
-                </a>
-                <p style={{ marginTop: "-10px" }}>
-                  Already have an account?
-                  <span onClick={() => setCurrState("Login")}>Login here</span>
-                </p>
-              </>
-            )}
+  <>
+    <a
+      className="doc-signup-button"
+      onClick={handleRedirection} // Corrected this part
+      style={{ marginTop: "-15px" }}
+    >
+      Sign in as a Doctor
+    </a>
+    <p>
+      Create a new account?
+      <span onClick={() => setCurrState("Sign-Up")}>Click here</span>
+    </p>
+  </>
+) : (
+  <>
+    <a
+      className="doc-signup-button"
+      onClick={() => setDoc((prev) => !prev)}
+      style={{ marginTop: "-15px" }}
+    >
+      Sign up as a {text}
+    </a>
+    <p style={{ marginTop: "-10px" }}>
+      Already have an account?
+      <span onClick={() => setCurrState("Login")}>Login here</span>
+    </p>
+  </>
+)}
+
           </form>
         </div>
       </div>
