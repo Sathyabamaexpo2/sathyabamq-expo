@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import './Details.css';
 import pat from '../assets/pat.png';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import back from '../assets/back.png';
 
 const Details = () => {
     const [togglePrescription, setPrescription] = useState(false);
+    const location=useLocation();
+    const {state}=location;
+    const {Name,Age,Id}=state||{};
+    console.log(Name)
     const Navigate=useNavigate();
     const HandleRedirection=()=>{
        Navigate('/doctor');
@@ -31,8 +35,9 @@ const Details = () => {
                     </div>
                     <div className="det-user">
                     <div className="det-column">
-                    <p>Name: Lijo</p>
-                    <p>Age: 20</p>
+                    <p>Name:{Name}</p>
+                    <p>Age: {Age}</p>
+                    <p>Id:{Id}</p>
                     <p>DOB: 1/1/2004</p>
                     <p>Sex: Male</p>
                     <p>Height: 165 cm</p>

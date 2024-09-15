@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const cors=require('cors');
+const path = require('path');
 
 dotenv.config(); 
 connectDB(); 
@@ -19,7 +20,8 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
-
+const imagesPath = path.join(__dirname, 'path_to_your_images_folder');
+app.use('/api/user/image', express.static(imagesPath));
 // Routes
 app.use('/api/user', authRoutes); // Base route for authentication
 

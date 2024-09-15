@@ -8,98 +8,157 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = ({ setShowLogin }) => {
   const [currstate, setCurrState] = useState("Login");
-  const navigate = useNavigate();
   const [doc, setDoc] = useState(false);
   const [text, setText] = useState("");
-  const [data, setData] = useState({
+  const navigate = useNavigate();
+
+  const [userData, setUserData] = useState({
     name: "",
     age: "",
-    Lic_No: "",
-    Hospital_Name: "",
-    Specialized: "",
     gender: "",
     bloodgroup: "",
     height: "",
     weight: "",
     email: "",
     password: "",
-    Confirm_password: "",
-    Image: null,
   });
 
-
+  const [doctorData, setDoctorData] = useState({
+    name: "",
+    age: "",
+    Lic_No: "",
+    Hospital_Name: "",
+    Specialized: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    image: null,
+  });
 
   const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData((data) => ({ ...data, [name]: value }));
+    const { name, value, type, files } = event.target;
+
+    if (currstate === "Sign-Up" && doc) {
+      if (type === "file") {
+        setDoctorData((prevData) => ({ ...prevData, [name]: files[0] }));
+      } else {
+        setDoctorData((prevData) => ({ ...prevData, [name]: value }));
+      }
+    } else {
+      setUserData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
 
   const onLogin = async (event) => {
     event.preventDefault();
     let newUrl = "http://localhost:5000/api/user";
-    if (currstate === "Login") {
-      newUrl += "/login";
-    } else {
-      newUrl += "/register";
-    }
-
+    let payload;
+  
     try {
-      const response = await axios.post(newUrl, data);
-
-      console.log("Response:", response);
-
-      if (response.data.success) {
-        toast.success(`${currstate} Successful!`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-
-        if (currstate === "Login") {
-          localStorage.setItem("token", response.data.token);
-          navigate("/userpage"); // Navigate to /userpage after successful login
+      if (currstate === "Login") {
+        newUrl += "/login";
+        if (!userData.email || !userData.password) {
+          toast.error("Email and password are required.", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+          return;
         }
-      } else {
-        toast.error(response.data.message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+        payload = {
+          email: userData.email,
+          password: userData.password,
+        };
+        const response = await axios.post(newUrl, payload, {
+          headers: { "Content-Type": "application/json" },
         });
+        if (response.status === 200) {
+          toast.success("Login Successful!", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+          localStorage.setItem("token", response.data.token);
+          navigate("/userpage");
+        } else {
+          toast.error(response.data.message || "Something went wrong.", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+        }
+      } else if (currstate === "Sign-Up") {
+        if (doc) {
+          newUrl += "/RegDo";
+          const requiredFields = ["name", "age", "Lic_No", "Hospital_Name", "Specialized", "email", "password", "confirmPassword", "image"];
+          payload = new FormData();
+          
+          for (const field of requiredFields) {
+            if (!doctorData[field] && field !== "image") {
+              toast.error(`${field.replace('_', ' ')} is required.`, {
+                position: "top-right",
+                autoClose: 3000,
+              });
+              return;
+            }
+            if (field === "image" && !doctorData.image) {
+              toast.error("Image is required.", {
+                position: "top-right",
+                autoClose: 3000,
+              });
+              return;
+            }
+            payload.append(field, doctorData[field]);
+          }
+        } else {
+          newUrl += "/register";
+          const requiredFields = ["name", "age", "gender", "bloodgroup", "height", "weight", "email", "password"];
+          payload = new FormData();
+          
+          for (const field of requiredFields) {
+            if (!userData[field]) {
+              toast.error(`${field.replace('_', ' ')} is required.`, {
+                position: "top-right",
+                autoClose: 3000,
+              });
+              return;
+            }
+            payload.append(field, userData[field]);
+          }
+        }
+  
+        // Send request with form-data content-type
+        const response = await axios.post(newUrl, payload, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+  
+        // Handle successful registration
+        if (response.status === 201) {
+          toast.success(`${currstate} Successful!`, {
+            position: "top-right",
+            autoClose: 3000,
+          });
+          // Redirect or other actions after successful sign-up
+        } else {
+          toast.error(response.data.message || "Something went wrong.", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+        }
       }
     } catch (error) {
-      console.error("Error during login:", error);
-      toast.error("Something went wrong. Please try again!", {
+      console.error("Error during submission:", error);
+      toast.error(`Error: ${error.response ? error.response.data.message : "Something went wrong. Please try again!"}`, {
         position: "top-right",
         autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
       });
     }
   };
-
+  
   useEffect(() => {
-    if (doc) {
-      setText("User");
-    } else {
-      setText("Doctor");
-    }
+    setText(doc ? "User" : "Doctor ");
   }, [doc]);
 
-  const handleRedirection=()=>{
-     navigate('/doclogin');
-  }
+  const handleRedirection = () => {
+    navigate('/doclogin');
+  };
 
   return (
     <>
@@ -122,7 +181,7 @@ const Login = ({ setShowLogin }) => {
                   <input
                     name="email"
                     onChange={onChangeHandler}
-                    value={data.email}
+                    value={userData.email}
                     type="email"
                     placeholder="Your email"
                     required
@@ -130,7 +189,7 @@ const Login = ({ setShowLogin }) => {
                   <input
                     name="password"
                     onChange={onChangeHandler}
-                    value={data.password}
+                    value={userData.password}
                     type="password"
                     placeholder="Password"
                     required
@@ -143,14 +202,15 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="name"
                         onChange={onChangeHandler}
-                        value={data.name}
+                        value={doctorData.name}
                         type="text"
                         placeholder="Your Name"
+                        required
                       />
                       <input
                         name="age"
                         onChange={onChangeHandler}
-                        value={data.age}
+                        value={doctorData.age}
                         type="number"
                         placeholder="Your age"
                         required
@@ -158,7 +218,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="Lic_No"
                         onChange={onChangeHandler}
-                        value={data.Lic_No}
+                        value={doctorData.Lic_No}
                         type="text"
                         placeholder="License number"
                         required
@@ -166,7 +226,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="Hospital_Name"
                         onChange={onChangeHandler}
-                        value={data.Hospital_Name}
+                        value={doctorData.Hospital_Name}
                         type="text"
                         placeholder="Hospital Name"
                         required
@@ -174,7 +234,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="Specialized"
                         onChange={onChangeHandler}
-                        value={data.Specialized}
+                        value={doctorData.Specialized}
                         type="text"
                         placeholder="Specialization"
                         required
@@ -182,7 +242,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="email"
                         onChange={onChangeHandler}
-                        value={data.email}
+                        value={doctorData.email}
                         type="email"
                         placeholder="Your email"
                         required
@@ -190,15 +250,15 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="password"
                         onChange={onChangeHandler}
-                        value={data.password}
+                        value={doctorData.password}
                         type="password"
                         placeholder="Password"
                         required
                       />
                       <input
-                        name="Confirm_password"
+                        name="confirmPassword"
                         onChange={onChangeHandler}
-                        value={data.Confirm_password}
+                        value={doctorData.confirmPassword}
                         type="password"
                         placeholder="Confirm Password"
                         required
@@ -210,11 +270,11 @@ const Login = ({ setShowLogin }) => {
                         <input
                           id="file-upload"
                           type="file"
-                          name="Image"
+                          name="image"
                           onChange={onChangeHandler}
                           style={{ display: "none" }}
                         />
-                        <span>{data.Image ? data.Image.name : "No file chosen"}</span>
+                        <span>{doctorData.image ? doctorData.image.name : "No file chosen"}</span>
                       </div>
                     </div>
                   ) : (
@@ -222,14 +282,15 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="name"
                         onChange={onChangeHandler}
-                        value={data.name}
+                        value={userData.name}
                         type="text"
                         placeholder="Your Name"
+                        required
                       />
                       <input
                         name="age"
                         onChange={onChangeHandler}
-                        value={data.age}
+                        value={userData.age}
                         type="number"
                         placeholder="Your age"
                         required
@@ -237,7 +298,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="gender"
                         onChange={onChangeHandler}
-                        value={data.gender}
+                        value={userData.gender}
                         type="text"
                         placeholder="Gender"
                         required
@@ -245,7 +306,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="bloodgroup"
                         onChange={onChangeHandler}
-                        value={data.bloodgroup}
+                        value={userData.bloodgroup}
                         type="text"
                         placeholder="Blood Group"
                         required
@@ -253,7 +314,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="height"
                         onChange={onChangeHandler}
-                        value={data.height}
+                        value={userData.height}
                         type="number"
                         placeholder="Height in cms"
                         required
@@ -261,7 +322,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="weight"
                         onChange={onChangeHandler}
-                        value={data.weight}
+                        value={userData.weight}
                         type="number"
                         placeholder="Weight"
                         required
@@ -269,7 +330,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="email"
                         onChange={onChangeHandler}
-                        value={data.email}
+                        value={userData.email}
                         type="email"
                         placeholder="Your email"
                         required
@@ -277,7 +338,7 @@ const Login = ({ setShowLogin }) => {
                       <input
                         name="password"
                         onChange={onChangeHandler}
-                        value={data.password}
+                        value={userData.password}
                         type="password"
                         placeholder="Password"
                         required
@@ -299,35 +360,34 @@ const Login = ({ setShowLogin }) => {
               </p>
             </div>
             {currstate === "Login" ? (
-  <>
-    <a
-      className="doc-signup-button"
-      onClick={handleRedirection} // Corrected this part
-      style={{ marginTop: "-15px" }}
-    >
-      Sign in as a Doctor
-    </a>
-    <p>
-      Create a new account?
-      <span onClick={() => setCurrState("Sign-Up")}>Click here</span>
-    </p>
-  </>
-) : (
-  <>
-    <a
-      className="doc-signup-button"
-      onClick={() => setDoc((prev) => !prev)}
-      style={{ marginTop: "-15px" }}
-    >
-      Sign up as a {text}
-    </a>
-    <p style={{ marginTop: "-10px" }}>
-      Already have an account?
-      <span onClick={() => setCurrState("Login")}>Login here</span>
-    </p>
-  </>
-)}
-
+              <>
+                <a
+                  className="doc-signup-button"
+                  onClick={handleRedirection}
+                  style={{ marginTop: "-15px" }}
+                >
+                  Sign in as a Doctor
+                </a>
+                <p>
+                  Create a new account?
+                  <span onClick={() => setCurrState("Sign-Up")}>Click here</span>
+                </p>
+              </>
+            ) : (
+              <>
+                <a
+                  className="doc-signup-button"
+                  onClick={() => setDoc((prev) => !prev)}
+                  style={{ marginTop: "-15px" }}
+                >
+                  Sign up as a {text}
+                </a>
+                <p style={{ marginTop: "-10px" }}>
+                  Already have an account?
+                  <span onClick={() => setCurrState("Login")}>Login here</span>
+                </p>
+              </>
+            )}
           </form>
         </div>
       </div>
