@@ -60,4 +60,4 @@ const LogDoc = async (req, res) => {
   }
 };
 
-module.exports = { AddDoc, LogDoc };
+module.exports = { AddDoc, LogDoc};

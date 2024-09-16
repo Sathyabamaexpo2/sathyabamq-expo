@@ -11,6 +11,8 @@ const Login = ({ setShowLogin }) => {
   const [doc, setDoc] = useState(false);
   const [text, setText] = useState("");
   const navigate = useNavigate();
+  const[otpPopup,setOtpPopup]=useState(false);
+  const [otp,setOtp]=useState("");
 
   const [userData, setUserData] = useState({
     name: "",
@@ -72,7 +74,7 @@ const Login = ({ setShowLogin }) => {
         const response = await axios.post(newUrl, payload, {
           headers: { "Content-Type": "application/json" },
         });
-        if (response.status === 200) {  // Handle 200 OK
+        if (response.status === 200) {
           toast.success("Login Successful!", {
             position: "top-right",
             autoClose: 3000,
@@ -113,7 +115,8 @@ const Login = ({ setShowLogin }) => {
             headers: { "Content-Type": "multipart/form-data" },
           });
           if (response.status === 200 || response.status === 201) { 
-            toast.success("Registration Successful!");
+            await sendVerificationtoAdmin(doctorData.Lic_No,doctorData.email,doctorData.name);
+            setOtpPopup(true);
           } else {
             toast.error(response.data.message || "Something went wrong.");
           }
@@ -155,7 +158,44 @@ const Login = ({ setShowLogin }) => {
       });
     }
   };
-    
+
+  const sendVerificationtoAdmin=async(LicenseNumber,email,name)=>{
+    try{
+      const response=await axios.post("http://localhost:5000/api/user/superadmin/verify",{
+        Lic_No:LicenseNumber,
+        email:email,
+        name:name,
+      })
+      if(response.status===200){
+        toast.success("Verification email send to Super Admin");
+      }else{
+        toast.error(response.data.message || "Failed to send verification email");
+      }
+    }catch(error){
+      console.log("Error",error);
+      toast.error("Verification Failed");
+    }
+  }
+
+  const OtpVerification = async () => {
+    try {
+      setOtpPopup(true);
+      const response = await axios.post("http://localhost:5000/api/user/verifyOtp", {
+        otp,
+        email: doctorData.email,
+      });
+      if(response.status === 200) {
+        toast.success("Registration Successful!");
+        setOtpPopup(false);
+      } else {
+        toast.error("Failed to verify OTP, try again");
+      }
+    } catch (error) {
+      console.error("Error during OTP verification:", error);
+      toast.error("Something went wrong, try again.");
+    }
+  };
+  
   
   useEffect(() => {
     setText(doc ? "User" : "Doctor ");
@@ -396,6 +436,24 @@ const Login = ({ setShowLogin }) => {
               </>
             )}
           </form>
+
+          {otpPopup && (
+        <>
+          <div className="blur-background" onClick={() => setOtpPopup(false)}></div>
+          <div className="otp-popup">
+            <span className="close-icon" onClick={() => setOtpPopup(false)}>&times;</span>
+            <h3>Enter OTP</h3>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+            />
+            <button onClick={OtpVerification}>Verify OTP</button>
+          </div>
+        </>
+      )}
+      
         </div>
       </div>
     </>
