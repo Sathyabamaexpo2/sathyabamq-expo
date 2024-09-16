@@ -34,6 +34,7 @@
 .user-center{
   width:60%; 
   height: 100vh;
+  margin-top: 30px;
   display: flex;
   position: absolute;
   top:0;
@@ -93,7 +94,7 @@
   flex-wrap: wrap;
   width:100%; 
   height:40%;
-  margin-top:-10px;
+  margin-top:10px;
 }
 
 .patient-profile {
@@ -147,13 +148,14 @@
 .calories-card {
   display: flex;
   width: 70%;
-  height:30%;
+  height:35%;
   background-color: #fff;
   border-radius: 15px;
   padding: 20px;
   margin-right:80px;
   font-size:small;
   margin-top: -130px;
+  margin-bottom: 50px;
   border: 1px solid #d1d9e6;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -379,9 +381,9 @@
   margin-top: 10px;
   width: 90%;
   margin-left: 3px;
-  height: 50px; /* Reduce height */
+  height: 70px; /* Reduce height */
   border-radius: 10px;
-  color:#213547; 
+  color:#ffffff; 
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 

@@ -5,13 +5,16 @@ import axios from 'axios';
 import theme from "../../assets/theme.png";
 import chat from "../../assets/chat.png";
 import power from "../../assets/power-button.png";
+import { useLocation } from 'react-router-dom';
 
 const User = () => {
 
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const location=useLocation();
+  const{state}=location;
+  const{image}=state ||{};
   const appointments = [
     { 
       type: "Dentist",
@@ -221,7 +224,10 @@ const { weightLossCalories, weightGainCalories } = calculateCalories(bmr);
 const weightLossMacros = calculateMacros(weightLossCalories);
 const weightGainMacros = calculateMacros(weightGainCalories);
 
- 
+const normalizePath = (filePath) => {
+  return filePath ? filePath.replace(/\\/g, '/') : '';
+};
+const imageUrl = image ? `http://localhost:5000/api/user/${normalizePath(image)}` : '';
   const getHealthRisk = (bmi) => {
     if (bmi < 18) {
       return { risk: 'Underweight', color: '#FFD700' }; 
@@ -257,7 +263,7 @@ const weightGainMacros = calculateMacros(weightGainCalories);
           <div className="user-profile">
             <div className="user-card">
               <div className="user-img-container">
-                <img src={profile} alt="Profile"/>
+                <img src={imageUrl} alt="Profile"/>
               </div>
               <h2 className="user-card-username">{userData.name}</h2>
               <div className="patient-details">
