@@ -8,7 +8,7 @@ const Details = () => {
     const [togglePrescription, setPrescription] = useState(false);
     const location=useLocation();
     const {state}=location;
-    const {Name,Age,Id}=state||{};
+    const {Name,Age,ID}=state||{};
     console.log(Name)
     const Navigate=useNavigate();
     const HandleRedirection=()=>{
@@ -37,7 +37,7 @@ const Details = () => {
                     <div className="det-column">
                     <p>Name:{Name}</p>
                     <p>Age: {Age}</p>
-                    <p>Id:{Id}</p>
+                    <p>Id:{ID}</p>
                     <p>DOB: 1/1/2004</p>
                     <p>Sex: Male</p>
                     <p>Height: 165 cm</p>

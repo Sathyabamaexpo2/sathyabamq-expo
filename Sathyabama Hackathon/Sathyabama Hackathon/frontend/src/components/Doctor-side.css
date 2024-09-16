@@ -1,363 +1,369 @@
 .doc-nav-Lcont{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap:40px;
-  width: 100%;
-}
-.doc-search-div{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap:20px;
-  position: relative;
-  padding-bottom: 20px;
-  width: 90%;
-}
-.main-top{
-  display: flex;
-  width: 100%;
-  height: 250px;
-  gap: 80px;
-  flex-direction: row;
-}
-.main-bottom{
-  display: flex;
-  background-color: #342828;
-  width: 100%;
-  height: 100%;
-  flex-direction: row;
-}
-.whole-cont {
-  display: flex;
-  flex-direction: column; 
-  background: rgb(232, 225, 255);
-  width: 100vw;
-  height: 100vh; 
-  overflow: hidden; 
-}
-.input-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-.doc-title{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.typed-anim-cont{
-  display: flex;
-  flex-direction: row;
-}
-.doc-greet-text{
-  display: flex;
-  position: static;
-  flex-direction: column;
-  top:20px;
-  justify-content: center;
-  
-}
-.logout-btn-div{
-  display: flex;
-  position: absolute;
-  padding-left: 20px;
-  padding-bottom: 20px;
-  bottom: 0;
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:40px;
+    width: 100%;
+  }
+  .doc-search-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+    position: relative;
+    padding-bottom: 20px;
+    width: 90%;
+  }
+  .main-top{
+    display: flex;
+    width: 100%;
+    height: 250px;
+    gap: 80px;
+    flex-direction: row;
+  }
+  .main-bottom{
+    display: flex;
+    background-color: #342828;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+  }
+  .whole-cont {
+    display: flex;
+    flex-direction: column; 
+    background: rgb(232, 225, 255);
+    width: 100vw;
+    height: 100vh; 
+    overflow: hidden; 
+  }
+  .input-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .doc-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .typed-anim-cont{
+    display: flex;
+    flex-direction: row;
+  }
+  .doc-greet-text{
+    display: flex;
+    position: static;
+    flex-direction: column;
+    top:20px;
+    justify-content: center;
+    
+  }
+  .logout-btn-div{
+    display: flex;
+    position: absolute;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    bottom: 0;
+  }
   .prof {
     display: flex;
     justify-content: center;
-    position: relative;
-    top:29px;
-    left: 50px;
     align-items: center;
+    position: relative;
+    top: 29px;
+    left: 50px;
     border: 2px solid #e0e0e0;
     width: 120px;
     height: 120px;
     border-radius: 50%;
     background-color: #f9f9f9;
-    object-fit: fill;
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-}
-.btn-img{
-  display: flex;
-  gap: 20px;
-}
-#prof-2{
-    width: 50px;
-    height: 50px;
-}
-.other-btn-div{
-  display: flex;
-  flex-direction: column;
-  gap:50px;
-}
-.other-btn{
-  background: none;
-  border: none  ;
-  border-radius: none;
-  outline: none;
-  color: rgb(0, 0, 0);
-  /* border-bottom: 1px solid black; */
-
-}
-#lout {
-  background: none;
-  color: #342828;
-  width: 80%;
+    overflow: hidden; 
 }
 
-#lout:hover {
-  color: rgb(254, 120, 59);
-  border: none;
-}
-
-.doc-pat-count{
-  display: flex;
-  position: relative;
-  top:10px;
-  background: #ffffff;
-  flex-direction: column;
-  justify-content: center;
-  padding: 10px 10px 10px 10px;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  height: 180px;
-  border-radius: 15px;
-  color: lightgray;
-}
-.other-btn:focus {
-  outline: none;  
-  border: none;   
-  box-shadow: none; 
-}
-.other-btn:hover{
-  color: rgb(238, 95, 23);
-}
-aside{
-    display: flex;
-    gap:40px;
-    width: 20%;
-    height: 560px;
-}
-
-main{
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  gap:100px;
-  height: 100vh;
-}
-.doc-greet{
-  display: flex;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-  text-align: center;
-  gap:140px;
-  border-radius: 20px;
-  color: white;
-  background-color:rgb(160, 131, 255);
-  left: 50px;
-  top:10px;
-  width: 70%;
-  height: 100%;
-}
-  .toggle-prof-div,.appion-div{
-    position: fixed; 
-    top: 0;
-    left: 0;
+.prof img {
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.5); 
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(2px); 
-    z-index: 1000; }
-    .appion-div:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-    .det-doc{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap:40px;   
-        border-radius: 20px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);  
-        width: 30%;
-        height: 80%;   
-    }
-  .main-content-DS{
+    object-fit: cover; 
+}
+  .btn-img{
     display: flex;
-    margin-left: 40px;
-    position: absolute;
-    top:120px;
-    width: 100%;
-    height: 80vh;
+    gap: 20px;
   }
-#doc-prof-btn{
+  #prof-2{
+      width: 50px;
+      height: 50px;
+  }
+  .other-btn-div{
+    display: flex;
+    flex-direction: column;
+    gap:50px;
+  }
+  .other-btn{
     background: none;
-    border: none;
-
-}
-  .welcome-div{
-    display: flex;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding-top:50px;
-    border-radius: 15px;
-    width: 100%;
-    height: 100%;
-  }
-  .main-bottom {
-    display: flex;
-    flex-direction: row;
-    margin-left: 40px;
-    top:250px;
-    background-color: #ffffff; 
-  }
-  .list-container{
-    display: flex;
-    justify-content: center;
-    position: relative;
-    bottom:60px;
-    justify-content: center;
-    flex-direction: row;
-    gap:40px;
-    width: 90%;
-  }
-  #view,.appoin-btn{
-    color: white;
-    border-radius: 30px;
-    background-color:rgb(160, 131, 255);
-  }
-  #view:focus{
+    border: none  ;
+    border-radius: none;
     outline: none;
-  }
-  .list-div-Card {
-    display: flex;
-    flex-direction: column;
-    color: rgb(166, 166, 166);
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    width: 40%;
-    height: 280px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px); /* Blur effect */
-    -webkit-backdrop-filter: blur(10px); /* Safari support */
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Soft white border */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-  }
+    color: rgb(0, 0, 0);
+    /* border-bottom: 1px solid black; */
   
-  .list-div-Card:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
-    opacity: 0.4;
-    pointer-events: none; 
-    z-index: 1;
   }
-  
-  .list-div-Card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  }
-  
-  .list-div-Card * {
-    position: relative;
-    z-index: 2; 
-  }
-  .appion-div{
-    flex-direction: row;
-    gap: 30px;
-  }
-  .appion-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    min-height: 100vh;
-    justify-content: center;
-    align-items: center;
-  }
-  .appion-div:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  }
-  
-  .prof3 img {
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    margin-right: 15px;
-  }
-  
-  .appion-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .appion-content p {
-    font-size: 0.9rem;
-    color: #333;
-    margin: 5px 0;
-  }
-  
-  .button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  
-  .appion-div button.appoin-btn {
-    background-color: #4a3df3;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .appion-div button.appoin-btn:hover {
-    background-color: #4a3df3;
-  }
-  .appion-div button.decline {
-    background-color: #ff4d44;
-  }
-  .appion-div button.decline:hover {
-    background-color: #D32F2F;
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+  #lout {
     background: none;
-    border: none;
-    color: #333;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  .close-btn:hover {
-    color: #FF3B30;
+    color: #342828;
+    width: 80%;
   }
   
+  #lout:hover {
+    color: rgb(254, 120, 59);
+    border: none;
+  }
+  
+  .doc-pat-count{
+    display: flex;
+    position: relative;
+    top:10px;
+    background: #ffffff;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 10px 10px 10px;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 180px;
+    border-radius: 15px;
+    color: lightgray;
+  }
+  .other-btn:focus {
+    outline: none;  
+    border: none;   
+    box-shadow: none; 
+  }
+  .other-btn:hover{
+    color: rgb(238, 95, 23);
+  }
+  aside{
+      display: flex;
+      gap:40px;
+      width: 20%;
+      height: 560px;
+  }
+  
+  main{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap:100px;
+    height: 100vh;
+  }
+  .doc-greet{
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    text-align: center;
+    gap:140px;
+    border-radius: 20px;
+    color: white;
+    background-color:rgb(160, 131, 255);
+    left: 50px;
+    top:10px;
+    width: 70%;
+    height: 100%;
+  }
+    .toggle-prof-div,.appion-div{
+      position: fixed; 
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.5); 
+      display: flex; 
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(2px); 
+      z-index: 1000; }
+      .appion-div:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+      .det-doc{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap:40px;   
+          border-radius: 20px;
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);  
+          width: 30%;
+          height: 80%;   
+      }
+    .main-content-DS{
+      display: flex;
+      margin-left: 40px;
+      position: absolute;
+      top:120px;
+      width: 100%;
+      height: 80vh;
+    }
+  #doc-prof-btn{
+      background: none;
+      border: none;
+  
+  }
+    .welcome-div{
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding-top:50px;
+      border-radius: 15px;
+      width: 100%;
+      height: 100%;
+    }
+    .main-bottom {
+      display: flex;
+      flex-direction: row;
+      margin-left: 40px;
+      top:250px;
+      background-color: #ffffff; 
+    }
+    .list-container{
+      display: flex;
+      justify-content: center;
+      position: relative;
+      bottom:60px;
+      justify-content: center;
+      flex-direction: row;
+      gap:40px;
+      width: 90%;
+    }
+    #view,.appoin-btn{
+      color: white;
+      border-radius: 30px;
+      background-color:rgb(160, 131, 255);
+    }
+    #view:focus{
+      outline: none;
+    }
+    .list-div-Card {
+      display: flex;
+      flex-direction: column;
+      color: rgb(166, 166, 166);
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 40%;
+      height: 280px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px); /* Blur effect */
+      -webkit-backdrop-filter: blur(10px); /* Safari support */
+      border: 1px solid rgba(255, 255, 255, 0.3); /* Soft white border */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .list-div-Card:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
+      opacity: 0.4;
+      pointer-events: none; 
+      z-index: 1;
+    }
+    
+    .list-div-Card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .list-div-Card * {
+      position: relative;
+      z-index: 2; 
+    }
+    .appion-div{
+      flex-direction: row;
+      gap: 30px;
+    }
+    .appion-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+    .appion-div:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .prof3 img {
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      margin-right: 15px;
+    }
+    
+    .appion-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .appion-content p {
+      font-size: 0.9rem;
+      color: #333;
+      margin: 5px 0;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .appion-div button.appoin-btn {
+      background-color: #4a3df3;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .appion-div button.appoin-btn:hover {
+      background-color: #4a3df3;
+    }
+    .appion-div button.decline {
+      background-color: #ff4d44;
+    }
+    .appion-div button.decline:hover {
+      background-color: #D32F2F;
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #333;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .close-btn:hover {
+      color: #FF3B30;
+    }
+    

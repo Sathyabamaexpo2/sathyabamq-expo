@@ -20,10 +20,13 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
-const imagesPath = path.join(__dirname, 'path_to_your_images_folder');
-app.use('/api/user/image', express.static(imagesPath));
-// Routes
-app.use('/api/user', authRoutes); // Base route for authentication
+app.use('/api/user/uploads', express.static(path.join(__dirname, 'uploads')));
+app.get('/api/user/uploads/:filename', (req, res) => {
+  const filePath = path.join(__dirname, 'uploads', req.params.filename);
+  res.sendFile(normalizePath(filePath));
+});
+
+app.use('/api/user', authRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
