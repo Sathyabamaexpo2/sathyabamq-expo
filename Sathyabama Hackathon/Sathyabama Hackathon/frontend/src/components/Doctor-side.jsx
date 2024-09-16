@@ -13,15 +13,16 @@ import profile from '../assets/profile.png';
 
 const Doctorside = () => {
   const appointments = [
-    { Name: "Mugeish", Time: "10:00 AM" },
-    { Name: "Harish", Time: "10:00 AM" },
-    { Name: "Navi", Time: "5:00 PM" },
-    { Name: "Lijo", Time: "12:00 PM" },
-    { Name: "Harrsha", Time: "9:00 AM" }
+    { Name: "Mugeish",Age:20,ID:"12A",Time: "10:00 AM" },
+    { Name: "Harish",Age:21,ID:"12B", Time: "10:00 AM" },
+    { Name: "Navi",Age:22,ID:"12C", Time: "5:00 PM" },
+    { Name: "Lijo",Age:23,ID:"12D", Time: "12:00 PM" },
+    { Name: "Harrsha",Age:24,ID:"12E",Time: "9:00 AM" }
   ];
 
   const { state } = useLocation();
   const { name = 'No Name', image = '', Hospital_Name = 'No Hospital', Specialized = 'No Specialization', Lic_No = 'No License' } = state || {};
+  console.log('State:', state);
   const navigate = useNavigate();
   const [toggleProfile, setToggleProfile] = useState(false);
   const [toggleAppointment, setToggleAppointment] = useState(false);
@@ -29,9 +30,10 @@ const Doctorside = () => {
   const handleLogout = () => {
     navigate('/');
   };
-
-  // Construct the image URL correctly
-  const imageUrl = image ? `http://localhost:5000/api/user/${image}` : '';
+  const normalizePath = (filePath) => {
+    return filePath ? filePath.replace(/\\/g, '/') : '';
+  };
+  const imageUrl = image ? `http://localhost:5000/api/user/${normalizePath(image)}` : '';
   console.log('Image URL:', imageUrl);
 
   const handleProfileToggle = () => {
@@ -41,9 +43,8 @@ const Doctorside = () => {
   const handleAppointmentToggle = () => {
     setToggleAppointment(prev => !prev);
   };
-
   const handleRedirect = (item) => {
-    navigate('/details', { state: { Name: item.Name, Age: item.Age, Id: item.Id } });
+    navigate('/details', { state: { Name: item.Name, Age: item.Age, ID: item.ID } });
   };
 
   useEffect(() => {
@@ -71,7 +72,7 @@ const Doctorside = () => {
             </div>
           </nav>
           <button id="doc-prof-btn" onClick={handleProfileToggle}>
-            <img src={profile} alt="Profile" width={50} height={50} />
+            <img src={imageUrl} alt="Profile" width={50} height={50} />
           </button>
         </header>
       </div>
@@ -127,7 +128,7 @@ const Doctorside = () => {
                   </div>
                   <label>Name: {item.Name}</label>
                   <label>Age: {item.Age}</label>
-                  <label>Patient's Id: {item.Id}</label>
+                  <label>Patient's Id: {item.ID}</label>
                   <button className="button-31" id="view" onClick={() => handleRedirect(item)}>View in Detail</button>
                 </div>
               ))}
@@ -138,7 +139,7 @@ const Doctorside = () => {
           <div className="toggle-prof-div">
             <div className="det-doc">
               <div className="prof-det">
-                <img src={profile} alt="Profile" width={125} />
+                <img src={imageUrl} alt="Profile" width={125} />
               </div>
               <label>Name: Dr. {name}</label>
               <label>Hospital Name: {Hospital_Name}</label>
