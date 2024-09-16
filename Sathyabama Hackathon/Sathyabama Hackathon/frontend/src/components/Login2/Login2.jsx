@@ -1,45 +1,12 @@
-<<<<<<< HEAD
-import React from 'react'
-import loginimage1 from "../../assets/loginimage1.jpeg";
-import { useState } from 'react';
-import {useNavigate } from 'react-router-dom';
-
-const Login2 = () => {
-    
-    const navigate=useNavigate();
-=======
   import React, { useState } from 'react';
   import loginimage1 from "../../assets/loginimage1.jpeg";
   import { useNavigate } from 'react-router-dom';
   import axios from 'axios';
   import { ToastContainer, toast } from "react-toastify";
   import "react-toastify/dist/ReactToastify.css";
->>>>>>> 2c7578c984c748291b8a18a3f61e7e362bb944aa
 
   const Login2 = () => {
     const [data, setData] = useState({
-<<<<<<< HEAD
-        name: "",
-        age: "",
-        Lic_No: "",
-        Hospital_Name: "",
-        Specialized: "",
-        email: "",
-        password: "",
-        Confirm_password: "",
-        Image: null,
-      });
-
-      const handleRedirection=()=>{
-        navigate('/');
-     }
-   
-      const onChangeHandler = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setData((data) => ({ ...data, [name]: value }));
-      };
-=======
       email: "",
       password: ""
     });
@@ -50,7 +17,6 @@ const Login2 = () => {
       const { name, value } = event.target;
       setData((prevData) => ({ ...prevData, [name]: value }));
     };
->>>>>>> 2c7578c984c748291b8a18a3f61e7e362bb944aa
 
     const handleLogin = async (event) => {
       event.preventDefault();
@@ -126,20 +92,11 @@ const Login2 = () => {
               </p>
             </div>
             <a
-<<<<<<< HEAD
-      className="doc-signup-button"
-      onClick={handleRedirection} 
-    >
-      Sign in as a User
-    </a>
-    
-=======
               className="doc-signup-button"
               onClick={handleRedirection} 
             >
               Sign in as a User
             </a>
->>>>>>> 2c7578c984c748291b8a18a3f61e7e362bb944aa
           </form>
         </div>
         <ToastContainer />

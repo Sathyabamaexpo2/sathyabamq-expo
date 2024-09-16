@@ -51,8 +51,9 @@ const Login = ({ setShowLogin }) => {
 
   const onLogin = async (event) => {
     event.preventDefault();
-    let newUrl = "http://localhost:5000/api/user";
+    let newUrl ="http://localhost:5000/api/user";
     let payload;
+  
   
     try {
       if (currstate === "Login") {
@@ -71,7 +72,7 @@ const Login = ({ setShowLogin }) => {
         const response = await axios.post(newUrl, payload, {
           headers: { "Content-Type": "application/json" },
         });
-        if (response.status === 200) {
+        if (response.status === 200) {  // Handle 200 OK
           toast.success("Login Successful!", {
             position: "top-right",
             autoClose: 3000,
@@ -107,40 +108,43 @@ const Login = ({ setShowLogin }) => {
             }
             payload.append(field, doctorData[field]);
           }
+          
+          const response = await axios.post(newUrl, payload, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          if (response.status === 200 || response.status === 201) { 
+            toast.success("Registration Successful!");
+          } else {
+            toast.error(response.data.message || "Something went wrong.");
+          }
         } else {
           newUrl += "/register";
-          const requiredFields = ["name", "age", "gender", "bloodgroup", "height", "weight", "email", "password"];
-          payload = new FormData();
           
+          const requiredFields = ["name", "age", "gender", "bloodgroup", "height", "weight", "email", "password"];
+          payload = {};
+        
           for (const field of requiredFields) {
-            if (!userData[field]) {
+            if (userData[field] === undefined || userData[field] === '') {
               toast.error(`${field.replace('_', ' ')} is required.`, {
                 position: "top-right",
                 autoClose: 3000,
               });
               return;
             }
-            payload.append(field, userData[field]);
+            payload[field] = userData[field];
           }
-        }
-  
-        // Send request with form-data content-type
-        const response = await axios.post(newUrl, payload, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-  
-        // Handle successful registration
-        if (response.status === 201) {
-          toast.success(`${currstate} Successful!`, {
-            position: "top-right",
-            autoClose: 3000,
+        
+          console.log("Payload being sent:", payload);
+        
+          const response = await axios.post(newUrl, payload, {
+            headers: { "Content-Type": "application/json" },
           });
-          // Redirect or other actions after successful sign-up
-        } else {
-          toast.error(response.data.message || "Something went wrong.", {
-            position: "top-right",
-            autoClose: 3000,
-          });
+
+          if (response.status === 200 || response.status === 201) {
+            toast.success('User registered successfully!');
+          } else {
+            toast.error(response.data.message || 'Something went wrong.');
+          }
         }
       }
     } catch (error) {
@@ -151,6 +155,7 @@ const Login = ({ setShowLogin }) => {
       });
     }
   };
+    
   
   useEffect(() => {
     setText(doc ? "User" : "Doctor ");
@@ -159,6 +164,7 @@ const Login = ({ setShowLogin }) => {
   const handleRedirection = () => {
     navigate('/doclogin');
   };
+
 
   return (
     <>

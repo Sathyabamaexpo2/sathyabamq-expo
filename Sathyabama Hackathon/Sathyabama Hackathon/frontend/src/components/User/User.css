@@ -55,6 +55,7 @@
   position: absolute;
   top:15;
   right:0;
+  margin-right: 10px;
 }
 
 .user-profile {
