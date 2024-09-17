@@ -5,12 +5,15 @@ import axios from 'axios';
 import theme from "../../assets/theme.png";
 import chat from "../../assets/chat.png";
 import power from "../../assets/power-button.png";
+import { useNavigate } from 'react-router-dom';
 
 const User = () => {
 
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate=useNavigate();
 
   const appointments = [
     { 
@@ -235,8 +238,9 @@ const weightGainMacros = calculateMacros(weightGainCalories);
   const totalWeightLossMacros = weightLossMacros.protein + weightLossMacros.carbs + weightLossMacros.fats;
   const totalWeightGainMacros = weightGainMacros.protein + weightGainMacros.carbs + weightGainMacros.fats;
   
-
-  
+  const handleLogout = () => {
+    navigate('/');
+  };
 
   return (
     <div className="user-main-container">
@@ -249,7 +253,7 @@ const weightGainMacros = calculateMacros(weightGainCalories);
            <div className="btn-img"><img src={theme} alt="" width={40} height={40}/><button className='other-btn'>Theme</button></div>
            <div className="btn-img"><img src={chat} alt="" width={40} height={40}/><button className='other-btn'>Chat</button></div>
         </div>
-        <div className="logout-btn-div" style={{marginLeft:"-30px"}}><img src={power} alt="" width={40} height={40}/> <button className='button-31' id='lout'>Logout</button></div>
+        <div className="logout-btn-div" style={{marginLeft:"-30px"}}><img src={power} alt="" width={40} height={40}/> <button className='button-31' id='lout' onClick={handleLogout}>Logout</button></div>
       </div>
 
       <div className="user-right-container">

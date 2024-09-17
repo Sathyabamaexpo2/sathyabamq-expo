@@ -72,7 +72,7 @@ const Doctorside = () => {
             </div>
           </nav>
           <button id="doc-prof-btn" onClick={handleProfileToggle}>
-            <img src={imageUrl} alt="Profile" width={50} height={50} />
+            <img src={imageUrl} alt="Profile" width={60} height={60} className='profile-img'/>
           </button>
         </header>
       </div>
