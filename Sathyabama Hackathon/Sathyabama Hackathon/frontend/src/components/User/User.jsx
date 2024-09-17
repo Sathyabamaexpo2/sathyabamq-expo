@@ -6,9 +6,7 @@ import theme from "../../assets/theme.png";
 import chat from "../../assets/chat.png";
 import power from "../../assets/power-button.png";
 import { useLocation } from 'react-router-dom';
-
 const User = () => {
-
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -34,52 +32,36 @@ const User = () => {
       time: "04:00 PM",
       color: "rgb(249, 204, 92)",
     },
-
   ];
-
   appointments.sort((a, b) => {
     const timeA = new Date(`1970/01/01 ${a.time}`);
     const timeB = new Date(`1970/01/01 ${b.time}`);
     return timeA - timeB;
   });
-  
-
   const CalendarAppointments = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
     const [daysInMonth, setDaysInMonth] = useState([]);
-
-    // Update days in month based on selected month
     useEffect(() => {
       const getDaysInMonth = (month, year) => {
         return new Date(year, month + 1, 0).getDate();
       };
-
       const year = selectedDate.getFullYear();
       const days = getDaysInMonth(currentMonth, year);
       setDaysInMonth(Array.from({ length: days }, (_, i) => i + 1));
     }, [currentMonth, selectedDate]);
-
-    // Handle month change
     const handleMonthChange = (event) => {
       const monthIndex = parseInt(event.target.value, 10);
       setCurrentMonth(monthIndex);
       setSelectedDate(new Date(selectedDate.getFullYear(), monthIndex, selectedDate.getDate()));
     };
-
-    // Get weekdays for calendar
     const weekdays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-
-    // Render calendar days with weekends highlighted
     const renderCalendarDays = () => {
       const startDay = new Date(selectedDate.getFullYear(), currentMonth, 1).getDay();
       const calendarDays = [];
-
-      // Fill empty slots before the first days
       for (let i = 0; i < (startDay + 6) % 7; i++) {
         calendarDays.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
       }
-
       daysInMonth.forEach((day) => {
         const isWeekend = (startDay + day - 1) % 7 === 5 || (startDay + day - 1) % 7 === 6;
         calendarDays.push(
@@ -92,10 +74,8 @@ const User = () => {
           </div>
         );
       });
-
       return calendarDays;
     };
-
     return (
       <div className='appointments-container'>
         <div className="calendar">
@@ -112,8 +92,6 @@ const User = () => {
               ))}
             </select>
           </div>
-
-          {/* Weekdays */}
           <div className="calendar-grid calendar-weekdays">
             {weekdays.map((day, index) => (
               <div key={index} className="calendar-day calendar-header-day">
@@ -121,13 +99,10 @@ const User = () => {
               </div>
             ))}
           </div>
-
-          {/* Days of the Month */}
           <div className="calendar-grid calendar-days">{renderCalendarDays()}</div>
         </div>
         </div> 
         </div>
-        {/* Appointments Section */}
         <div className="appointments-list">
                {appointments.map((appointment, index) => (
         <div
@@ -147,10 +122,8 @@ const User = () => {
     </div>
         <button className='appointments-button'>View More Appointments</button>
       </div>
-      
     );
   };  
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -161,7 +134,6 @@ const User = () => {
             'Authorization': `Bearer ${token}`,
           },
         });
-
         setUserData(response.data.Msg);
       } 
       catch (err) {
@@ -172,25 +144,19 @@ const User = () => {
         setLoading(false);
       }
     };
-  
     fetchUserData();
   }, []);
-  
   if (loading) {
     return <div>Loading...</div>;
   }
-  
   if (error) {
     return <div>{error}</div>;
   }
-
-
   const calculateBMI = (weight, height) => {
     const heightInMeters = height / 100;
     const bmi = weight / (heightInMeters * heightInMeters);
     return bmi.toFixed(2); 
   };
-
   const calculateBMR = (weight, height, age, gender) => {
     if (gender === 'male') {
       return 10 * weight + 6.25 * height - 5 * age + 5;
@@ -198,32 +164,25 @@ const User = () => {
       return 10 * weight + 6.25 * height - 5 * age - 161;
     }
   };
-
   const calculateMacros = (calories) => {
     const carbCalories = calories * 0.50;
     const proteinCalories = calories * 0.30;
     const fatCalories = calories * 0.20; 
-  
     const carbs = Math.round(carbCalories / 4);
     const protein = Math.round(proteinCalories / 4);
     const fats = Math.round(fatCalories / 9);
-  
     return { carbs, protein, fats };
   };
-  
-
   const calculateCalories = (bmr) => {
     const weightLossCalories = bmr - 500;
     const weightGainCalories = bmr + 500; 
     return { weightLossCalories, weightGainCalories };
   };
-
 const bmi = userData ? calculateBMI(userData.weight, userData.height) : 'N/A';
 const bmr = userData ? calculateBMR(userData.weight, userData.height, userData.age, userData.gender) : 0;
 const { weightLossCalories, weightGainCalories } = calculateCalories(bmr);
 const weightLossMacros = calculateMacros(weightLossCalories);
 const weightGainMacros = calculateMacros(weightGainCalories);
-
 const normalizePath = (filePath) => {
   return filePath ? filePath.replace(/\\/g, '/') : '';
 };
@@ -237,13 +196,8 @@ const imageUrl = image ? `http://localhost:5000/api/user/${normalizePath(image)}
       return { risk: 'At Risk of Obesity', color: '#FF6347' };
     }
   };
-
   const totalWeightLossMacros = weightLossMacros.protein + weightLossMacros.carbs + weightLossMacros.fats;
   const totalWeightGainMacros = weightGainMacros.protein + weightGainMacros.carbs + weightGainMacros.fats;
-  
-
-  
-
   return (
     <div className="user-main-container">
       <div className="user-left">
