@@ -21,7 +21,7 @@
     const handleLogin = async (event) => {
       event.preventDefault();
       try {
-        const res = await axios.post('http://localhost:5000/api/user/loginDoc', {
+        const res = await axios.post('http://localhost:5000/api/user/loginDoc',{
           email: data.email,
           password: data.password
         });

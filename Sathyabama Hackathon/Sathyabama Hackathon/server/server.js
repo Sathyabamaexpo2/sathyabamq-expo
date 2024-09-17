@@ -4,6 +4,8 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const cors=require('cors');
 const path = require('path');
+const appointmentRoutes = require('./routes/appointmentRoutes');
+
 
 dotenv.config(); 
 connectDB(); 
@@ -27,6 +29,8 @@ app.get('/api/user/uploads/:filename', (req, res) => {
 });
 
 app.use('/api/user', authRoutes);
+app.use('/api/user', appointmentRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
