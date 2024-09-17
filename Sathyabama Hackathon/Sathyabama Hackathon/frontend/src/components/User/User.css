@@ -34,6 +34,7 @@
 .user-center{
   width:60%; 
   height: 100vh;
+  margin-top: 30px;
   display: flex;
   position: absolute;
   top:0;
@@ -93,7 +94,7 @@
   flex-wrap: wrap;
   width:100%; 
   height:40%;
-  margin-top:-10px;
+  margin-top:10px;
 }
 
 .patient-profile {
@@ -147,13 +148,14 @@
 .calories-card {
   display: flex;
   width: 70%;
-  height:30%;
+  height:35%;
   background-color: #fff;
   border-radius: 15px;
   padding: 20px;
   margin-right:80px;
   font-size:small;
   margin-top: -130px;
+  margin-bottom: 50px;
   border: 1px solid #d1d9e6;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -220,7 +222,7 @@
   border: 1px solid #d1d9e6;
   padding: 20px;
   padding-bottom:70px;
-  width:58%;
+  width:62%;
   height:40%;
   margin-left:70px;
   margin-right: auto;
@@ -302,7 +304,7 @@
   border-radius: 15px;
   margin-bottom: 20px;
   width: 350px; 
-  height: 580px;
+  height: 680px;
 }
 .user-center{
   margin-left: 60px;
@@ -379,9 +381,13 @@
   margin-top: 10px;
   width: 90%;
   margin-left: 3px;
-  height: 50px; /* Reduce height */
+  height: 70px; /* Reduce height */
   border-radius: 10px;
+<<<<<<< HEAD
   color:#464343; 
+=======
+  color:#ffffff; 
+>>>>>>> 5a8835e81995f524876b5c47c5b955d664369ae9
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
@@ -416,9 +422,8 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   padding:20px;
-  width: 58%;
+  width: 60%;
   height:80%;
-  margin-left: 7px;
   background-color: #fff;
   font-size: small;
   margin-top: -12px;

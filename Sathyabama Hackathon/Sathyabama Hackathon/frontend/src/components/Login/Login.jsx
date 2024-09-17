@@ -23,6 +23,7 @@ const Login = ({ setShowLogin }) => {
     weight: "",
     email: "",
     password: "",
+    image:null
   });
 
   const [doctorData, setDoctorData] = useState({
@@ -47,156 +48,175 @@ const Login = ({ setShowLogin }) => {
         setDoctorData((prevData) => ({ ...prevData, [name]: value }));
       }
     } else {
-      setUserData((prevData) => ({ ...prevData, [name]: value }));
+      if (currstate === "Sign-Up" && !doc) {
+        if (type === "file") {
+          setUserData((prevData) => ({ ...prevData, [name]: files[0] }));
+        }
+      else {
+        setUserData((prevData) => ({ ...prevData, [name]: value }));
+      }
     }
   };
+};
+const onLogin = async (event) => {
+  event.preventDefault();
+  let newUrl = "http://localhost:5000/api/user";
+  let payload;
 
-  const onLogin = async (event) => {
-    event.preventDefault();
-    let newUrl ="http://localhost:5000/api/user";
-    let payload;
-  
-  
-    try {
-      if (currstate === "Login") {
-        newUrl += "/login";
-        if (!userData.email || !userData.password) {
-          toast.error("Email and password are required.", {
-            position: "top-right",
-            autoClose: 3000,
-          });
-          return;
-        }
-        payload = {
-          email: userData.email,
-          password: userData.password,
-        };
-        const response = await axios.post(newUrl, payload, {
-          headers: { "Content-Type": "application/json" },
+  try {
+    if (currstate === "Login") {
+      newUrl += "/login";
+      if (!userData.email || !userData.password) {
+        toast.error("Email and password are required.", {
+          position: "top-right",
+          autoClose: 3000,
         });
-        if (response.status === 200) {
-          toast.success("Login Successful!", {
-            position: "top-right",
-            autoClose: 3000,
-          });
-          localStorage.setItem("token", response.data.token);
-          navigate("/userpage");
-        } else {
-          toast.error(response.data.message || "Something went wrong.", {
-            position: "top-right",
-            autoClose: 3000,
-          });
+        return;
+      }
+      payload = {
+        email: userData.email,
+        password: userData.password,
+      };
+      const response = await axios.post(newUrl, payload, {
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.status === 200) {
+        toast.success("Login Successful!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        const imagePath = response.data.user.image.path;
+        localStorage.setItem("token", response.data.token);
+        navigate("/userpage",{state:{image: imagePath}});
+      } else {
+        toast.error(response.data.message || "Something went wrong.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+    } else if (currstate === "Sign-Up") {
+      if (doc) {
+        newUrl += "/RegDo";
+        const requiredFields = ["name", "age", "Lic_No", "Hospital_Name", "Specialized", "email", "password", "confirmPassword", "image"];
+        payload = new FormData();
+        
+        for (const field of requiredFields) {
+          if (!doctorData[field] && field !== "image") {
+            toast.error(`${field.replace('_', ' ')} is required.`, {
+              position: "top-right",
+              autoClose: 3000,
+            });
+            return;
+          }
+          if (field === "image" && !doctorData.image) {
+            toast.error("Image is required.", {
+              position: "top-right",
+              autoClose: 3000,
+            });
+            return;
+          }
+          payload.append(field, doctorData[field]);
         }
-      } else if (currstate === "Sign-Up") {
-        if (doc) {
-          newUrl += "/RegDo";
-          const requiredFields = ["name", "age", "Lic_No", "Hospital_Name", "Specialized", "email", "password", "confirmPassword", "image"];
-          payload = new FormData();
-          
-          for (const field of requiredFields) {
-            if (!doctorData[field] && field !== "image") {
-              toast.error(`${field.replace('_', ' ')} is required.`, {
-                position: "top-right",
-                autoClose: 3000,
-              });
-              return;
-            }
-            if (field === "image" && !doctorData.image) {
-              toast.error("Image is required.", {
-                position: "top-right",
-                autoClose: 3000,
-              });
-              return;
-            }
-            payload.append(field, doctorData[field]);
+        const response = await sendVerificationtoAdmin(doctorData.Lic_No, doctorData.email, doctorData.name);
+        if(response) {
+          setOtpPopup(true);
+        }
+      } else {
+        newUrl += "/register";
+        const requiredFields = ["name", "age", "gender", "bloodgroup", "height", "weight", "email", "password"];
+        payload = new FormData();
+      
+        for (const field of requiredFields) {
+          if (!userData[field]) {
+            toast.error(`${field.replace('_', ' ')} is required.`, {
+              position: "top-right",
+              autoClose: 3000,
+            });
+            return;
           }
-          
-          const response = await axios.post(newUrl, payload, {
-            headers: { "Content-Type": "multipart/form-data" },
-          });
-          if (response.status === 200 || response.status === 201) { 
-            await sendVerificationtoAdmin(doctorData.Lic_No,doctorData.email,doctorData.name);
-            setOtpPopup(true);
-          } else {
-            toast.error(response.data.message || "Something went wrong.");
-          }
+          payload.append(field, userData[field]);
+        }
+        
+        // Handle image if present
+        if (userData.image) {
+          payload.append('image', userData.image);
+        }
+      
+        const response = await axios.post(newUrl, payload, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        if (response.status === 200 || response.status === 201) {
+          toast.success('User registered successfully!');
         } else {
-          newUrl += "/register";
-          
-          const requiredFields = ["name", "age", "gender", "bloodgroup", "height", "weight", "email", "password"];
-          payload = {};
-        
-          for (const field of requiredFields) {
-            if (userData[field] === undefined || userData[field] === '') {
-              toast.error(`${field.replace('_', ' ')} is required.`, {
-                position: "top-right",
-                autoClose: 3000,
-              });
-              return;
-            }
-            payload[field] = userData[field];
-          }
-        
-          console.log("Payload being sent:", payload);
-        
-          const response = await axios.post(newUrl, payload, {
-            headers: { "Content-Type": "application/json" },
-          });
+          toast.error(response.data.message || 'Something went wrong.');
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error during submission:", error);
+    toast.error(`Error: ${error.response ? error.response.data.message : "Something went wrong. Please try again!"}`, {
+      position: "top-right",
+      autoClose: 3000,
+    });
+  }
+};
 
-          if (response.status === 200 || response.status === 201) {
-            toast.success('User registered successfully!');
-          } else {
-            toast.error(response.data.message || 'Something went wrong.');
-          }
-        }
+  
+  const sendVerificationtoAdmin = async (LicenseNumber, email, name) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/user/superadmin/verify", {
+        Lic_No: LicenseNumber,
+        email: email,
+        name: name,
+      });
+  
+      if (response.status === 200) {
+        toast.success("Verification email sent to Super Admin.");
+        return true; 
+      } else {
+        toast.error(response.data.message || "Failed to send verification email.");
+        return false;
       }
     } catch (error) {
-      console.error("Error during submission:", error);
-      toast.error(`Error: ${error.response ? error.response.data.message : "Something went wrong. Please try again!"}`, {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      console.log("Error", error);
+      toast.error("Verification failed.");
+      return false;
     }
   };
-
-  const sendVerificationtoAdmin=async(LicenseNumber,email,name)=>{
-    try{
-      const response=await axios.post("http://localhost:5000/api/user/superadmin/verify",{
-        Lic_No:LicenseNumber,
-        email:email,
-        name:name,
-      })
-      if(response.status===200){
-        toast.success("Verification email send to Super Admin");
-      }else{
-        toast.error(response.data.message || "Failed to send verification email");
-      }
-    }catch(error){
-      console.log("Error",error);
-      toast.error("Verification Failed");
-    }
-  }
-
+  
   const OtpVerification = async () => {
     try {
-      setOtpPopup(true);
       const response = await axios.post("http://localhost:5000/api/user/verifyOtp", {
         otp,
         email: doctorData.email,
       });
-      if(response.status === 200) {
+  
+      if (response.status === 200) {
         toast.success("Registration Successful!");
-        setOtpPopup(false);
+        const registerUrl = "http://localhost:5000/api/user/RegDo";
+        const formData = new FormData();
+        Object.keys(doctorData).forEach((key) => {
+          formData.append(key, doctorData[key]);
+        });
+        const registerResponse = await axios.post(registerUrl, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        if (registerResponse.status === 200 || registerResponse.status === 201) {
+          toast.success('Doctor registered successfully!');
+          setOtpPopup(false);
+          navigate("/doclogin");
+        } else {
+          toast.error(registerResponse.data.message || "Something went wrong.");
+        }
+  
       } else {
-        toast.error("Failed to verify OTP, try again");
+        toast.error("Failed to verify OTP, try again.");
       }
     } catch (error) {
       console.error("Error during OTP verification:", error);
       toast.error("Something went wrong, try again.");
     }
   };
-  
-  
   useEffect(() => {
     setText(doc ? "User" : "Doctor ");
   }, [doc]);
@@ -204,8 +224,6 @@ const Login = ({ setShowLogin }) => {
   const handleRedirection = () => {
     navigate('/doclogin');
   };
-
-
   return (
     <>
       <ToastContainer />
@@ -390,6 +408,19 @@ const Login = ({ setShowLogin }) => {
                         placeholder="Password"
                         required
                       />
+  <div className="file-input-container">
+      <label htmlFor="user-file-upload" className="custom-file-upload">
+        Upload profile-pic
+      </label>
+      <input
+        id="user-file-upload"
+        type="file"
+        name="image"
+        onChange={onChangeHandler}
+        style={{ display: "none" }}
+        required
+      />
+      <span>{userData.image ? userData.image.name : "No file chosen"}</span></div>
                     </div>
                   )}
                 </>
