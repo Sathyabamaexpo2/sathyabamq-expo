@@ -5,14 +5,25 @@ import axios from 'axios';
 import theme from "../../assets/theme.png";
 import chat from "../../assets/chat.png";
 import power from "../../assets/power-button.png";
+<<<<<<< HEAD
+import { useNavigate } from 'react-router-dom';
+
+=======
 import { useLocation } from 'react-router-dom';
+>>>>>>> 5a8835e81995f524876b5c47c5b955d664369ae9
 const User = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+<<<<<<< HEAD
+
+  const navigate=useNavigate();
+
+=======
   const location=useLocation();
   const{state}=location;
   const{image}=state ||{};
+>>>>>>> 5a8835e81995f524876b5c47c5b955d664369ae9
   const appointments = [
     { 
       type: "Dentist",
@@ -198,6 +209,14 @@ const imageUrl = image ? `http://localhost:5000/api/user/${normalizePath(image)}
   };
   const totalWeightLossMacros = weightLossMacros.protein + weightLossMacros.carbs + weightLossMacros.fats;
   const totalWeightGainMacros = weightGainMacros.protein + weightGainMacros.carbs + weightGainMacros.fats;
+<<<<<<< HEAD
+  
+  const handleLogout = () => {
+    navigate('/');
+  };
+
+=======
+>>>>>>> 5a8835e81995f524876b5c47c5b955d664369ae9
   return (
     <div className="user-main-container">
       <div className="user-left">
@@ -209,7 +228,7 @@ const imageUrl = image ? `http://localhost:5000/api/user/${normalizePath(image)}
            <div className="btn-img"><img src={theme} alt="" width={40} height={40}/><button className='other-btn'>Theme</button></div>
            <div className="btn-img"><img src={chat} alt="" width={40} height={40}/><button className='other-btn'>Chat</button></div>
         </div>
-        <div className="logout-btn-div" style={{marginLeft:"-30px"}}><img src={power} alt="" width={40} height={40}/> <button className='button-31' id='lout'>Logout</button></div>
+        <div className="logout-btn-div" style={{marginLeft:"-30px"}}><img src={power} alt="" width={40} height={40}/> <button className='button-31' id='lout' onClick={handleLogout}>Logout</button></div>
       </div>
 
       <div className="user-right-container">

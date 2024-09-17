@@ -19,6 +19,7 @@
     width: 100%;
     height: 250px;
     gap: 80px;
+    margin-top: -10px;
     flex-direction: row;
   }
   .main-bottom{
@@ -26,6 +27,7 @@
     background-color: rgb(232, 225, 255);
     width: 100%;
     height: 100%;
+    margin-top: -10px;
     flex-direction: row;
   }
   .whole-cont {
@@ -60,8 +62,13 @@
     flex-direction: column;
     top:20px;
     justify-content: center;
-    
   }
+
+  .doc-greet-text p{
+    position: relative;
+    bottom: 20px;
+  }
+
   .logout-btn-div{
     display: flex;
     position: absolute;
@@ -140,7 +147,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     height: 180px;
     border-radius: 15px;
+<<<<<<< HEAD
     color: rgb(255, 255, 255);
+=======
+    color: black;
+    margin-left:20px;
+>>>>>>> da7272255f02eb5ac2c4d2d3394cde05a205f391
   }
   .other-btn:focus {
     outline: none;  
@@ -172,7 +184,7 @@
     gap:140px;
     border-radius: 20px;
     color: white;
-    background-color:rgb(160, 131, 255);
+    background-color:rgb(142, 107, 255);
     left: 50px;
     top:10px;
     width: 70%;
@@ -222,6 +234,7 @@
       display: flex;
       justify-content: center;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background: white;
       padding-top:50px;
       border-radius: 15px;
       width: 100%;
@@ -230,9 +243,9 @@
     .main-bottom {
       display: flex;
       flex-direction: row;
-      margin-left: 40px;
+      margin-left: 50px;
       top:250px;
-      background-color: #ffffff; 
+      background-color: rgb(232, 225, 255); 
     }
     .list-container{
       display: flex;
@@ -256,7 +269,11 @@
     .list-div-Card {
       display: flex;
       flex-direction: column;
+<<<<<<< HEAD
       color: rgb(174, 174, 174);
+=======
+      /* color: rgb(166, 166, 166); */
+>>>>>>> da7272255f02eb5ac2c4d2d3394cde05a205f391
       justify-content: center;
       background-color: white;
       align-items: center;
@@ -265,7 +282,7 @@
       height: 280px;
       border-radius: 15px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px); /* Blur effect */
+      /* backdrop-filter: blur(10px); Blur effect */
       -webkit-backdrop-filter: blur(10px); /* Safari support */
       border: 1px solid rgba(255, 255, 255, 0.3); /* Soft white border */
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -374,3 +391,7 @@
       color: #FF3B30;
     }
     
+    .profile-img{
+      border-radius: 50%;
+      object-fit: cover;
+    }
