@@ -29,9 +29,6 @@ const registerUser = async (req, res) => {
     res.status(500).json({ success:false,message: "Something went wrong", error: error.message });
   }
 };
-
-
-
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
