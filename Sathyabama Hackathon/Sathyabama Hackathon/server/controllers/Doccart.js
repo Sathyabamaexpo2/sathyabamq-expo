@@ -10,7 +10,7 @@ const AddPatient = async (req, res) => {
             ExUser = new Cartmodel({
                 email: req.user.email, 
                 Patients: [{
-                    name, age, gender, bloodgroup, height, weight, email, password,image, Visit
+                    name, age, gender, bloodgroup, height, weight, email, password, Visit
                 }]
             });
         } else {

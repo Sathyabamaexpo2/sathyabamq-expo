@@ -4,8 +4,6 @@ import { Toaster } from 'react-hot-toast';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./Search.css";
-import SearchIcon from "../assets/search .png";
-
 
 const Search = (props) => {
   const [query, setQuery] = useState('');
@@ -27,6 +25,8 @@ const Search = (props) => {
       setFilteredResults([]);
     }
   }, [query, results]);
+
+
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -57,8 +57,11 @@ const Search = (props) => {
       if (!token) {
         throw new Error('No token found');
       }
+
+      const username = props.userData.name
   
       const response = await axios.post('http://localhost:5000/api/user/bookAppointment', {
+        username:username,
         doctorName: selectedDoctor.name,
         doctorType: selectedDoctor.Specialized,
         time: appointmentTime,

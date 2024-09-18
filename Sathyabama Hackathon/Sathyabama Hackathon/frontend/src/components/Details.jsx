@@ -78,11 +78,12 @@ const Details = () => {
       };
     
 
-    const getDownloadUrl = (filename) => {
-        return `http://localhost:5000/uploads/${normalizePath(filename)}`; 
+      const getDownloadUrl = (filename) => {
+        return `http://localhost:5000/api/user/uploads/${normalizePath(filename)}`;
     };
+    
 
-    const handleDownload = (file) => {
+    const handleDownload = (file) => {  
         const link = document.createElement('a');
         link.href = getDownloadUrl(file.filename);
         link.download = file.filename; 

@@ -17,7 +17,7 @@ router.get('/getdata',userAuth,userData);
 router.post('/login',loginUser);
 router.post('/loginDoc',LogDoc);
 router.post('/RegDo',upload.single('image'),AddDoc);
-router.post('/cartAdd',userAuth,AddPatient);
+router.post('/cartAdd',userAuth,AddPatient);    
 router.get('/showDoccart',userAuth,DisPat);
 router.post('/superadmin/verify', verifyLicense);
 router.post('/verifyOtp', verifyOtp);

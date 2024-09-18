@@ -2,27 +2,56 @@ const Appointment = require('../models/AppointmentModel');
 const nodemailer = require('nodemailer');
 
 const bookAppointment = async (req, res) => {
-  const { doctorName, doctorType, time, date} = req.body;
+  const { username, doctorName, doctorType, time, date } = req.body;
+  const email = req.user?.email; 
+
+  console.log('Email:', email); // Log the email for debugging
   
-  const email=req.user.email;
+  // Check if the email exists
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required to book an appointment.' });
+  }
 
   try { 
-    let userAppointments = await Appointment.findOne({email});
+    // Find existing appointments for the user
+    let userAppointments = await Appointment.findOne({ email });
+    console.log('Found user appointments:', userAppointments);
 
+    // If no appointments exist for this email, create a new document
     if (!userAppointments) {
       userAppointments = new Appointment({ email, appointments: [] });
+      console.log('Creating new user appointments document:', userAppointments);
     }
 
-    userAppointments.appointments.push({
+    // Log appointment details to be added
+    const newAppointment = {
+      username,
       doctorName,
       doctorType,
       time,
       date,
       status: 'pending',
-    });
+    };
+
+    // Optional: Check for existing appointments with the same details to prevent duplicates
+    const existingAppointment = userAppointments.appointments.find(app => 
+      app.username === username && app.doctorName === doctorName && 
+      app.date === date && app.time === time
+    );
+
+    if (existingAppointment) {
+      return res.status(400).json({ message: 'This appointment already exists.' });
+    }
+
+    userAppointments.appointments.push(newAppointment);
+    console.log('Pushing appointment:', newAppointment);
+
+    console.log('Before saving:', userAppointments);
 
     await userAppointments.save();
+    console.log('Saved user appointments:', userAppointments);
 
+    // Respond with success message
     res.status(200).json({
       message: 'Appointment request sent successfully',
     });
@@ -32,6 +61,7 @@ const bookAppointment = async (req, res) => {
     res.status(500).json({ message: 'Error processing appointment request', error: error.message });
   }
 };
+
 
 
 const getAppointmentById = async (req, res) => {
@@ -54,13 +84,13 @@ const getAppointmentById = async (req, res) => {
     }
 
     const userAppointmentData = userAppointments.appointments.map((appointment) => ({
+      username:appointment.username,
       doctorName: appointment.doctorName,
       doctorType: appointment.doctorType,
       time: appointment.time,
       date: appointment.date,
       status: appointment.status
     }));
-
    console.log(userAppointmentData)
 
     res.status(200).json({ appointments: userAppointmentData });
@@ -71,47 +101,45 @@ const getAppointmentById = async (req, res) => {
 };
 
 const getAppointmentsForDoctor = async (req, res) => {
-  const { doctorName } = req.params;
+  const { doctorName, doctorType } = req.params;
 
   try {
-    // Find all documents and filter appointments by doctorName
-    const users = await Appointment.find({});
-    const appointments = users.flatMap(user =>
-      user.appointments.filter(appointment => appointment.doctorName === doctorName)
-    );
+      const appointments = await Appointment.find({
+          'appointments.doctorName': doctorName,
+          'appointments.doctorType': doctorType,
+      });
 
-    res.status(200).json({ appointments });
+      res.status(200).json({ appointments });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching appointments', error: error.message });
+      console.error('Error fetching appointments:', error);
+      res.status(500).json({ message: 'Error fetching appointments', error: error.message });
   }
 };
 
 const updateAppointmentStatus = async (req, res) => {
-  const { id } = req.params;
+  const { username } = req.params;
   const { status } = req.body;
 
   try {
-    // Find the user document
-    const userAppointments = await Appointment.findOne({ 'appointments._id': id });
-    
-    if (!userAppointments) {
-      return res.status(404).json({ message: 'Appointment not found' });
-    }
+      const userAppointments = await Appointment.findOne({ 'appointments.username': username });
+      
+      if (!userAppointments) {
+          return res.status(404).json({ message: 'Appointment not found' });
+      }
 
-    const appointment = userAppointments.appointments.id(id);
-    if (!appointment) {
-      return res.status(404).json({ message: 'Appointment not found' });
-    }
+      const appointment = userAppointments.appointments.find(app => app.username === username);
+      if (!appointment) {
+          return res.status(404).json({ message: 'Appointment not found' });
+      }
 
-    appointment.status = status;
-    await userAppointments.save();
+      appointment.status = status;
+      await userAppointments.save();
 
-    res.status(200).json({ message: 'Appointment status updated', userAppointments });
+      res.status(200).json({ message: 'Appointment status updated', userAppointments });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating appointment status', error: error.message });
+      res.status(500).json({ message: 'Error updating appointment status', error: error.message });
   }
 };
 
 
-
-module.exports = { bookAppointment,getAppointmentById};
+module.exports = { bookAppointment,getAppointmentById,getAppointmentsForDoctor,updateAppointmentStatus};

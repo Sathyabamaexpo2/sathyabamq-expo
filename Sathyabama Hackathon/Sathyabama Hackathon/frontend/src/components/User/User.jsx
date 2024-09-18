@@ -29,6 +29,7 @@ const User = () => {
             'Authorization': `Bearer ${token}`,
           },
         });
+        console.log('User Data:', response.data.Msg);
         setUserData(response.data.Msg);
       } catch (err) {
         console.error('Error fetching user data:', err);
@@ -39,6 +40,7 @@ const User = () => {
     };
     fetchUserData();
   }, []);
+  
 
   useEffect(() => {
     if (userData && userData.email) {
@@ -247,7 +249,7 @@ const User = () => {
       </div>
 
       <div className="user-right-container">
-        <Search userData={userData} />
+      <Search userData={userData} />
         <div className="user-center">
           <div className="user-profile">
             <div className="user-card">

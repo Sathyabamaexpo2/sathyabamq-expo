@@ -15,7 +15,7 @@ app.use(express.json());
  
 app.use(cors({
     origin: 'http://localhost:5173', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
 app.use('/api/user/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -28,7 +28,6 @@ app.get('/api/user/uploads/:filename', (req, res) => {
       }
   });
 });
-
 
 app.use('/api/user', authRoutes);
 app.use('/api/user', appointmentRoutes);

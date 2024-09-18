@@ -14,7 +14,7 @@ const Cartmodel=new mongoose.Schema({
             weight: { type: Number, required: true },
             email: { type: String, required: true, unique: true },
             password: { type: String, required: true },
-            image:{filename:String,path:String}
+            // image:{filename:String,path:String}
         }
     ]
 })
