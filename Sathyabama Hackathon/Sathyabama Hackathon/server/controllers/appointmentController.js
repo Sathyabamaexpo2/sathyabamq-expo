@@ -70,6 +70,48 @@ const getAppointmentById = async (req, res) => {
   }
 };
 
+const getAppointmentsForDoctor = async (req, res) => {
+  const { doctorName } = req.params;
+
+  try {
+    // Find all documents and filter appointments by doctorName
+    const users = await Appointment.find({});
+    const appointments = users.flatMap(user =>
+      user.appointments.filter(appointment => appointment.doctorName === doctorName)
+    );
+
+    res.status(200).json({ appointments });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching appointments', error: error.message });
+  }
+};
+
+const updateAppointmentStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    // Find the user document
+    const userAppointments = await Appointment.findOne({ 'appointments._id': id });
+    
+    if (!userAppointments) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+
+    const appointment = userAppointments.appointments.id(id);
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+
+    appointment.status = status;
+    await userAppointments.save();
+
+    res.status(200).json({ message: 'Appointment status updated', userAppointments });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating appointment status', error: error.message });
+  }
+};
 
 
-module.exports = { bookAppointment,getAppointmentById };
+
+module.exports = { bookAppointment,getAppointmentById};

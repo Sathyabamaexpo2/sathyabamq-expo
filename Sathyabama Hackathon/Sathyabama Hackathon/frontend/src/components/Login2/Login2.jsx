@@ -25,28 +25,28 @@
           email: data.email,
           password: data.password
         });
-
-        if (res.data.Msg === "User doesn't exist") {
+        if (res.data.message === "User doesn't exist") {
           toast.warn('User does not exist');
-        } else if (res.data.Msg === "Invalid credentials") {
+        } else if (res.data.message === "Invalid credentials") {
           toast.error('Wrong Password');
         } else {
           localStorage.setItem("token", res.data.token);
-          const imagePath = res.data.user.image.path;
-          navigate('/doctor', { state: {
-            name: res.data.user.name,
-            image: imagePath,
-            Hospital_Name: res.data.user.Hospital_Name,
-            Specialized: res.data.user.Specialized,
-            Lic_No: res.data.user.Lic_No
-        }});
+          const imagePath = res.data.user.image ? res.data.user.image.path : ''; // Handle optional image
+          navigate('/doctor', { 
+            state: {
+              name: res.data.user.name,
+              image: imagePath,
+              Hospital_Name: res.data.user.Hospital_Name,
+              Specialized: res.data.user.Specialized,
+              Lic_No: res.data.user.Lic_No
+            }
+          });
           toast.success("Logged in Successfully!");
         }
       } catch (error) {
-        toast.error(error.res ? error.res.data.message : 'Something went wrong');
+        toast.error(error.response ? error.response.data.message : 'Something went wrong');
       }
     };
-
     const handleRedirection = () => {
       navigate('/');
     };

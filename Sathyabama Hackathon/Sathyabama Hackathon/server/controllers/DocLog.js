@@ -41,24 +41,30 @@ const AddDoc = async (req, res) => {
 };
 
 const LogDoc = async (req, res) => {
-  const { email, password } = req.body;
-  console.log("req" + " " + req.body)
-  try {
-    const user = await Doc.findOne({ email });
-    if (!user) return res.status(400).json({ message: "User doesn't exist" });
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) return res.status(400).json({ message: "Invalid credentials" });
-
-    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
-    res.status(200).json({ success: true, token, user });
-
-  } catch (error) {
-    console.error("Login Error:", error);
-    res.status(500).json({ message: "Something went wrong", error: error.message });
-  }
-};
+    const { email, password } = req.body;
+    console.log("Request Body:", req.body);
+  
+    try {
+      if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+      }
+  
+      const user = await Doc.findOne({ email });
+      if (!user) return res.status(400).json({ message: "User does not exist" });
+  
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) return res.status(400).json({ message: "Invalid credentials" });
+  
+      const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  
+      res.status(200).json({ success: true, token, user });
+  
+    } catch (error) {
+      console.error("Login Error:", error);
+      res.status(500).json({ message: "Something went wrong", error: error.message });
+    }
+  };
+  
 
 
 const searchDoctors = async (req, res) => {

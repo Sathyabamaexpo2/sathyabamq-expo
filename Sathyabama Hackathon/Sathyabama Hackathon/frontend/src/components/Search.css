@@ -1,46 +1,40 @@
 .search-container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin-top: 20px;
-  position: relative; 
-  top:0;
-  right:100;
+  justify-content: flex-end; /* Aligns the search bar to the right */
+  width: 100%;
+  padding-right: 50px;
+  position: relative;
+  top: 0;
+  left:124px;
+  margin-top: -10px;
 }
 
 .search-bar {
   display: flex;
-  flex-direction: row;
-  position: relative;
+  align-items: center; /* Ensures input and buttons are aligned vertically in the center */
   width: 100%;
-  max-width: 400px; /* Adjust as needed */
+  max-width: 600px; /* Set max width for better layout */
 }
 
-.search-input {
-  width: 100%;
-  padding-right: 40px; /* Adjust based on the size of the search button */
-  height: 40px; /* Adjust the height as needed */
-  box-sizing: border-box; /* Ensures padding and width are calculated correctly */
-  border: 1px solid #ccc;
+.search-bar input {
+  flex: 1; /* Input takes the available width */
+  padding-right: 10px;
+  height: 30px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
   border-radius: 5px;
 }
 
-.search-button {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
+.search-bar button {
+  background-color: rgb(106, 106, 170);
+  padding: 8px;
+  border-radius: 15px;
+  color: white;
   border: none;
   cursor: pointer;
-}
-
-.search-button img {
-  width: 20px; /* Adjust as needed */
-  height: 20px; /* Adjust as needed */
-  position: absolute;
-  bottom:0;
-  right: 0;
+  width:100px;
+  margin-left: 10px;
 }
 
 .clear-search-btn {
@@ -48,15 +42,8 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  color: red; /* Customize color as per your need */
+  color: red;
 }
-
-
-.clear-search-btn:hover {
-  background-color: #cc0000;
-}
-
-/* Other styles remain unchanged */
 
 
 .results-container {

@@ -6,17 +6,13 @@ const cors=require('cors');
 const path = require('path');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 
-
 dotenv.config(); 
 connectDB(); 
 
 
 const app = express();
-
-
 app.use(express.json());
  
-
 app.use(cors({
     origin: 'http://localhost:5173', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -25,8 +21,14 @@ app.use(cors({
 app.use('/api/user/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get('/api/user/uploads/:filename', (req, res) => {
   const filePath = path.join(__dirname, 'uploads', req.params.filename);
-  res.sendFile(normalizePath(filePath));
+  res.sendFile(filePath, (err) => {
+      if (err) {
+          console.error(err);
+          res.status(err.status).end();
+      }
+  });
 });
+
 
 app.use('/api/user', authRoutes);
 app.use('/api/user', appointmentRoutes);

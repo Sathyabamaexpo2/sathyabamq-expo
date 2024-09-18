@@ -166,8 +166,6 @@
     margin-left: 10px;
     transition: background-color 0.3s ease;
 }
-
-
 .popup-prescription {
     position: fixed;
     top: 0;
@@ -180,25 +178,9 @@
     align-items: center;
     backdrop-filter: blur(8px);
     z-index: 2000;
-}
-.Total-Payment{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* position: absolute; */
-    border-radius: 20px;
-    backdrop-filter: blur(80px);
-    color:white;
-    background-color:rgb(147, 114, 255);
-    margin-left:180px ;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    height: 50px;
-    /* margin-bottom: 75px; */
-    /* right: 0;
-    bottom:0; */
-}
-.content-pres {
+  }
+  
+  .content-pres {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -206,11 +188,46 @@
     background-color: white;
     padding: 20px;
     width: 40%;
-    height: 40%;
+    height: auto;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
-}
+  }
+  
+  .file-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    margin-left: 60px;
+    width: 100%;
+  }
+  
+  .custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: black;
+    border-radius: 4px;
+  }
+  
+  input[type="file"] {
+    display: none; /* Hide the file input */
+  }
+  
+  span {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
 #pres-btn {
     background-color: red;
     color: white;

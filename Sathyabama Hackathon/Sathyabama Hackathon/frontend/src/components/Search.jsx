@@ -95,24 +95,19 @@ const Search = (props) => {
 
   return (
     <div className="search-container">
-      <Toaster />
-      <div className="search-bar">
-      <form onSubmit={handleSearch}>
-        <div className="search-inputbar">
+  <Toaster />
+  <div className="search-bar">
+    <form onSubmit={handleSearch} style={{ display: 'flex', width: '100%' }}>
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search doctors by name, specialization, or hospital"
-        className="search-input"
       />
-      <button type="submit" className="search-button">
-        <img src={SearchIcon} alt="" />
-      </button>
-      </div>
+      <button type="submit">Search</button>
       <button type="button" onClick={clearSearch} className="clear-search-btn">Clear</button>
     </form>
-      </div>
+  </div>
 
       <div className="results-container">
         {searchPerformed && filteredResults.length > 0 ? (

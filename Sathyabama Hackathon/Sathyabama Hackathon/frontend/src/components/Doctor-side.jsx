@@ -10,43 +10,50 @@ import theme from '../assets/theme.png';
 import appoin from '../assets/appoinment.png';
 import power from '../assets/power-button.png';
 import profile from '../assets/profile.png';
+import axios from 'axios';
 
 const Doctorside = () => {
-  const appointments = [
-    { Name: "Mugeish",Age:20,ID:"12A",Time: "10:00 AM" },
-    { Name: "Harish",Age:21,ID:"12B", Time: "10:00 AM" },
-    { Name: "Navi",Age:22,ID:"12C", Time: "5:00 PM" },
-    { Name: "Lijo",Age:23,ID:"12D", Time: "12:00 PM" },
-    { Name: "Harrsha",Age:24,ID:"12E",Time: "9:00 AM" }
-  ];
-
-  const { state } = useLocation();
-  const { name = 'No Name', image = '', Hospital_Name = 'No Hospital', Specialized = 'No Specialization', Lic_No = 'No License' } = state || {};
-  console.log('State:', state);
-  const navigate = useNavigate();
+  const [cart, setCartData] = useState({});
+  const [appointments, setAppointments] = useState([]);
+  const [userData, setUserData] = useState({});
   const [toggleProfile, setToggleProfile] = useState(false);
   const [toggleAppointment, setToggleAppointment] = useState(false);
+  const { state } = useLocation();
+  const { name = 'No Name', image = '', Hospital_Name = 'No Hospital', Specialized = 'No Specialization', Lic_No = 'No License' } = state || {};
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const userResponse = await axios.get('http://localhost:5000/api/user/showDoccart', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        console.log(userResponse)
+        setCartData(userResponse.data.patientsdata);
+        console.log(userResponse.data.patientsdata)
+        setAppointments(userResponse.data.patientsdata || []);
+        
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleLogout = () => {
     navigate('/');
   };
+
   const normalizePath = (filePath) => {
     return filePath ? filePath.replace(/\\/g, '/') : '';
   };
+
   const imageUrl = image ? `http://localhost:5000/api/user/${normalizePath(image)}` : '';
-  console.log('Image URL:', imageUrl);
-
-  const handleProfileToggle = () => {
-    setToggleProfile(prev => !prev);
-  };
-
-  const handleAppointmentToggle = () => {
-    setToggleAppointment(prev => !prev);
-  };
-  const handleRedirect = (item) => {
-    navigate('/details', { state: { Name: item.Name, Age: item.Age, ID: item.ID } });
-  };
-
+  console.log(imageUrl)
   useEffect(() => {
     const typed = new Typed('.typed-text', {
       strings: [`Dr. ${name}`],
@@ -71,7 +78,7 @@ const Doctorside = () => {
               </div>
             </div>
           </nav>
-          <button id="doc-prof-btn" onClick={handleProfileToggle}>
+          <button id="doc-prof-btn" onClick={() => setToggleProfile(prev => !prev)}>
             <img src={imageUrl} alt="Profile" width={60} height={60} className='profile-img'/>
           </button>
         </header>
@@ -91,7 +98,7 @@ const Doctorside = () => {
               </div>
               <div className="btn-img">
                 <img src={appoin} alt="Appointment" width={40} height={40} />
-                <button className="other-btn" onClick={handleAppointmentToggle}>Appointment</button>
+                <button className="other-btn" onClick={() => setToggleAppointment(prev => !prev)}>Appointment</button>
               </div>
             </div>
             <div className="logout-btn-div">
@@ -115,23 +122,31 @@ const Doctorside = () => {
               </div>
             </div>
             <div className="doc-pat-count">
-              <h2>Total patients:</h2>
-              <h3>100</h3>
+              <h2 >Total patients:</h2>
+              <h3>100</h3> 
             </div>
           </div>
           <div className="main-bottom">
             <div className="list-container">
-              {appointments.map((item, index) => (
-                <div key={index} className="list-div-Card">
-                  <div className="prof2">
-                    <img src={pat} alt="Patient" width={90} />
-                  </div>
-                  <label>Name: {item.Name}</label>
-                  <label>Age: {item.Age}</label>
-                  <label>Patient's Id: {item.ID}</label>
-                  <button className="button-31" id="view" onClick={() => handleRedirect(item)}>View in Detail</button>
-                </div>
-              ))}
+            {appointments.length > 0 ? (
+  appointments.map((item, index) => (
+    <div key={index} className="list-div-Card">
+      <div className="prof2">
+        <img src={pat} alt="Patient" width={90} />
+      </div>
+      <label>Name: {item.name}</label>
+      <label>Age: {item.age}</label>
+      <label>email:{item.email}</label>
+      <label>Patient's Id: {item.ID}</label>
+      <button className="button-31" id="view" onClick={() => navigate('/details', { state: { Name: item.name, Age: item.age, ID: item.ID,email:item.email} })}>View in Detail</button>
+    </div>
+  ))
+) : (
+  <div className="nothing">
+    <h2>No appointments available.</h2>
+  </div>
+)}
+
             </div>
           </div>
         </main>
@@ -145,7 +160,7 @@ const Doctorside = () => {
               <label>Hospital Name: {Hospital_Name}</label>
               <label>Position: {Specialized} Surgeon</label>
               <label>Lic_No: {Lic_No}</label>
-              <button className="button-31" onClick={handleProfileToggle}>Close</button>
+              <button className="button-31" onClick={() => setToggleProfile(prev => !prev)}>Close</button>
             </div>
           </div>
         )}
@@ -161,7 +176,7 @@ const Doctorside = () => {
             <div className="button-group">
               <button className="appoin-btn">Accept</button>
               <button className="appoin-btn decline">Decline</button>
-              <button className="close-btn" onClick={handleAppointmentToggle}>✕</button>
+              <button className="close-btn" onClick={() => setToggleAppointment(prev => !prev)}>✕</button>
             </div>
           </div>
         ))}
