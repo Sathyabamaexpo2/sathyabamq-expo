@@ -5,25 +5,15 @@ import axios from 'axios';
 import theme from "../../assets/theme.png";
 import chat from "../../assets/chat.png";
 import power from "../../assets/power-button.png";
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 
-=======
-import { useLocation } from 'react-router-dom';
->>>>>>> 5a8835e81995f524876b5c47c5b955d664369ae9
 const User = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-<<<<<<< HEAD
 
   const navigate=useNavigate();
 
-=======
-  const location=useLocation();
-  const{state}=location;
-  const{image}=state ||{};
->>>>>>> 5a8835e81995f524876b5c47c5b955d664369ae9
   const appointments = [
     { 
       type: "Dentist",
@@ -209,14 +199,11 @@ const imageUrl = image ? `http://localhost:5000/api/user/${normalizePath(image)}
   };
   const totalWeightLossMacros = weightLossMacros.protein + weightLossMacros.carbs + weightLossMacros.fats;
   const totalWeightGainMacros = weightGainMacros.protein + weightGainMacros.carbs + weightGainMacros.fats;
-<<<<<<< HEAD
   
   const handleLogout = () => {
     navigate('/');
   };
 
-=======
->>>>>>> 5a8835e81995f524876b5c47c5b955d664369ae9
   return (
     <div className="user-main-container">
       <div className="user-left">

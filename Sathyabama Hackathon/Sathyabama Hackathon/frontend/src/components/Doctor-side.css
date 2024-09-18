@@ -147,12 +147,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     height: 180px;
     border-radius: 15px;
-<<<<<<< HEAD
     color: rgb(255, 255, 255);
-=======
-    color: black;
-    margin-left:20px;
->>>>>>> da7272255f02eb5ac2c4d2d3394cde05a205f391
   }
   .other-btn:focus {
     outline: none;  
@@ -269,11 +264,7 @@
     .list-div-Card {
       display: flex;
       flex-direction: column;
-<<<<<<< HEAD
       color: rgb(174, 174, 174);
-=======
-      /* color: rgb(166, 166, 166); */
->>>>>>> da7272255f02eb5ac2c4d2d3394cde05a205f391
       justify-content: center;
       background-color: white;
       align-items: center;
