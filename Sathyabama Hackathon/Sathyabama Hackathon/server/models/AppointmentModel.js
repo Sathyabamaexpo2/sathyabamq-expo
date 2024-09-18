@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const appointmentSchema = new mongoose.Schema({
-  email: { type: String},
+  email: { type: String,unique:true,sparse: true },
   appointments: [
     {
       username:String,
