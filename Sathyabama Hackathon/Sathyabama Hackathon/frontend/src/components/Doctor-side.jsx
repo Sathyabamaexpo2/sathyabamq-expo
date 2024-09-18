@@ -11,6 +11,7 @@ import appoin from '../assets/appoinment.png';
 import power from '../assets/power-button.png';
 import profile from '../assets/profile.png';
 import axios from 'axios';
+import { toast } from 'react-hot-toast'; // Import toast
 
 const Doctorside = () => {
   const [cart, setCartData] = useState({});
@@ -21,6 +22,7 @@ const Doctorside = () => {
   const { state } = useLocation();
   const { name = 'No Name', image = '', Hospital_Name = 'No Hospital', Specialized = 'No Specialization', Lic_No = 'No License' } = state || {};
   const navigate = useNavigate();
+  const [confirmAppointments, setConfirmAppointments] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,11 +33,8 @@ const Doctorside = () => {
             'Authorization': `Bearer ${token}`,
           },
         });
-        console.log(userResponse)
         setCartData(userResponse.data.patientsdata);
-        console.log(userResponse.data.patientsdata)
         setAppointments(userResponse.data.patientsdata || []);
-        
       } catch (err) {
         console.error('Error fetching user data:', err);
       }
@@ -43,6 +42,61 @@ const Doctorside = () => {
 
     fetchData();
   }, []);
+
+    
+  const handleAccept = async (username) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.patch(`http://localhost:5000/api/user/appointments/${username}`, 
+      { status: 'accepted' }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      toast.success('Appointment accepted successfully!');
+      fetchAppointments(); 
+    } catch (error) {
+      toast.error(`Error accepting appointment: ${error.message}`);
+      console.error('Error:', error);
+    }
+  };
+  
+  const handleDecline = async (username) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.patch(`http://localhost:5000/api/user/appointments/${username}`, 
+      { status: 'declined' }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      toast.success('Appointment declined successfully!');
+  
+      fetchAppointments(); 
+    } catch (error) {
+      toast.error(`Error declining appointment: ${error.message}`);
+      console.error('Error:', error);
+    }
+  };
+  
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/user/appointments/${name}/${Specialized}`);
+      setConfirmAppointments(response.data.appointments);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchAppointments();
+  }, [toggleAppointment]);
+  
+
+
 
   const handleLogout = () => {
     navigate('/');
@@ -53,7 +107,7 @@ const Doctorside = () => {
   };
 
   const imageUrl = image ? `http://localhost:5000/api/user/${normalizePath(image)}` : '';
-  console.log(imageUrl)
+  
   useEffect(() => {
     const typed = new Typed('.typed-text', {
       strings: [`Dr. ${name}`],
@@ -64,6 +118,7 @@ const Doctorside = () => {
 
     return () => typed.destroy();
   }, [name]);
+
 
   return (
     <div className="whole-cont">
@@ -79,7 +134,7 @@ const Doctorside = () => {
             </div>
           </nav>
           <button id="doc-prof-btn" onClick={() => setToggleProfile(prev => !prev)}>
-            <img src={imageUrl} alt="Profile" width={50} height={50} />
+            <img src={imageUrl} alt="Profile" width={60} height={60} className='profile-img'/>
           </button>
         </header>
       </div>
@@ -122,30 +177,30 @@ const Doctorside = () => {
               </div>
             </div>
             <div className="doc-pat-count">
-              <h2>Total patients:</h2>
+              <h2 >Total patients:</h2>
               <h3>100</h3> 
             </div>
           </div>
           <div className="main-bottom">
             <div className="list-container">
-            {appointments.length > 0 ? (
-  appointments.map((item, index) => (
-    <div key={index} className="list-div-Card">
-      <div className="prof2">
-        <img src={pat} alt="Patient" width={90} />
-      </div>
-      <label>Name: {item.name}</label>
-      <label>Age: {item.age}</label>
-      <label>Patient's Id: {item.ID}</label>
-      <button className="button-31" id="view" onClick={() => navigate('/details', { state: { Name: item.name, Age: item.age, ID: item.ID } })}>View in Detail</button>
-    </div>
-  ))
-) : (
-  <div className="nothing">
-    <h2>No appointments available.</h2>
-  </div>
-)}
-
+              {appointments.length > 0 ? (
+                appointments.map((item, index) => (
+                  <div key={index} className="list-div-Card">
+                    <div className="prof2">
+                      <img src={pat} alt="Patient" width={90} />
+                    </div>
+                    <label>Name: {item.name}</label>
+                    <label>Age: {item.age}</label>
+                    <label>Email: {item.email}</label>
+                    <label>Patient's ID: {item.ID}</label>
+                    <button className="button-31" id="view" onClick={() => navigate('/details', { state: { Name: item.name, Age: item.age, ID: item.ID, email: item.email } })}>View in Detail</button>
+                  </div>
+                ))
+              ) : (
+                <div className="nothing">
+                  <h2>No appointments available.</h2>
+                </div>
+              )}
             </div>
           </div>
         </main>
@@ -163,22 +218,31 @@ const Doctorside = () => {
             </div>
           </div>
         )}
-        {toggleAppointment && appointments.map((item, index) => (
-          <div key={index} className="appion-div">
-            <div className="prof3">
-              <img src={pat} alt={item.Name} width={60} />
-            </div>
-            <div className="appion-content">
-              <p>{item.Name}</p>
-              <p>Time: {item.Time}</p>
-            </div>
-            <div className="button-group">
-              <button className="appoin-btn">Accept</button>
-              <button className="appoin-btn decline">Decline</button>
-              <button className="close-btn" onClick={() => setToggleAppointment(prev => !prev)}>✕</button>
-            </div>
-          </div>
-        ))}
+      {toggleAppointment && confirmAppointments.map((item) => (
+  item.appointments.map((appointment, index) => (
+    <div key={index} className="appion-div">
+      <div className="prof3">
+        <img src={pat} alt={appointment.username} width={60} />
+      </div>
+      <div className="appion-content">
+        <p>{appointment.username}</p>
+        <p>{appointment.date}</p>
+        <p>Time: {appointment.time}</p>
+        <p>Status:{appointment.status}</p>
+      </div>
+      <div className="button-group">
+        {appointment.status !== 'accepted' && appointment.status !== 'declined' && (
+          <>
+            <button className="appoin-btn" onClick={() => handleAccept(appointment.username)}>Accept</button>
+            <button className="appoin-btn decline" onClick={() => handleDecline(appointment.username)}>Decline</button>
+          </>
+        )}
+        <button className="close-btn" onClick={() => setToggleAppointment(prev => !prev)}>✕</button>
+      </div>
+    </div>
+  ))
+))}
+
       </div>
     </div>
   );

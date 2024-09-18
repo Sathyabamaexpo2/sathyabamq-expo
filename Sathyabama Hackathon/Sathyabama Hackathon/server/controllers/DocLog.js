@@ -66,4 +66,28 @@ const LogDoc = async (req, res) => {
   };
   
 
-module.exports = { AddDoc, LogDoc};
+
+const searchDoctors = async (req, res) => {
+  const { query } = req.query; 
+
+  try {
+    if (!query) {
+      return res.status(400).json({ message: "No search query provided" });
+    }
+
+    const doctors = await Doc.find({
+      $or: [
+        { name: new RegExp(query, 'i') },
+        { Hospital_Name: new RegExp(query, 'i') },
+        { Specialized: new RegExp(query, 'i') }
+      ]
+    });
+
+    res.status(200).json({ success: true, doctors });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong", error: error.message });
+  }
+};
+
+
+module.exports = { AddDoc, LogDoc,searchDoctors};

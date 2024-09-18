@@ -40,24 +40,29 @@ const Login = ({ setShowLogin }) => {
 
   const onChangeHandler = (event) => {
     const { name, value, type, files } = event.target;
-
+  
+    // For Sign-Up (Doctor)
     if (currstate === "Sign-Up" && doc) {
       if (type === "file") {
         setDoctorData((prevData) => ({ ...prevData, [name]: files[0] }));
       } else {
         setDoctorData((prevData) => ({ ...prevData, [name]: value }));
       }
-    } else {
-      if (currstate === "Sign-Up" && !doc) {
-        if (type === "file") {
-          setUserData((prevData) => ({ ...prevData, [name]: files[0] }));
-        }
-      else {
+    } 
+    // For Sign-Up (User)
+    else if (currstate === "Sign-Up" && !doc) {
+      if (type === "file") {
+        setUserData((prevData) => ({ ...prevData, [name]: files[0] }));
+      } else {
         setUserData((prevData) => ({ ...prevData, [name]: value }));
       }
     }
+    // For Login
+    else if (currstate === "Login") {
+      setUserData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
-};
+  
 const onLogin = async (event) => {
   event.preventDefault();
   let newUrl = "http://localhost:5000/api/user";
@@ -80,20 +85,32 @@ const onLogin = async (event) => {
       const response = await axios.post(newUrl, payload, {
         headers: { "Content-Type": "application/json" },
       });
+      
+      console.log(response.data); // Log the entire response data to check the structure
       if (response.status === 200) {
         toast.success("Login Successful!", {
           position: "top-right",
           autoClose: 3000,
         });
-        const imagePath = response.data.user.image.path;
-        localStorage.setItem("token", response.data.token);
-        navigate("/userpage",{state:{image: imagePath}});
+      
+        // Check if response.data.user and response.data.user.image exist
+        if (response.data.user && response.data.user.image && response.data.user.image.path) {
+          const imagePath = response.data.user.image.path;
+          localStorage.setItem("token", response.data.token);
+          navigate("/userpage", { state: { image: imagePath } });
+        } else {
+          // Handle cases where image or path is missing
+          toast.warn("User logged in, but no image found.");
+          localStorage.setItem("token", response.data.token);
+          navigate("/userpage");
+        }
       } else {
         toast.error(response.data.message || "Something went wrong.", {
           position: "top-right",
           autoClose: 3000,
         });
       }
+      
     } else if (currstate === "Sign-Up") {
       if (doc) {
         newUrl += "/RegDo";

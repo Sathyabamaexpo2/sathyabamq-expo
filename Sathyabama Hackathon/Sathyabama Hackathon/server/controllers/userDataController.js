@@ -17,4 +17,4 @@ const userData=async(req,res)=>{
         res.status(500).json({Msg:"Server Error"});
     }
 }
-module.exports = { userData};
+module.exports = {userData};

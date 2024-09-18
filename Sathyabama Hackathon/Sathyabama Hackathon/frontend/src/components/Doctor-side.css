@@ -147,7 +147,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     height: 180px;
     border-radius: 15px;
+<<<<<<< HEAD
     color: rgb(255, 255, 255);
+=======
+    color:white;
+    margin-left:20px;
+>>>>>>> 51a2d1dc271acf418764c65151780b7c59a17a39
   }
   .other-btn:focus {
     outline: none;  
@@ -196,6 +201,7 @@
       justify-content: center;
       align-items: center;
       backdrop-filter: blur(2px); 
+      color:black;
       z-index: 1000; }
       .appion-div:hover {
         transform: translateY(-5px);
@@ -252,6 +258,8 @@
       flex-direction: row;
       gap:40px;
       width: 90%;
+      border: 1px solid rgb(192, 189, 189);
+      border-radius: 15px;
     }
     #view,.appoin-btn{
       color: white;
@@ -264,7 +272,11 @@
     .list-div-Card {
       display: flex;
       flex-direction: column;
+<<<<<<< HEAD
       color: rgb(174, 174, 174);
+=======
+      /* color: rgb(166, 166, 166); */
+>>>>>>> 51a2d1dc271acf418764c65151780b7c59a17a39
       justify-content: center;
       background-color: white;
       align-items: center;

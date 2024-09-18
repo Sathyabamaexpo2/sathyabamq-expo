@@ -76,11 +76,11 @@
   padding: 20px;
   font-size: medium;
   border-radius: 20px;
-  height: 62%;
+  height: 58%;
   border: 1px solid #d1d9e6;
   background-color: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  margin-top: -40px;
+  margin-top: -10px;
   max-width: 400px;
 }
 
@@ -94,7 +94,7 @@
   flex-wrap: wrap;
   width:100%; 
   height:40%;
-  margin-top:10px;
+  margin-top:-10px;
 }
 
 .patient-profile {
@@ -131,7 +131,7 @@
   gap: 30px;
   width: 50%;
   padding: 20px;
-  margin-top: -60px;
+  margin-top: -30px;
   margin-left: -20px;
   height:35%;
   border-radius: 15px;
@@ -148,7 +148,7 @@
 .calories-card {
   display: flex;
   width: 70%;
-  height:35%;
+  height:30%;
   background-color: #fff;
   border-radius: 15px;
   padding: 20px;
@@ -299,12 +299,13 @@
   display: flex;
   flex-direction: column;
   right:0px;
-  top:15px;
+  top:0px;
   background-color: #f5f8ff;
   border-radius: 15px;
   margin-bottom: 20px;
+  margin-top: -58px;
   width: 350px; 
-  height: 680px;
+  height:max-content;
 }
 .user-center{
   margin-left: 60px;
@@ -377,42 +378,45 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px; /* Reduce padding */
+  padding: 8px;
   margin-top: 10px;
   width: 90%;
   margin-left: 3px;
-  height: 70px; /* Reduce height */
+  height: 70px; 
   border-radius: 10px;
+<<<<<<< HEAD
   color:#464343; 
+=======
+  color: #ffffff;
+>>>>>>> 51a2d1dc271acf418764c65151780b7c59a17a39
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 .appointment-details {
   display: flex;
-  flex-direction: column; /* Arrange items in a column */
-  justify-content: flex-start; /* Align items at the top */
-  align-items: flex-start; /* Left-align the text */
-  width: 70%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%; /* Adjust to take full width */
 }
 
 .appointment-details h3 {
-  margin: 0; /* Remove margin for tighter layout */
+  margin: 0;
 }
 
 .appointment-details p {
-  margin: 0; /* Remove margin for tighter layout */
-  font-weight: bold; /* You can customize this based on the design */
-  font-size: 14px; /* Adjust font size if needed */
+  margin: 0;
+  font-weight: bold;
+  font-size: 14px;
 }
 
-.appointment-time {
+.date-time-status {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  width: 30%;
-  white-space: nowrap;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 12px;
 }
+
 
 .recommendation-box {
   border: 1px solid #ddd;
@@ -423,6 +427,7 @@
   background-color: #fff;
   font-size: small;
   margin-top: -12px;
+  margin-left: 15px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
@@ -510,6 +515,7 @@
     border: none;
     background:#ee4d4d;
     font-size: 15px;
+    margin-top:25px;
     cursor: pointer;
 }
 
