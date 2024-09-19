@@ -194,7 +194,7 @@
     position: relative;
   }
   
-  .file-input-container {
+  .details-file-input-container {
     display: flex;
     align-items: center;
     justify-content: center;

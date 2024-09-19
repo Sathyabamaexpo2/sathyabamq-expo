@@ -9,7 +9,7 @@ const PatientSchema = new mongoose.Schema({
     weight: { type: Number, required: true },
     email: { type: String, required: true }, // Not unique here
     password: { type: String, required: true },
-    // image: { filename: String, path: String }
+    image: { filename: String, path: String }
 });
 
 const CartModel = new mongoose.Schema({
@@ -19,7 +19,7 @@ const CartModel = new mongoose.Schema({
         unique: true,
         sparse: true
     },
-    patients: [PatientSchema] 
+    Patients: [PatientSchema] 
 });
 
 const Cart = mongoose.model("Cart", CartModel);

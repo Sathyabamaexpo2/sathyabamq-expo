@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./Search.css";
+import doctor122 from "../assets/doctor.png";
 
 const Search = (props) => {
   const [query, setQuery] = useState('');
@@ -67,6 +68,11 @@ const Search = (props) => {
         doctorType: selectedDoctor.Specialized,
         time: appointmentTime,
         date: appointmentDate,
+        age:props.userData.age,
+        gender:props.userData.gender,
+        bloodgroup:props.userData.bloodgroup,
+        height:props.userData.height,
+        weight:props.userData.weight
       }, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -120,7 +126,7 @@ const Search = (props) => {
             <div key={doctor._id} className={`doctor-card ${selectedDoctor === doctor ? 'hidden' : ''}`}>
               <span className="close-icon" onClick={clearSearch}>&times;</span>
               <div>
-                <img src={doctor.image} alt="" />
+                <img src={doctor122} alt="" width={40} height={40} className='doc-popup-img'/>
                 <h3>{doctor.name}</h3>
                 <p>Specialization: {doctor.Specialized}</p>
                 <p>Hospital: {doctor.Hospital_Name}</p>

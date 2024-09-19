@@ -11,7 +11,8 @@ import appoin from '../assets/appoinment.png';
 import power from '../assets/power-button.png';
 import profile from '../assets/profile.png';
 import axios from 'axios';
-import { toast } from 'react-hot-toast'; // Import toast
+import { toast } from 'react-hot-toast';
+import download from "../assets/download.png";
 
 const Doctorside = () => {
   const [cart, setCartData] = useState({});
@@ -81,7 +82,7 @@ const Doctorside = () => {
       console.error('Error:', error);
     }
   };
-  
+
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/user/appointments/${name}/${Specialized}`);
@@ -90,13 +91,12 @@ const Doctorside = () => {
       console.error('Error fetching appointments:', error);
     }
   };
+
+  console.log(confirmAppointments)
   
   useEffect(() => {
     fetchAppointments();
   }, [toggleAppointment]);
-  
-
-
 
   const handleLogout = () => {
     navigate('/');
@@ -178,29 +178,35 @@ const Doctorside = () => {
             </div>
             <div className="doc-pat-count">
               <h2 >Total patients:</h2>
-              <h3>100</h3> 
+              <h3>{appointments.length}</h3> 
             </div>
           </div>
           <div className="main-bottom">
             <div className="list-container">
-              {appointments.length > 0 ? (
-                appointments.map((item, index) => (
-                  <div key={index} className="list-div-Card">
-                    <div className="prof2">
-                      <img src={pat} alt="Patient" width={90} />
-                    </div>
-                    <label>Name: {item.name}</label>
-                    <label>Age: {item.age}</label>
-                    <label>Email: {item.email}</label>
-                    <label>Patient's ID: {item.ID}</label>
-                    <button className="button-31" id="view" onClick={() => navigate('/details', { state: { Name: item.name, Age: item.age, ID: item.ID, email: item.email } })}>View in Detail</button>
-                  </div>
-                ))
-              ) : (
-                <div className="nothing">
-                  <h2>No appointments available.</h2>
-                </div>
-              )}
+            
+            {confirmAppointments.length > 0 ? (
+  confirmAppointments.flatMap((user) => 
+    user.appointments
+      .filter(appointment => appointment.status === 'accepted')
+      .map((appointment, index) => (
+        <div key={index} className="list-div-Card">
+          <div className="prof2">
+            <img src={download} alt="Patient" width={90} /> {/* Assuming username or another field holds the image */}
+          </div>
+          <label>Name: {appointment.username}</label>
+          <label>Age: {appointment.age}</label>
+          <label>Email: {user.email}</label> 
+          <button className="button-31" id="view" onClick={() => navigate('/details', { state: { Name: appointment.username, Age: appointment.age, ID: appointment._id, email: user.email } })}>
+            View in Detail
+          </button>
+        </div>
+      ))
+  )
+) : (
+  <div className='nothing'>No accepted appointments found.</div> 
+)}
+
+
             </div>
           </div>
         </main>

@@ -185,7 +185,7 @@ const Details = () => {
                                     </div>
                                 ))}
                             </div>
-                            <div className="file-input-container">
+                            <div className="details-file-input-container">
                                 <label htmlFor="prescription-upload" className="custom-file-upload">
                                     Upload prescription
                                 </label>

@@ -19,6 +19,9 @@ const User = () => {
   const navigate = useNavigate();
 
   const [appointments, setAppointments] = useState([]);
+  const redirectDetails=()=>{
+    navigate('/details');
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -220,7 +223,6 @@ const User = () => {
       return { risk: 'At Risk of Obesity', color: '#FF6347' };
     }
   };
-
   const handleLogout = () => {
     navigate('/');
   };

@@ -171,3 +171,10 @@
   color: #ff0000;
 }
 
+.doc-poup-img{
+  border:1px solid black;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 10px;
+}
+

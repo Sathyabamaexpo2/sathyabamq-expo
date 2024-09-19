@@ -2,15 +2,17 @@ const nodemailer = require('nodemailer');
 const Appointment = require('../models/AppointmentModel');
 
 const bookAppointment = async (req, res) => {
-  const { username, doctorName, doctorType, time, date } = req.body;
+  const { username, doctorName, doctorType, time, date ,age,gender,bloodgroup,height,weight} = req.body;
   const email = req.user?.email;
 
   console.log('Email:', email); 
+
   if (!email) {
     return res.status(400).json({ message: 'Email is required to book an appointment.' });
   }
 
   try {
+
     let userAppointments = await Appointment.findOne({ email });
     console.log('Found user appointments:', userAppointments);
 
@@ -25,6 +27,11 @@ const bookAppointment = async (req, res) => {
       doctorType,
       time,
       date,
+      age,
+      gender,
+      bloodgroup,
+      height,
+      weight,
       status: 'pending',
     };
 
@@ -45,14 +52,16 @@ const bookAppointment = async (req, res) => {
     await userAppointments.save();
     console.log('Saved user appointments:', userAppointments);
 
+    // Create the transporter for sending emails
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: process.env.EMAIL_ADMIN, 
+        user: process.env.EMAIL_ADMIN,
         pass: process.env.EMAIL_PASS,
       },
     });
 
+    // Set up the email options
     const mailOptions = {
       from: process.env.EMAIL_ADMIN,
       to: email,
@@ -60,20 +69,16 @@ const bookAppointment = async (req, res) => {
       text: `Hello ${username},\n\nYour appointment with Dr. ${doctorName} has been booked for ${date} at ${time}.\n\nThank you!`,
     };
 
+    // Send the email
     await transporter.sendMail(mailOptions);
-    console.log('Confirmation email sent to:', email);
 
-    res.status(200).json({ message: 'Appointment request sent successfully, confirmation email sent.' });
+    res.status(200).json({ message: 'Appointment request sent successfully' });
 
   } catch (error) {
     console.error('Error processing appointment request:', error);
     res.status(500).json({ message: 'Error processing appointment request', error: error.message });
   }
 };
-
-module.exports = { bookAppointment };
-
-
 
 const getAppointmentById = async (req, res) => {
 
@@ -100,6 +105,7 @@ const getAppointmentById = async (req, res) => {
       doctorType: appointment.doctorType,
       time: appointment.time,
       date: appointment.date,
+
       status: appointment.status
     }));
    console.log(userAppointmentData)

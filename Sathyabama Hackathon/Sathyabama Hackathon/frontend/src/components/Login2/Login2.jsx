@@ -31,7 +31,7 @@
           toast.error('Wrong Password');
         } else {
           localStorage.setItem("token", res.data.token);
-          const imagePath = res.data.user.image ? res.data.user.image.path : ''; // Handle optional image
+          const imagePath = res.data.user.image ? res.data.user.image.path : '';
           navigate('/doctor', { 
             state: {
               name: res.data.user.name,

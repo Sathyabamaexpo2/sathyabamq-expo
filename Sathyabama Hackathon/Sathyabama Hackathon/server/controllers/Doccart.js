@@ -1,6 +1,6 @@
 const Cartmodel = require('../models/Doccart.js');
 const AddPatient = async (req, res) => {
-    const { name, age, gender, bloodgroup, height, weight, email, password } = req.body;
+    const { name, age, gender, bloodgroup, height, weight, email, password} = req.body;
 
     try {
         console.log(req.body);
@@ -8,9 +8,10 @@ const AddPatient = async (req, res) => {
         let exUser = await Cartmodel.findOne({ email: req.user.email });
         console.log("Existing User:", exUser);
         if (!exUser) {
+            const profileImage = req.file ? { filename: req.file.filename, path: req.file.path } : {};
             exUser = new Cartmodel({
                 email: req.user.email,
-                patients: [{ name, age, gender, bloodgroup, height, weight, email, password, visitCount }]
+                patients: [{ name, age, gender, bloodgroup, height, weight, email, password,image:profileImage,visitCount }]
             });
         } else {
             const exPatient = exUser.patients.find(p => p.email === email);
@@ -19,7 +20,7 @@ const AddPatient = async (req, res) => {
                 exPatient.visitCount += 1; 
             } else {
                 exUser.patients.push({
-                    name, age, gender, bloodgroup, height, weight, email, password, visitCount
+                    name, age, gender, bloodgroup, height, weight, email, password,image:profileImage,visitCount
                 });
             }
         }
@@ -42,7 +43,7 @@ const AddPatient = async (req, res) => {
 
 const DisPat = async (req, res) => {
     try {
-        const email = req.user.email;
+        const email = req.user.email; 
         if (!email) {
             return res.status(400).json({ Msg: "User email is missing" });
         }
@@ -51,15 +52,19 @@ const DisPat = async (req, res) => {
         if (!cart) {
             return res.status(404).json({ Msg: "User does not exist or cart is empty" });
         }
+        if (!cart.Patients || !Array.isArray(cart.Patients)) {
+            return res.status(404).json({ Msg: "No patients found" });
+        }
+
         const patientsdata = cart.Patients.map(p => ({
-            name: p.name,
+            name: p.name, 
             age: p.age,
             gender: p.gender,
             bloodgroup: p.bloodgroup,
             height: p.height,
             weight: p.weight,
             email: p.email,
-            // Consider excluding sensitive data like password
+            password: p.password
         }));
 
         return res.status(200).json({
@@ -74,5 +79,7 @@ const DisPat = async (req, res) => {
         });
     }
 };
+
+
 
 module.exports={AddPatient,DisPat}

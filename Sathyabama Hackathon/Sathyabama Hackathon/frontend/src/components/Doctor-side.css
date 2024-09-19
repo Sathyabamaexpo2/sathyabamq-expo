@@ -139,7 +139,7 @@
     display: flex;
     position: relative;
     top:10px;
-    background: #f9d972;
+    background: rgb(142, 197, 248);
     flex-direction: column;
     justify-content: center;
     padding: 10px 10px 10px 10px;
@@ -147,7 +147,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     height: 180px;
     border-radius: 15px;
-    color:white;
+    color:rgb(255, 255, 255);
     margin-left:20px;
   }
   .other-btn:focus {

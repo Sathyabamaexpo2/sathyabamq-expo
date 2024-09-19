@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
 
-const AppointmentDetailSchema = new mongoose.Schema({
+const appointmentDetailSchema = new mongoose.Schema({
   username: { type: String, required: true },
   doctorName: { type: String, required: true },
+  age:{type:Number, required: true},
+  gender:{type:String, required: true},
+  bloodgroup:{type:String, required: true},
+  height:{type:String, required: true},
+  weight:{type:String, required: true},
   doctorType: { type: String, required: true },
   time: { type: String, required: true },
   date: { type: String, required: true },
@@ -13,15 +18,16 @@ const AppointmentDetailSchema = new mongoose.Schema({
   },
 });
 
-const AppointmentSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    sparse: true,
+const appointmentSchema = new mongoose.Schema({
+  email: { 
+    type: String, 
+    required: true, 
   },
-  appointments: [AppointmentDetailSchema],
+  appointments: [appointmentDetailSchema], // Embedded documents
 });
 
-const Appointment = mongoose.model('Appointment', AppointmentSchema);
+appointmentSchema.index({ email: 1 }, { unique: true, sparse: true });
+
+const Appointment = mongoose.model('Appointment', appointmentSchema);
+
 module.exports = Appointment;
