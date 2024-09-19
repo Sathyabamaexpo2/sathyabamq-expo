@@ -1,29 +1,24 @@
-const Appointment = require('../models/AppointmentModel');
 const nodemailer = require('nodemailer');
+const Appointment = require('../models/AppointmentModel');
 
 const bookAppointment = async (req, res) => {
   const { username, doctorName, doctorType, time, date } = req.body;
-  const email = req.user?.email; 
+  const email = req.user?.email;
 
-  console.log('Email:', email); // Log the email for debugging
-  
-  // Check if the email exists
+  console.log('Email:', email); 
   if (!email) {
     return res.status(400).json({ message: 'Email is required to book an appointment.' });
   }
 
-  try { 
-    // Find existing appointments for the user
+  try {
     let userAppointments = await Appointment.findOne({ email });
     console.log('Found user appointments:', userAppointments);
 
-    // If no appointments exist for this email, create a new document
     if (!userAppointments) {
       userAppointments = new Appointment({ email, appointments: [] });
       console.log('Creating new user appointments document:', userAppointments);
     }
 
-    // Log appointment details to be added
     const newAppointment = {
       username,
       doctorName,
@@ -33,9 +28,8 @@ const bookAppointment = async (req, res) => {
       status: 'pending',
     };
 
-    // Optional: Check for existing appointments with the same details to prevent duplicates
     const existingAppointment = userAppointments.appointments.find(app => 
-      app.username === username && app.doctorName === doctorName && 
+      app.username === username && app.doctorName === doctorName &&
       app.date === date && app.time === time
     );
 
@@ -51,16 +45,33 @@ const bookAppointment = async (req, res) => {
     await userAppointments.save();
     console.log('Saved user appointments:', userAppointments);
 
-    // Respond with success message
-    res.status(200).json({
-      message: 'Appointment request sent successfully',
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: process.env.EMAIL_ADMIN, 
+        pass: process.env.EMAIL_PASS,
+      },
     });
+
+    const mailOptions = {
+      from: process.env.EMAIL_ADMIN,
+      to: email,
+      subject: 'Appointment Confirmation',
+      text: `Hello ${username},\n\nYour appointment with Dr. ${doctorName} has been booked for ${date} at ${time}.\n\nThank you!`,
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Confirmation email sent to:', email);
+
+    res.status(200).json({ message: 'Appointment request sent successfully, confirmation email sent.' });
 
   } catch (error) {
     console.error('Error processing appointment request:', error);
     res.status(500).json({ message: 'Error processing appointment request', error: error.message });
   }
 };
+
+module.exports = { bookAppointment };
 
 
 

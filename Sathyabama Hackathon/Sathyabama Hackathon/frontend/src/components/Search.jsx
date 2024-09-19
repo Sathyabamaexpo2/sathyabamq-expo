@@ -45,6 +45,7 @@ const Search = (props) => {
     }
   };
 
+
   const handleBookAppointment = async () => {
     if (!appointmentTime || !appointmentDate || !selectedDoctor) {
       toast.error('Please select a doctor, date, and appointment time.');
@@ -87,6 +88,7 @@ const Search = (props) => {
   
   const handleDoctorClick = (doctor) => {
     setSelectedDoctor(doctor);
+    setSearchPerformed(false);
   };
 
   const clearSearch = () => {
@@ -118,6 +120,7 @@ const Search = (props) => {
             <div key={doctor._id} className={`doctor-card ${selectedDoctor === doctor ? 'hidden' : ''}`}>
               <span className="close-icon" onClick={clearSearch}>&times;</span>
               <div>
+                <img src={doctor.image} alt="" />
                 <h3>{doctor.name}</h3>
                 <p>Specialization: {doctor.Specialized}</p>
                 <p>Hospital: {doctor.Hospital_Name}</p>

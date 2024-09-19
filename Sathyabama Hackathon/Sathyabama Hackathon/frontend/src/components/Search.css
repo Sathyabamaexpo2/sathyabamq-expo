@@ -85,9 +85,8 @@
   color: #ff0000;
 }
 
-/* Button styling for the doctor card */
 .doctor-card button {
-  background-color: #28a745;
+  background-color: rgb(106, 106, 170);
   color: white;
   border: none;
   padding: 10px;
@@ -97,11 +96,6 @@
   margin-top: 10px;
 }
 
-.doctor-card button:hover {
-  background-color: #218838;
-}
-
-/* Background blur */
 .blur-background {
   position: fixed;
   top: 0;
@@ -154,7 +148,7 @@
 }
 
 .appointment-popup button {
-  background-color: #28a745;
+  background-color: rgb(106, 106, 170);
   color: white;
   border: none;
   padding: 10px;
@@ -163,9 +157,6 @@
   width: 100%;
 }
 
-.appointment-popup button:hover {
-  background-color: #218838;
-}
 
 .close-icon {
   position: absolute;
