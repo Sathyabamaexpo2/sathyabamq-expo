@@ -2,83 +2,73 @@ const nodemailer = require('nodemailer');
 const Appointment = require('../models/AppointmentModel');
 
 const bookAppointment = async (req, res) => {
-  const { username, doctorName, doctorType, time, date ,age,gender,bloodgroup,height,weight} = req.body;
+  const { username, doctorName, doctorType, time, date, age, gender, bloodgroup, height, weight } = req.body;
+  
+  // Ensure the email is correctly retrieved from req.user
   const email = req.user?.email;
+  console.log('Email from request:', email); // Log the email to debug
 
-  console.log('Email:', email); 
-
+  // Check if the email is missing
   if (!email) {
-    return res.status(400).json({ message: 'Email is required to book an appointment.' });
+      return res.status(400).json({ message: 'Email is required to book an appointment.' });
   }
 
   try {
+      // Attempt to find user appointments by email
+      let userAppointments = await Appointment.findOne({ email });
+      console.log('Found user appointments:', userAppointments);
 
-    let userAppointments = await Appointment.findOne({ email });
-    console.log('Found user appointments:', userAppointments);
+      // If no user appointments exist, create a new one
+      if (!userAppointments) {
+          userAppointments = new Appointment({ email, appointments: [] });
+          console.log('Creating new user appointments document:', userAppointments);
+      }
 
-    if (!userAppointments) {
-      userAppointments = new Appointment({ email, appointments: [] });
-      console.log('Creating new user appointments document:', userAppointments);
-    }
+      const newAppointment = {
+          username,
+          doctorName,
+          doctorType,
+          time,
+          date,
+          age,
+          gender,
+          bloodgroup,
+          height,
+          weight,
+          status: 'pending',
+      };
 
-    const newAppointment = {
-      username,
-      doctorName,
-      doctorType,
-      time,
-      date,
-      age,
-      gender,
-      bloodgroup,
-      height,
-      weight,
-      status: 'pending',
-    };
+      // Check for existing appointment
+      const existingAppointment = userAppointments.appointments.find(app => 
+          app.username === username && 
+          app.doctorName === doctorName && 
+          app.date === date && 
+          app.time === time
+      );
 
-    const existingAppointment = userAppointments.appointments.find(app => 
-      app.username === username && app.doctorName === doctorName &&
-      app.date === date && app.time === time
-    );
+      if (existingAppointment) {
+          return res.status(400).json({ message: 'This appointment already exists.' });
+      }
 
-    if (existingAppointment) {
-      return res.status(400).json({ message: 'This appointment already exists.' });
-    }
+      // Push the new appointment to the user's appointments
+      userAppointments.appointments.push(newAppointment);
+      console.log('Pushing appointment:', newAppointment);
 
-    userAppointments.appointments.push(newAppointment);
-    console.log('Pushing appointment:', newAppointment);
+      // Save user appointments
+      await userAppointments.save();
+      console.log('Saved user appointments:', userAppointments);
 
-    console.log('Before saving:', userAppointments);
-
-    await userAppointments.save();
-    console.log('Saved user appointments:', userAppointments);
-
-    // Create the transporter for sending emails
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: process.env.EMAIL_ADMIN,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    // Set up the email options
-    const mailOptions = {
-      from: process.env.EMAIL_ADMIN,
-      to: email,
-      subject: 'Appointment Confirmation',
-      text: `Hello ${username},\n\nYour appointment with Dr. ${doctorName} has been booked for ${date} at ${time}.\n\nThank you!`,
-    };
-
-    // Send the email
-    await transporter.sendMail(mailOptions);
-
-    res.status(200).json({ message: 'Appointment request sent successfully' });
+      res.status(200).json({ message: 'Appointment request sent successfully' });
 
   } catch (error) {
-    console.error('Error processing appointment request:', error);
-    res.status(500).json({ message: 'Error processing appointment request', error: error.message });
+      console.error('Error processing appointment request:', error);
+      if (error.code === 11000) {
+          return res.status(400).json({ message: 'Duplicate appointment found.' });
+      }
+      res.status(500).json({ message: 'Error processing appointment request', error: error.message });
   }
 };
+
 
 const getAppointmentById = async (req, res) => {
 
@@ -105,7 +95,7 @@ const getAppointmentById = async (req, res) => {
       doctorType: appointment.doctorType,
       time: appointment.time,
       date: appointment.date,
-
+      
       status: appointment.status
     }));
    console.log(userAppointmentData)

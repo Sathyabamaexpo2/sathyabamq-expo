@@ -84,14 +84,14 @@
     color: rgb(0, 0, 0);
     width: 90%;
     max-height:320px;
-    gap: 80px;
+    gap: 60px;
 }
 
 .det-column {
     display: flex;
     flex-direction: row;
     padding-top: 20px;
-    gap: 20px;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: space-between;
 }

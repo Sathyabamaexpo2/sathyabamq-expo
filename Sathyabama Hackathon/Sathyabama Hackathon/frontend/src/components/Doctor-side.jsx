@@ -96,7 +96,7 @@ const Doctorside = () => {
   
   useEffect(() => {
     fetchAppointments();
-  }, [toggleAppointment]);
+  }, []);
 
   const handleLogout = () => {
     navigate('/');
@@ -185,7 +185,7 @@ const Doctorside = () => {
             <div className="list-container">
             
             {confirmAppointments.length > 0 ? (
-  confirmAppointments.flatMap((user) => 
+    confirmAppointments.flatMap((user) => 
     user.appointments
       .filter(appointment => appointment.status === 'accepted')
       .map((appointment, index) => (
@@ -196,6 +196,8 @@ const Doctorside = () => {
           <label>Name: {appointment.username}</label>
           <label>Age: {appointment.age}</label>
           <label>Email: {user.email}</label> 
+          <label>Height:{appointment.height}</label>
+          <label>Weight:{appointment.weight}</label>
           <button className="button-31" id="view" onClick={() => navigate('/details', { state: { Name: appointment.username, Age: appointment.age, ID: appointment._id, email: user.email } })}>
             View in Detail
           </button>

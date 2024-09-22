@@ -160,10 +160,6 @@ const Details = () => {
                         <button className="button-31" id="view" onClick={handlePopup}>
                             View Prescription
                         </button>
-                        <button className="button-31" id="remove">Remove</button>
-                        <div className="Total-Payment">
-                            <h2>Total: $100</h2>
-                        </div>
                     </div>
                 </div>
 
@@ -171,20 +167,22 @@ const Details = () => {
                     <div className="popup-prescription">
                         <div className="content-pres">
                             <h2>Prescription:</h2>
-                            <div className="fetched-files">
-                                <h3>Uploaded Files:</h3>
-                                {prescriptions.map((prescription, index) => (
-                                    <div key={index}>
-                                        {prescription.files.map((file, fileIndex) => (
-                                            <div key={fileIndex}>
-                                                <a onClick={() => handleDownload(file)} style={{ cursor: 'pointer', textDecoration: 'underline', color: "blueviolet" }}>
-                                                    {file.filename} {/* This displays the original filename */}
-                                                </a>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ))}
-                            </div>
+
+                                <div className="fetched-files">
+                           <h3>Uploaded Files:</h3>
+    {prescriptions.map((prescription, index) => (
+        <div key={index}>
+            {prescription.files.map((file, fileIndex) => (
+                <div key={fileIndex}>
+                    <a onClick={() => handleDownload(file)} style={{ cursor: 'pointer', textDecoration: 'underline', color: "blueviolet" }}>
+                        {file.filename} {/* This displays the original filename */}
+                    </a>
+                </div>
+            ))}
+        </div>
+    ))}
+</div>
+
                             <div className="details-file-input-container">
                                 <label htmlFor="prescription-upload" className="custom-file-upload">
                                     Upload prescription

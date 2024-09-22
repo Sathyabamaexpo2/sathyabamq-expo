@@ -22,11 +22,12 @@ const appointmentSchema = new mongoose.Schema({
   email: { 
     type: String, 
     required: true, 
+    unique:true,
+    sparse:true
   },
-  appointments: [appointmentDetailSchema], // Embedded documents
+  appointments: [appointmentDetailSchema],
 });
 
-appointmentSchema.index({ email: 1 }, { unique: true, sparse: true });
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
