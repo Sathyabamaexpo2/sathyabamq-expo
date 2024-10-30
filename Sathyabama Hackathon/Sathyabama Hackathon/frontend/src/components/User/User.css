@@ -222,7 +222,7 @@
   border: 1px solid #d1d9e6;
   padding: 20px;
   padding-bottom:70px;
-  width:62%;
+  width:60%;
   height:40%;
   margin-left:70px;
   margin-right: auto;
@@ -245,7 +245,7 @@
 }
 
 .bmi-normal {
-  background-color: #87fc91; /* Green for BMI between 18-24 */
+  background-color: #62f76f; /* Green for BMI between 18-24 */
   color: white;
 }
 
@@ -393,7 +393,9 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%; /* Adjust to take full width */
+  width: 100%;
+  cursor: pointer;
+  /* color:rgb(61, 151, 211); */
 }
 
 .appointment-details h3 {

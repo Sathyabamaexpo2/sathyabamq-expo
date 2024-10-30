@@ -142,22 +142,29 @@ const User = () => {
           </div>
         </div>
         <div className="appointments-list">
-          {appointments.map((appointment, index) => (
-            <div
-              key={index}
-              className="appointment-card"
-              style={{ backgroundColor: appointment.status === 'accepted' ? 'lightgreen' : 'lightcoral' }}
-            >
-              <div className="appointment-details">
-                <p>{appointment.doctorName}</p>
-                <h3>{appointment.doctorType}</h3>
-                <div className="date-time-status">
-                  <p>{appointment.date} {appointment.time}</p>
-                  <p>Status: {appointment.status}</p>
-                </div>
-              </div>
+        {appointments.map((appointment, index) => (
+         <div
+         key={index}
+         className="appointment-card"
+         style={{ backgroundColor: appointment.status === 'accepted' ? '#62f76f ': 'lightcoral' }}
+         onClick={() => navigate('/Details', {
+          state: { 
+              userData,
+              doctorName: appointment.doctorName
+          }
+      })}
+
+       >
+          <div className="appointment-details">
+            <p>{appointment.doctorName}</p>
+            <h3>{appointment.doctorType}</h3>
+            <div className="date-time-status">
+              <p>{appointment.date} {appointment.time}</p>
+              <p>Status: {appointment.status}</p>
             </div>
-          ))}
+          </div>
+        </div>
+      ))}
           <button className='appointments-button'>View More Appointments</button>
         </div>
       </div>

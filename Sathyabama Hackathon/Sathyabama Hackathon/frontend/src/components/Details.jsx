@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Details.css';
 import pat from '../assets/pat.png';
 import { useLocation, useNavigate } from 'react-router-dom';
-import back from '../assets/back.png';
 import axios from 'axios';
 
 const Details = () => {
@@ -10,8 +9,25 @@ const Details = () => {
     const [fileName, setFileName] = useState('');
     const [file, setFile] = useState('');
     const location = useLocation();
-    const { state } = location;
-    const { Name, Age, ID, email } = state || {};
+    const { name, cart, userData,doctorName} = location.state || {};
+
+    const isFromUserPage = Boolean(userData);
+    const isFromDocPage = Boolean(cart);
+
+    console.log('User Data:', userData);
+    console.log('Appointment Data:', cart);
+
+
+    const displayName = isFromUserPage ? userData.name : cart.name || 'N/A';
+    const displayAge = isFromUserPage ? userData.age : cart.age || 'N/A';
+    const displayEmail = isFromUserPage ? userData.email : cart.email || 'N/A';
+    const displayGender = isFromUserPage ? userData.gender : cart.gender || 'N/A';
+    const displayHeight = isFromUserPage ? userData.height :cart.height || 'N/A';
+    const displayWeight = isFromUserPage ? userData.weight :cart.weight || 'N/A';
+    const displayBloodGroup = isFromUserPage ? userData.bloodgroup :cart.bloodgroup || 'N/A';
+    const displayDoctorName = doctorName || name || 'N/A';
+  
+  
     const Navigate = useNavigate();
     const [prescriptions, setPrescriptions] = useState([]);
 
@@ -21,6 +37,7 @@ const Details = () => {
 
     const handlePopup = () => {
         setPrescription(!togglePrescription);
+        fetchPrescriptions();
     };
 
     const handleFileChange = async (event) => {
@@ -33,6 +50,8 @@ const Details = () => {
         }
     };
 
+    console.log(displayEmail);
+
     const handleUpload = async () => {
         if (!file) {
             alert("Please select a file to upload.");
@@ -40,13 +59,14 @@ const Details = () => {
         }
 
         const formData = new FormData();
-        formData.append('email', email);
+        formData.append('DoctorName',displayDoctorName);
+        formData.append('PatientName',displayName);
         formData.append('files', file);
 
         try {
             await axios.post('http://localhost:5000/api/user/docprescription', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data', // Corrected content type
+                    'Content-Type': 'multipart/form-data', //
                 },
             });
             alert('Prescription uploaded successfully!');
@@ -58,21 +78,22 @@ const Details = () => {
         }
     };
 
-    useEffect(() => {
-        const fetchPrescriptions = async () => {
-            try {
-                const response = await axios.post("http://localhost:5000/api/user/getDocprescriptions", {
-                    email: email
-                });
-                setPrescriptions(response.data);
-            } catch (error) {
-                console.error('Error fetching prescriptions:', error);
-            }
-        };
-        fetchPrescriptions();
-    }, [email]);
-
-
+    const fetchPrescriptions = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/api/user/getDocprescriptions", {
+                params: {
+                    doctorName: displayDoctorName,
+                    patientName: displayName
+                }
+            });
+            setPrescriptions(response.data);
+            console.log("Response:", response.data);
+        } catch (error) {
+            console.error('Error fetching prescriptions:', error);
+        }
+    };
+    
+        
     const normalizePath = (filePath) => {
         return filePath ? filePath.replace(/\\/g, '/') : '';
       };
@@ -92,15 +113,14 @@ const Details = () => {
         document.body.removeChild(link);
     };
 
-
     return (
         <>
             <div className="details-container">
                 <nav className="navbar">
                     <h1 style={{ fontSize: "26px" }}>
-                        <button className="back" onClick={HandleRedirection}>
+                        {/* <button className="back" onClick={HandleRedirection}>
                             <img src={back} alt="Back" width={20} height={20} />
-                        </button>
+                        </button> */}
                         MedX
                     </h1>
                 </nav>
@@ -110,19 +130,18 @@ const Details = () => {
                     </div>
                     <div className="det-user">
                         <div className="det-column">
-                            <p>Name: {Name}</p>
-                            <p>Age: {Age}</p>
-                            <p>Id: {ID}</p>
-                            <p>DOB: 1/1/2004</p>
-                            <p>Sex: Male</p>
-                            <p>Height: 165 cm</p>
+                        <p>Name: {displayName}</p>
+                        <p>Age: {displayAge}</p>
+                        <p>Sex: {displayGender}</p>
                         </div>
                         <div className="det-column">
-                            <p>Weight: 75 kg</p>
-                            <p>Hemoglobin: 10 g/dl</p>
+                            <p>Blood-Group:{displayBloodGroup}</p>
+                            <p>Height:{displayHeight}</p>
+                            <p>Weight: {displayWeight}</p>
+                            {/* <p>Hemoglobin: 10 g/dl</p>
                             <p>Sugar: 30 mmol/l</p>
                             <p>Blood Pressure: 100 mmHg</p>
-                            <p>Address: 10, Lijo St, Sundarapuram, Coimbatore-4</p>
+                            <p>Address: 10, Lijo St, Sundarapuram, Coimbatore-4</p> */}
                         </div>
                     </div>
                 </div>
@@ -169,20 +188,21 @@ const Details = () => {
                             <h2>Prescription:</h2>
 
                                 <div className="fetched-files">
-                           <h3>Uploaded Files:</h3>
-    {prescriptions.map((prescription, index) => (
-        <div key={index}>
-            {prescription.files.map((file, fileIndex) => (
-                <div key={fileIndex}>
-                    <a onClick={() => handleDownload(file)} style={{ cursor: 'pointer', textDecoration: 'underline', color: "blueviolet" }}>
-                        {file.filename} {/* This displays the original filename */}
-                    </a>
-                </div>
-            ))}
-        </div>
-    ))}
-</div>
+                           <h3>Previous Prescriptions:</h3>
+{prescriptions.map((prescription, index) => (
+    <div key={index} style={{ marginBottom: '20px' }}>
+        {prescription.files.map((file, fileIndex) => (
+            <div key={fileIndex}>
+                <a onClick={() => handleDownload(file)} style={{ cursor: 'pointer', textDecoration: 'underline', color: "blueviolet", textAlign:"center"}}>
+                    {file.filename}
+                </a>
+            </div>
+        ))}
+    </div>
+))}
 
+</div>  
+                         {isFromDocPage ?
                             <div className="details-file-input-container">
                                 <label htmlFor="prescription-upload" className="custom-file-upload">
                                     Upload prescription
@@ -200,6 +220,7 @@ const Details = () => {
                                 </button>
                                 <span>{fileName || "No file chosen"}</span>
                             </div>
+:<p></p>}
                             <button className="button-31" id="pres-btn" onClick={handlePopup}>
                                 Close
                             </button>

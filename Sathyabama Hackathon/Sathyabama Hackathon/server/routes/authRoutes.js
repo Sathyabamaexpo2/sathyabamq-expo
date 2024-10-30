@@ -9,7 +9,6 @@ const upload = require('../config/multerconfig.js');
 const { AddPatient, DisPat } = require('../controllers/Doccart.js');
 const {getPrescriptions,storePrescription}=require('../controllers/docPrescription.js');
 
-
 const router=express.Router();
 
 router.post('/register',upload.single('image'),registerUser);
@@ -22,6 +21,7 @@ router.get('/showDoccart',userAuth,DisPat);
 router.post('/superadmin/verify', verifyLicense);
 router.post('/verifyOtp', verifyOtp);
 router.post('/docprescription', upload.array('files'), storePrescription); 
-router.post('/getDocprescriptions',getPrescriptions);
+router.get('/getDocprescriptions',getPrescriptions);
 router.get('/searchDoctors',searchDoctors);
+
 module.exports = router;

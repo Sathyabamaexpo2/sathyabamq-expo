@@ -7,20 +7,14 @@ const PatientSchema = new mongoose.Schema({
     bloodgroup: { type: String, required: true },
     height: { type: Number, required: true },
     weight: { type: Number, required: true },
-    email: { type: String, required: true }, 
-    password: { type: String, required: true },
-    image: { filename: String, path: String }
+    email: { type: String, required: true },
+    visitCount: { type: Number, default: 1 } // Added visitCount with a default of 1
 });
 
-const CartModel = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        sparse: true
-    },
-    Patients: [PatientSchema] 
+const cartSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true, sparse: true },
+    patients: { type: [PatientSchema], default: [] }
 });
 
-const Cart = mongoose.model("Cart", CartModel);
+const Cart = mongoose.model("Cart", cartSchema);
 module.exports = Cart;

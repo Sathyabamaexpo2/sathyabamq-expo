@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/bookAppointment', userAuth, bookAppointment);
 router.get('/appointments',userAuth , getAppointmentById);
 router.get('/appointments/:doctorName/:doctorType', getAppointmentsForDoctor);
-router.patch('/appointments/:username', updateAppointmentStatus);
+router.patch('/appointments/:username',userAuth, updateAppointmentStatus);
 
 
 module.exports = router;

@@ -15,9 +15,8 @@ import { toast } from 'react-hot-toast';
 import download from "../assets/download.png";
 
 const Doctorside = () => {
-  const [cart, setCartData] = useState({});
+  const [cartData, setCartData] = useState({});
   const [appointments, setAppointments] = useState([]);
-  const [userData, setUserData] = useState({});
   const [toggleProfile, setToggleProfile] = useState(false);
   const [toggleAppointment, setToggleAppointment] = useState(false);
   const { state } = useLocation();
@@ -44,30 +43,58 @@ const Doctorside = () => {
     fetchData();
   }, []);
 
+
     
-  const handleAccept = async (username) => {
+  const token = localStorage.getItem('token');
+
+  const acceptAppointmentAndAddPatient = async ({ email, appointment }) => {
     try {
-      const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/user/appointments/${username}`, 
-      { status: 'accepted' }, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      toast.success('Appointment accepted successfully!');
-      fetchAppointments(); 
+        const updateStatusResponse = await axios.patch(
+            `http://localhost:5000/api/user/appointments/${appointment.username}`, 
+            { doctorName: appointment.doctorName, status: 'accepted' },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+            }
+        );
+
+        console.log("Appointment accepted:", updateStatusResponse.data);
+
+        if (updateStatusResponse.status === 200) {
+            const addPatientResponse = await axios.post(
+                'http://localhost:5000/api/user/cartAdd',
+                {
+                    name: appointment.username,
+                    age: appointment.age,
+                    gender: appointment.gender,
+                    bloodgroup: appointment.bloodgroup,
+                    height: appointment.height,
+                    weight: appointment.weight,
+                    email: email
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                }
+            );
+
+            console.log("Patient added to cart:", addPatientResponse.data);
+        }
     } catch (error) {
-      toast.error(`Error accepting appointment: ${error.message}`);
-      console.error('Error:', error);
+        console.error("Error processing appointment:", error.response ? error.response.data : error.message);
     }
-  };
+};
+
   
-  const handleDecline = async (username) => {
+  const handleDecline = async (appointment) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/user/appointments/${username}`, 
-      { status: 'declined' }, {
+      await axios.patch(`http://localhost:5000/api/user/appointments/${appointment.username}`,
+      {doctorName:appointment.doctorName, status: 'declined' }, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -83,7 +110,7 @@ const Doctorside = () => {
     }
   };
 
-  const fetchAppointments = async () => {
+  const fetchAppointments = async () =>{
     try {
       const response = await axios.get(`http://localhost:5000/api/user/appointments/${name}/${Specialized}`);
       setConfirmAppointments(response.data.appointments);
@@ -182,34 +209,40 @@ const Doctorside = () => {
             </div>
           </div>
           <div className="main-bottom">
-            <div className="list-container">
-            
-            {confirmAppointments.length > 0 ? (
-    confirmAppointments.flatMap((user) => 
-    user.appointments
-      .filter(appointment => appointment.status === 'accepted')
-      .map((appointment, index) => (
-        <div key={index} className="list-div-Card">
-          <div className="prof2">
-            <img src={download} alt="Patient" width={90} /> {/* Assuming username or another field holds the image */}
-          </div>
-          <label>Name: {appointment.username}</label>
-          <label>Age: {appointment.age}</label>
-          <label>Email: {user.email}</label> 
-          <label>Height:{appointment.height}</label>
-          <label>Weight:{appointment.weight}</label>
-          <button className="button-31" id="view" onClick={() => navigate('/details', { state: { Name: appointment.username, Age: appointment.age, ID: appointment._id, email: user.email } })}>
-            View in Detail
-          </button>
+          <div className="list-container">
+          {cartData.length > 0 ? (
+  cartData.map((cart, index) => 
+   
+      <div key={`${index}`} className="list-div-Card">
+        <div className="prof2">
+          <img src={download} alt="Patient" width={40} height={40}/>
         </div>
-      ))
+        <label>Name: {cart.name}</label>
+        <label>Age: {cart.age}</label>
+        <label>Email: {cart.email}</label>
+        <label>Height: {cart.height}</label>
+        <label>Weight: {cart.weight}</label>
+        <button
+          className="button-31"
+          id="view"
+          onClick={() => navigate('/details', {
+            state: { 
+                name,
+                cart
+            }
+        })}
+        
+        >
+          View Details
+        </button>
+      </div>
   )
 ) : (
-  <div className='nothing'>No accepted appointments found.</div> 
+  <p>No Patients found.</p>
 )}
 
-
-            </div>
+</div>
+         
           </div>
         </main>
         {toggleProfile && (
@@ -227,24 +260,34 @@ const Doctorside = () => {
           </div>
         )}
       {toggleAppointment && confirmAppointments.map((item) => (
-  item.appointments.map((appointment, index) => (
-    <div key={index} className="appion-div">
-      <div className="prof3">
-        <img src={pat} alt={appointment.username} width={60} />
-      </div>
-      <div className="appion-content">
-        <p>{appointment.username}</p>
-        <p>{appointment.date}</p>
-        <p>Time: {appointment.time}</p>
-        <p>Status:{appointment.status}</p>
-      </div>
-      <div className="button-group">
-        {appointment.status !== 'accepted' && appointment.status !== 'declined' && (
-          <>
-            <button className="appoin-btn" onClick={() => handleAccept(appointment.username)}>Accept</button>
-            <button className="appoin-btn decline" onClick={() => handleDecline(appointment.username)}>Decline</button>
-          </>
-        )}
+    item.appointments.map((appointment, index) => (
+        <div key={index} className="appion-div">
+            <div className="prof3">
+                <img src={pat} alt={appointment.username} width={60} />
+            </div>
+            <div className="appion-content">
+                <p>{appointment.username}</p>
+                <p>{appointment.date}</p>
+                <p>Time: {appointment.time}</p>
+                <p>Status: {appointment.status}</p>
+            </div>
+            <div className="button-group">
+                {appointment.status !== 'accepted' && appointment.status !== 'declined' && (
+                    <>
+                        <button 
+                            className="appoin-btn" 
+                            onClick={() => acceptAppointmentAndAddPatient({ email: item.email, appointment })}
+                        >
+                            Accept
+                        </button>
+                        <button 
+                            className="appoin-btn decline" 
+                            onClick={() => handleDecline(appointment)}
+                        >
+                            Decline
+                        </button>
+                    </>
+                )}
         <button className="close-btn" onClick={() => setToggleAppointment(prev => !prev)}>✕</button>
       </div>
     </div>

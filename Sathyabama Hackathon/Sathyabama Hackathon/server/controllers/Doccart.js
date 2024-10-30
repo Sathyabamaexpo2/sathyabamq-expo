@@ -1,32 +1,31 @@
 const Cartmodel = require('../models/Doccart.js');
+const bcrypt = require('bcrypt');
+
 const AddPatient = async (req, res) => {
-    const { name, age, gender, bloodgroup, height, weight, email, password} = req.body;
+    const { name, age, gender, bloodgroup, height, weight, email } = req.body;
+
+    if (!name || !age || !gender || !bloodgroup || !height || !weight || !email) {
+        return res.status(400).json({ msg: "All fields are required." });
+    }
 
     try {
-        console.log(req.body);
-        let visitCount = 0; 
         let exUser = await Cartmodel.findOne({ email: req.user.email });
-        console.log("Existing User:", exUser);
+        
         if (!exUser) {
-            const profileImage = req.file ? { filename: req.file.filename, path: req.file.path } : {};
             exUser = new Cartmodel({
                 email: req.user.email,
-                patients: [{ name, age, gender, bloodgroup, height, weight, email, password,image:profileImage,visitCount }]
+                patients: [{ name, age, gender, bloodgroup, height, weight, email, visitCount: 1 }]
             });
         } else {
             const exPatient = exUser.patients.find(p => p.email === email);
-            console.log("Existing Patient:", exPatient);
             if (exPatient) {
-                exPatient.visitCount += 1; 
+                exPatient.visitCount += 1;
             } else {
-                exUser.patients.push({
-                    name, age, gender, bloodgroup, height, weight, email, password,image:profileImage,visitCount
-                });
+                exUser.patients.push({ name, age, gender, bloodgroup, height, weight, email, visitCount: 1 });
             }
         }
 
         const savedCart = await exUser.save();
-        console.log("Saved Cart:", savedCart);
         res.status(200).json({
             msg: "Successfully added or updated!",
             savedCart
@@ -40,7 +39,6 @@ const AddPatient = async (req, res) => {
     }
 };
 
-
 const DisPat = async (req, res) => {
     try {
         const email = req.user.email; 
@@ -48,15 +46,15 @@ const DisPat = async (req, res) => {
             return res.status(400).json({ Msg: "User email is missing" });
         }
 
-        const cart = await Cartmodel.findOne({ email: email }); 
+        const cart = await Cartmodel.findOne({ email: email });
         if (!cart) {
             return res.status(404).json({ Msg: "User does not exist or cart is empty" });
         }
-        if (!cart.Patients || !Array.isArray(cart.Patients)) {
+        if (!cart.patients || !Array.isArray(cart.patients)) {
             return res.status(404).json({ Msg: "No patients found" });
         }
 
-        const patientsdata = cart.Patients.map(p => ({
+        const patientsdata = cart.patients.map(p => ({
             name: p.name, 
             age: p.age,
             gender: p.gender,
@@ -64,7 +62,7 @@ const DisPat = async (req, res) => {
             height: p.height,
             weight: p.weight,
             email: p.email,
-            password: p.password
+            visitCount: p.visitCount
         }));
 
         return res.status(200).json({

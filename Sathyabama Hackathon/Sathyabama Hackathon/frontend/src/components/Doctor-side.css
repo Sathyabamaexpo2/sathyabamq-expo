@@ -19,7 +19,7 @@
     width: 100%;
     height: 250px;
     gap: 80px;
-    margin-top: -10px;
+    margin-top: -20px;
     flex-direction: row;
   }
   .main-bottom{
@@ -210,7 +210,7 @@
           align-items: center;
           gap:40px;   
           border-radius: 20px;
-          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);  
+          box-shadow: 2px 8px 16px rgba(0, 0, 0, 0.15);  
           width: 30%;
           height: 80%;   
       }
@@ -234,8 +234,9 @@
       background: white;
       padding-top:50px;
       border-radius: 15px;
-      width: 100%;
-      height: 100%;
+      width:100%;
+      height:83%;
+      margin-top:-10px;
     }
     .main-bottom {
       display: flex;
@@ -252,10 +253,12 @@
       bottom:60px;
       justify-content: center;
       flex-direction: row;
-      gap:40px;
+      /* gap:40px; */
       width: 90%;
+      height:82%;
       border: 1px solid rgb(192, 189, 189);
       border-radius: 15px;
+      margin-top: -10px;
     }
     #view,.appoin-btn{
       color: white;
@@ -273,17 +276,22 @@
       background-color: white;
       align-items: center;
       gap: 10px;
-      width: 40%;
-      height: 280px;
+      width:25%;
+      height:80%;
       border-radius: 15px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       /* backdrop-filter: blur(10px); Blur effect */
       -webkit-backdrop-filter: blur(10px); /* Safari support */
       border: 1px solid rgba(255, 255, 255, 0.3); /* Soft white border */
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      padding: 20px;
+      padding: 15px;
       position: relative;
+      margin-top: 20px;
       overflow: hidden;
+    }
+
+    .list-div-Card label{
+      margin-top: -5px;
     }
     
     .list-div-Card:before {
@@ -297,6 +305,10 @@
       opacity: 0.4;
       pointer-events: none; 
       z-index: 1;
+    }
+
+    .list-conatainer button{
+      margin-top: -10px;
     }
     
     .list-div-Card:hover {
@@ -389,4 +401,5 @@
     .profile-img{
       border-radius: 50%;
       object-fit: cover;
+      cursor: pointer;
     }

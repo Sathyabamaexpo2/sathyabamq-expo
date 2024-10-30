@@ -1,14 +1,20 @@
 const mongoose = require('mongoose');
 
 const prescriptionSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-   files:[{
-    filename: String,
-    path: String,
-   }]
+    doctorName: {
+        type: String, 
+        required: true,
+        unique:true,
+    },
+    patientName: {
+        type: String,
+        required: true,
+        unique:true,
+    },
+    files: [{
+        filename: String,
+        path: String,
+    }]
 });
 
 const Prescription = mongoose.model('Prescription', prescriptionSchema);
