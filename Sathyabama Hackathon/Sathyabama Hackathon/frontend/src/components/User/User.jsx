@@ -8,10 +8,12 @@ import power from "../../assets/power-button.png";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Search from '../Search';
 import { toast } from 'react-toastify';
+import Chat from '../chatbot';
 
 const User = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [trigger,setTrigger]=useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
   const { state } = location;
@@ -75,6 +77,7 @@ const User = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
     const [daysInMonth, setDaysInMonth] = useState([]);
+
 
     useEffect(() => {
       const getDaysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
@@ -234,13 +237,18 @@ const User = () => {
     navigate('/');
   };
 
+  const BotTrigger=()=>{
+    setTrigger(!trigger);
+  }
   return (
     <div className="user-main-container">
       <div className="user-left">
         <div className="user-left-title">
           <h2>MedX</h2>
         </div>
-
+       {trigger&&(<div className="acctual-bot">
+           <Chat BotTrigger={BotTrigger}/>
+        </div>)}
         <div className="user-left-div">
           <div className="btn-img">
             <img src={theme} alt="" width={40} height={40} />
@@ -248,7 +256,7 @@ const User = () => {
           </div>
           <div className="btn-img">
             <img src={chat} alt="" width={40} height={40} />
-            <button className='other-btn'>Chat</button>
+            <button className='other-btn' onClick={BotTrigger}>Chat</button>
           </div>
         </div>
         <div className="logout-btn-div" style={{ marginLeft: "-30px" }}>
