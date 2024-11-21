@@ -5,6 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const cors=require('cors');
 const path = require('path');
 const appointmentRoutes = require('./routes/appointmentRoutes');
+const {checkAndUpdateAppointments} = require('./controllers/appointmentController');
 
 dotenv.config(); 
 connectDB(); 
@@ -35,5 +36,9 @@ app.use('/api/user', authRoutes);
 app.use('/api/user', appointmentRoutes);
 
 
+setInterval(checkAndUpdateAppointments, 24 * 60 * 60 * 1000);
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

@@ -172,5 +172,23 @@ const updateAppointmentStatus = async (req, res) => {
     }
 };
 
+const checkAndUpdateAppointments = async () => {
+  try {
+    // Find all users' appointments
+    const appointments = await Appointment.find();
 
-module.exports = {bookAppointment,getAppointmentById,getAppointmentsForDoctor,updateAppointmentStatus};
+    // Loop through each user and check for expired appointments
+    for (let appointment of appointments) {
+      await appointment.checkExpiredAppointments();
+      console.log(`Expired appointments checked and updated for user ${appointment.email}`);
+    }
+  } catch (error) {
+    console.error("Error checking appointments:", error);
+  }
+};
+
+
+
+
+
+module.exports = {bookAppointment,getAppointmentById,getAppointmentsForDoctor,updateAppointmentStatus,checkAndUpdateAppointments};

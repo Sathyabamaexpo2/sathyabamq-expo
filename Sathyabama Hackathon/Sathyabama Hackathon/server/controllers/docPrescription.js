@@ -3,7 +3,6 @@ const fs = require('fs'); // For file system operations
 const pdfParse = require('pdf-parse'); // For extracting text from PDFs
 const { createWorker } = require('tesseract.js'); // For OCR
 
-
 /**
  * Store prescription details along with uploaded files.
  */
@@ -160,5 +159,63 @@ const getPrescriptions = async (req, res) => {
     }
 };
 
+const getText = async (req, res) => {
+    const { patientName, doctorName } = req.query;
 
-module.exports = { getPrescriptions, storePrescription };
+    try {
+        // Fetch the first prescription for the patient and doctor
+        const prescription = await Prescription.findOne({ patientName, doctorName })
+            .sort({ createdAt: 1 })
+            .exec();
+
+        if (!prescription) {
+            return res.status(404).json({ message: 'Prescription not found.' });
+        }
+
+        // Combine all extracted text into a single string
+        let combinedText = prescription.files
+            .map(file => file.extractedText.replace(/\n/g, ' ').trim()) // Replace newlines and trim
+            .join(' ');
+
+        console.log("Combined Text:", combinedText); // Log combined text for debugging
+
+        // Extract tablets: Match "TAB" followed by any text until encountering a number or end of phrase
+        const tabletsText = prescription.files
+            .map(file => file.extractedText)
+            .join(' ') // Combine extracted text from multiple files
+            .match(/TAB[\s\w\.]+/g) // Match words starting with "TAB" followed by alphanumeric characters and spaces
+            .join(', ') || ''; // Join the tablets with commas
+
+        if (!tabletsText) {
+            return res.status(404).json({ message: 'No tablets found in the prescription text.' });
+        }
+
+
+        // Extract last visit date
+        const lastVisitDate = combinedText.match(/Last Vist Date:(\d{2}-\d{2}-\d{4})/);
+
+        // Check for "MONTHLY ONCE" in the prescription text
+        const monthlyOnce = combinedText.match(/MONTHLY ONCE/i) ? 'Yes' : 'No';
+
+        // Check for "surgery" or "admitted" in the prescription text
+        const surgeryAdmitted = combinedText.match(/admitted|surgery/i) ? 'Yes' : 'No';
+
+        // Send the response
+        res.status(200).json({
+            tablets: tabletsText,
+            lastVisitDate: lastVisitDate ? lastVisitDate[1] : 'Not Available',
+            monthlyOnce,
+            surgeryAdmitted,
+        });
+    } catch (error) {
+        console.error('Error fetching prescription:', error);
+        res.status(500).json({ message: 'Error fetching prescription.' });
+    }
+};
+
+
+
+
+module.exports = { getPrescriptions, storePrescription,getText};
+
+

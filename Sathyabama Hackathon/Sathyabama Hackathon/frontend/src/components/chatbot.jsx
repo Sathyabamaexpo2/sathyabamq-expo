@@ -2,18 +2,26 @@ import React, { useState, useEffect } from "react";
 import "./chatbot.css";
 import send from "../assets/send.png";
 import ai from "../assets/ai.png";
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const Chat = ({ BotTrigger }) => {
-  const [inputValue, setInputValue] = useState('');
+const Chat = ({ BotTrigger, userData }) => {
+  const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [userName, setUserName] = useState('');
-  const genAI = new GoogleGenerativeAI("AIzaSyA39LrrBJ49c4AAB2ZOCSZNGE9BfiD4Cp0");
+  const [userName, setUserName] = useState(userData?.name || "");
+  const genAI = new GoogleGenerativeAI(
+    "AIzaSyA39LrrBJ49c4AAB2ZOCSZNGE9BfiD4Cp0"
+  );
 
   useEffect(() => {
-    setMessages([{ text: "Hey, could you tell me your name?", type: 'bot' }]);
-  }, []);
+    if (userName) {
+      setMessages([
+        { text: `Hi ${userName}, how can I assist you today?`, type: "bot" },
+      ]);
+    } else {
+      setMessages([{ text: "Hey, could you tell me your name?", type: "bot" }]);
+    }
+  }, [userName]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -22,32 +30,42 @@ const Chat = ({ BotTrigger }) => {
   const handleSend = async () => {
     if (!inputValue.trim()) return;
 
-    const newMessages = [...messages, { text: inputValue, type: 'user' }];
+    const newMessages = [...messages, { text: inputValue, type: "user" }];
     setMessages(newMessages);
-    setInputValue('');
+    setInputValue("");
 
     if (!userName) {
       setUserName(inputValue);
       setMessages([
         ...newMessages,
-        { text: `Nice to meet you, ${inputValue}!`, type: 'bot' },
+        { text: `Nice to meet you, ${inputValue}!`, type: "bot" },
       ]);
     } else {
       try {
         setLoading(true);
+
+        // Construct the prompt using available user data
+        const prompt = `
+          User: ${userData?.name || "Unknown"}\n
+          Age: ${userData?.age || "N/A"}\n
+          Gender: ${userData?.gender || "N/A"}\n
+          Bloodgroup: ${userData?.bloodgroup || "N/A"}\n
+          Height: ${userData?.height || "N/A"}\n
+          Weight: ${userData?.weight || "N/A"}\n
+          Email: ${userData?.email || "N/A"}\n
+          Query: ${inputValue}\n
+          Response:`;
+
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const result = await model.generateContent(inputValue);
+        const result = await model.generateContent(prompt);
         const response = await result.response.text();
 
-        setMessages([
-          ...newMessages,
-          { text: response, type: 'bot' },
-        ]);
+        setMessages([...newMessages, { text: response, type: "bot" }]);
       } catch (error) {
         console.error("Error fetching response:", error);
         setMessages([
           ...newMessages,
-          { text: "Something went wrong. Please try again.", type: 'bot' },
+          { text: "Something went wrong. Please try again.", type: "bot" },
         ]);
       } finally {
         setLoading(false);
@@ -68,10 +86,7 @@ const Chat = ({ BotTrigger }) => {
 
         <div className="chat-content">
           {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`message ${message.type}`}
-            >
+            <div key={index} className={`message ${message.type}`}>
               {message.text}
             </div>
           ))}

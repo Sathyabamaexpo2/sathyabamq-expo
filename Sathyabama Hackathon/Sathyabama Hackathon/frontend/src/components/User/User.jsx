@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import './User.css';
-import profile from '../../assets/messi-ronaldo-fb.jpg';
-import axios from 'axios'; 
+import React, { useState, useEffect } from "react";
+import "./User.css";
+import profile from "../../assets/messi-ronaldo-fb.jpg";
+import axios from "axios";
 import theme from "../../assets/theme.png";
 import chat from "../../assets/chat.png";
 import power from "../../assets/power-button.png";
-import { useLocation, useNavigate } from 'react-router-dom';
-import Search from '../Search';
-import { toast } from 'react-toastify';
-import Chat from '../chatbot';
+import { useLocation, useNavigate } from "react-router-dom";
+import Search from "../Search";
+import { toast } from "react-toastify";
+import Chat from "../chatbot";
 
 const User = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [trigger,setTrigger]=useState(false);
+  const [trigger, setTrigger] = useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
   const { state } = location;
@@ -21,46 +21,51 @@ const User = () => {
   const navigate = useNavigate();
 
   const [appointments, setAppointments] = useState([]);
-  const redirectDetails=()=>{
-    navigate('/details');
-  }
+  const redirectDetails = () => {
+    navigate("/details");
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('token'); 
-        const response = await axios.get('http://localhost:5000/api/user/getdata', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-        console.log('User Data:', response.data.Msg);
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          "http://localhost:5000/api/user/getdata",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("User Data:", response.data.Msg);
         setUserData(response.data.Msg);
       } catch (err) {
-        console.error('Error fetching user data:', err);
-        setError('Error fetching user data');
+        console.error("Error fetching user data:", err);
+        setError("Error fetching user data");
       } finally {
         setLoading(false);
       }
     };
     fetchUserData();
   }, []);
-  
 
   useEffect(() => {
     if (userData && userData.email) {
       const fetchAppointments = async () => {
         try {
-          const token = localStorage.getItem('token'); 
-          const response = await axios.get('http://localhost:5000/api/user/appointments', {
-            headers:{
-              'Authorization':`Bearer ${token}`,
+          const token = localStorage.getItem("token");
+          const response = await axios.get(
+            "http://localhost:5000/api/user/appointments",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-          });
+          );
           setAppointments(response.data.appointments);
         } catch (error) {
           toast.error(`Error fetching appointments: ${error.message}`);
-          console.error('Error:', error);
+          console.error("Error:", error);
         }
       };
       fetchAppointments();
@@ -78,9 +83,9 @@ const User = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
     const [daysInMonth, setDaysInMonth] = useState([]);
 
-
     useEffect(() => {
-      const getDaysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
+      const getDaysInMonth = (month, year) =>
+        new Date(year, month + 1, 0).getDate();
       const year = selectedDate.getFullYear();
       const days = getDaysInMonth(currentMonth, year);
       setDaysInMonth(Array.from({ length: days }, (_, i) => i + 1));
@@ -89,24 +94,37 @@ const User = () => {
     const handleMonthChange = (event) => {
       const monthIndex = parseInt(event.target.value, 10);
       setCurrentMonth(monthIndex);
-      setSelectedDate(new Date(selectedDate.getFullYear(), monthIndex, selectedDate.getDate()));
+      setSelectedDate(
+        new Date(selectedDate.getFullYear(), monthIndex, selectedDate.getDate())
+      );
     };
 
     const weekdays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
     const renderCalendarDays = () => {
-      const startDay = new Date(selectedDate.getFullYear(), currentMonth, 1).getDay();
+      const startDay = new Date(
+        selectedDate.getFullYear(),
+        currentMonth,
+        1
+      ).getDay();
       const calendarDays = [];
       for (let i = 0; i < (startDay + 6) % 7; i++) {
-        calendarDays.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+        calendarDays.push(
+          <div key={`empty-${i}`} className="calendar-day empty"></div>
+        );
       }
       daysInMonth.forEach((day) => {
-        const isWeekend = (startDay + day - 1) % 7 === 5 || (startDay + day - 1) % 7 === 6;
+        const isWeekend =
+          (startDay + day - 1) % 7 === 5 || (startDay + day - 1) % 7 === 6;
         calendarDays.push(
           <div
             key={day}
-            className={`calendar-day ${isWeekend ? 'weekend' : ''}`}
-            onClick={() => setSelectedDate(new Date(selectedDate.getFullYear(), currentMonth, day))}
+            className={`calendar-day ${isWeekend ? "weekend" : ""}`}
+            onClick={() =>
+              setSelectedDate(
+                new Date(selectedDate.getFullYear(), currentMonth, day)
+              )
+            }
           >
             {day}
           </div>
@@ -116,17 +134,22 @@ const User = () => {
     };
 
     return (
-      <div className='appointments-container'>
+      <div className="appointments-container">
         <div className="calendar">
           <div className="calendar-container">
-            <h3 style={{fontSize: "22px"}}>Doctor Appointments</h3>
+            <h3 style={{ fontSize: "22px" }}>Doctor Appointments</h3>
             <div className="calendar-box">
               <div className="calendar-header">
-                <h2>{selectedDate.toLocaleString('default', { month: 'long' })}</h2>
+                <h2>
+                  {selectedDate.toLocaleString("default", { month: "long" })}
+                </h2>
                 <select onChange={handleMonthChange} value={currentMonth}>
                   {Array.from({ length: 12 }, (_, i) => (
                     <option key={i} value={i}>
-                      {new Date(selectedDate.getFullYear(), i).toLocaleString('default', { month: 'long' })}
+                      {new Date(selectedDate.getFullYear(), i).toLocaleString(
+                        "default",
+                        { month: "long" }
+                      )}
                     </option>
                   ))}
                 </select>
@@ -145,30 +168,38 @@ const User = () => {
           </div>
         </div>
         <div className="appointments-list">
-        {appointments.map((appointment, index) => (
-         <div
-         key={index}
-         className="appointment-card"
-         style={{ backgroundColor: appointment.status === 'accepted' ? '#62f76f ': 'lightcoral' }}
-         onClick={() => navigate('/Details', {
-          state: { 
-              userData,
-              doctorName: appointment.doctorName
-          }
-      })}
-
-       >
-          <div className="appointment-details">
-            <p>{appointment.doctorName}</p>
-            <h3>{appointment.doctorType}</h3>
-            <div className="date-time-status">
-              <p>{appointment.date} {appointment.time}</p>
-              <p>Status: {appointment.status}</p>
+          {appointments.map((appointment, index) => (
+            <div
+              key={index}
+              className="appointment-card"
+              style={{
+                backgroundColor:
+                  appointment.status === "accepted" ? "#62f76f " : "lightcoral",
+              }}
+              onClick={() =>
+                navigate("/Details", {
+                  state: {
+                    userData,
+                    doctorName: appointment.doctorName,
+                  },
+                })
+              }
+            >
+              <div className="appointment-details">
+                <p>{appointment.doctorName}</p>
+                <h3>{appointment.doctorType}</h3>
+                <div className="date-time-status">
+                  <p>
+                    {appointment.date} {appointment.time}
+                  </p>
+                  <p>Status: {appointment.status}</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
-          <button className='appointments-button'>View More Appointments</button>
+          ))}
+          <button className="appointments-button">
+            View More Appointments
+          </button>
         </div>
       </div>
     );
@@ -189,7 +220,7 @@ const User = () => {
   };
 
   const calculateBMR = (weight, height, age, gender) => {
-    if (gender === 'male') {
+    if (gender === "male") {
       return 10 * weight + 6.25 * height - 5 * age + 5;
     } else {
       return 10 * weight + 6.25 * height - 5 * age - 161;
@@ -197,9 +228,9 @@ const User = () => {
   };
 
   const calculateMacros = (calories) => {
-    const carbCalories = calories * 0.50;
-    const proteinCalories = calories * 0.30;
-    const fatCalories = calories * 0.20;
+    const carbCalories = calories * 0.5;
+    const proteinCalories = calories * 0.3;
+    const fatCalories = calories * 0.2;
     const carbs = Math.round(carbCalories / 4);
     const protein = Math.round(proteinCalories / 4);
     const fats = Math.round(fatCalories / 9);
@@ -212,61 +243,76 @@ const User = () => {
     return { weightLossCalories, weightGainCalories };
   };
 
-  const bmi = userData ? calculateBMI(userData.weight, userData.height) : 'N/A';
-  const bmr = userData ? calculateBMR(userData.weight, userData.height, userData.age, userData.gender) : 0;
+  const bmi = userData ? calculateBMI(userData.weight, userData.height) : "N/A";
+  const bmr = userData
+    ? calculateBMR(
+        userData.weight,
+        userData.height,
+        userData.age,
+        userData.gender
+      )
+    : 0;
   const { weightLossCalories, weightGainCalories } = calculateCalories(bmr);
   const weightLossMacros = calculateMacros(weightLossCalories);
   const weightGainMacros = calculateMacros(weightGainCalories);
 
   const normalizePath = (filePath) => {
-    return filePath ? filePath.replace(/\\/g, '/') : '';
+    return filePath ? filePath.replace(/\\/g, "/") : "";
   };
 
-  const imageUrl = image ? `http://localhost:5000/api/user/${normalizePath(image)}` : '';
+  const imageUrl = image
+    ? `http://localhost:5000/api/user/${normalizePath(image)}`
+    : "";
 
   const getHealthRisk = (bmi) => {
     if (bmi < 18) {
-      return { risk: 'Underweight', color: '#FFD700' };
+      return { risk: "Underweight", color: "#FFD700" };
     } else if (bmi >= 18 && bmi < 24) {
-      return { risk: 'Normal', color: '#32CD32' };
+      return { risk: "Normal", color: "#32CD32" };
     } else if (bmi >= 24) {
-      return { risk: 'At Risk of Obesity', color: '#FF6347' };
+      return { risk: "At Risk of Obesity", color: "#FF6347" };
     }
   };
   const handleLogout = () => {
-    navigate('/');
+    navigate("/");
   };
 
-  const BotTrigger=()=>{
+  const BotTrigger = () => {
     setTrigger(!trigger);
-  }
+  };
   return (
     <div className="user-main-container">
       <div className="user-left">
         <div className="user-left-title">
           <h2>MedX</h2>
         </div>
-       {trigger&&(<div className="acctual-bot">
-           <Chat BotTrigger={BotTrigger}/>
-        </div>)}
-        <div className="user-left-div">
-          <div className="btn-img">
-            <img src={theme} alt="" width={40} height={40} />
-            <button className='other-btn'>Theme</button>
+        {trigger && (
+          <div className="acctual-bot">
+            <Chat BotTrigger={BotTrigger} userData={userData} />
           </div>
+        )}
+        <div className="user-left-div">
+          {/* <div className="btn-img">
+            <img src={theme} alt="" width={40} height={40} />
+            <button className="other-btn">Theme</button>
+          </div> */}
           <div className="btn-img">
             <img src={chat} alt="" width={40} height={40} />
-            <button className='other-btn' onClick={BotTrigger}>Chat</button>
+            <button className="other-btn" onClick={BotTrigger}>
+              Chat
+            </button>
           </div>
         </div>
         <div className="logout-btn-div" style={{ marginLeft: "-30px" }}>
           <img src={power} alt="" width={40} height={40} />
-          <button className='button-31' id='lout' onClick={handleLogout}>Logout</button>
+          <button className="button-31" id="lout" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </div>
 
       <div className="user-right-container">
-      <Search userData={userData} />
+        <Search userData={userData} />
         <div className="user-center">
           <div className="user-profile">
             <div className="user-card">
@@ -295,14 +341,24 @@ const User = () => {
                 <div className="bmi-det-div">
                   <div className="bmi-l">
                     <h4>BMI</h4>
-                    <div className={`bmi-circle ${bmi >= 18 && bmi <= 24 ? 'bmi-normal' : 'bmi-high'}`}>
+                    <div
+                      className={`bmi-circle ${
+                        bmi >= 18 && bmi <= 24 ? "bmi-normal" : "bmi-high"
+                      }`}
+                    >
                       {bmi}
                     </div>
                   </div>
                   <div className="bmi-r">
-                    <h5><span>&lt;18: Low 🧍‍♂️🍏</span></h5>
-                    <h5><span>18-24: Normal ✅💪</span></h5>
-                    <h5><span>&gt;24: High ⚠️🍔</span></h5>
+                    <h5>
+                      <span>&lt;18: Low 🧍‍♂️🍏</span>
+                    </h5>
+                    <h5>
+                      <span>18-24: Normal ✅💪</span>
+                    </h5>
+                    <h5>
+                      <span>&gt;24: High ⚠️🍔</span>
+                    </h5>
                   </div>
                 </div>
               </div>
@@ -314,29 +370,39 @@ const User = () => {
                 <div className="recommendation-content">
                   {bmi < 18 ? (
                     <div className="icon-recommendation">
-                      <span role="img" aria-label="underweight">⚠️</span>
+                      <span role="img" aria-label="underweight">
+                        ⚠️
+                      </span>
                       <p>Risk of Nutrient Deficiency</p>
                     </div>
                   ) : bmi >= 18 && bmi <= 24 ? (
                     <div className="icon-recommendation">
-                      <span role="img" aria-label="healthy">✅</span>
+                      <span role="img" aria-label="healthy">
+                        ✅
+                      </span>
                       <p>Keep up the good work!</p>
                     </div>
                   ) : bmi > 24 && bmi <= 29 ? (
                     <div className="icon-recommendation">
-                      <span role="img" aria-label="overweight">⚠️</span>
+                      <span role="img" aria-label="overweight">
+                        ⚠️
+                      </span>
                       <p>Watch out for Hypertension and Diabetes</p>
                     </div>
                   ) : bmi >= 30 ? (
                     <div className="icon-recommendation">
-                      <span role="img" aria-label="obesity">🚨</span>
+                      <span role="img" aria-label="obesity">
+                        🚨
+                      </span>
                       <p>High Risk of Heart Disease</p>
                     </div>
                   ) : null}
 
                   {userData.age >= 40 ? (
                     <div className="icon-recommendation">
-                      <span role="img" aria-label="age risk">⚠️</span>
+                      <span role="img" aria-label="age risk">
+                        ⚠️
+                      </span>
                       <p>Higher Risk for Cardiovascular Diseases</p>
                     </div>
                   ) : null}
@@ -354,22 +420,37 @@ const User = () => {
 
               <div className="macro-details">
                 <p>Protein: {weightLossMacros.protein}g</p>
-                <div className="progress-bar"> 
-                  <span style={{ width: '50%', backgroundColor: 'rgb(160, 131, 255)' }}></span>
+                <div className="progress-bar">
+                  <span
+                    style={{
+                      width: "50%",
+                      backgroundColor: "rgb(160, 131, 255)",
+                    }}
+                  ></span>
                 </div>
               </div>
 
               <div className="macro-details">
                 <p>Carbs: {weightLossMacros.carbs}g</p>
                 <div className="progress-bar">
-                  <span style={{ width: '68%', backgroundColor: 'rgb(103, 166, 255)' }}></span>
+                  <span
+                    style={{
+                      width: "68%",
+                      backgroundColor: "rgb(103, 166, 255)",
+                    }}
+                  ></span>
                 </div>
               </div>
 
               <div className="macro-details">
-                <p className='fats'>Fats: {weightLossMacros.fats}g</p>
+                <p className="fats">Fats: {weightLossMacros.fats}g</p>
                 <div className="progress-bar">
-                  <span style={{ width: '35%', backgroundColor: 'rgb(249, 204, 92)' }}></span>
+                  <span
+                    style={{
+                      width: "35%",
+                      backgroundColor: "rgb(249, 204, 92)",
+                    }}
+                  ></span>
                 </div>
               </div>
             </div>
@@ -383,21 +464,36 @@ const User = () => {
               <div className="macro-details">
                 <p>Protein: {weightGainMacros.protein}g</p>
                 <div className="progress-bar">
-                  <span style={{ width: '35%', backgroundColor: 'rgb(160, 131, 255)' }}></span>
+                  <span
+                    style={{
+                      width: "35%",
+                      backgroundColor: "rgb(160, 131, 255)",
+                    }}
+                  ></span>
                 </div>
               </div>
 
               <div className="macro-details">
                 <p>Carbs: {weightGainMacros.carbs}g</p>
                 <div className="progress-bar">
-                  <span style={{ width: '68%', backgroundColor: 'rgb(103, 166, 255)' }}></span>
+                  <span
+                    style={{
+                      width: "68%",
+                      backgroundColor: "rgb(103, 166, 255)",
+                    }}
+                  ></span>
                 </div>
               </div>
 
               <div className="macro-details">
-                <p className='fats'>Fats: {weightGainMacros.fats}g</p>
+                <p className="fats">Fats: {weightGainMacros.fats}g</p>
                 <div className="progress-bar">
-                  <span style={{ width: '35%', backgroundColor: 'rgb(249, 204, 92)' }}></span>
+                  <span
+                    style={{
+                      width: "35%",
+                      backgroundColor: "rgb(249, 204, 92)",
+                    }}
+                  ></span>
                 </div>
               </div>
             </div>
