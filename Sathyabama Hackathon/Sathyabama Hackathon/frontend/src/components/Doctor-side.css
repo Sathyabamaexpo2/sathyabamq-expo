@@ -1,405 +1,638 @@
-.doc-nav-Lcont{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap:40px;
-    width: 100%;
-  }
-  .doc-search-div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap:20px;
-    position: relative;
-    padding-bottom: 20px;
-    width: 90%;
-  }
-  .main-top{
-    display: flex;
-    width: 100%;
-    height: 250px;
-    gap: 80px;
-    margin-top: -20px;
-    flex-direction: row;
-  }
-  .main-bottom{
-    display: flex;
-    background-color: rgb(232, 225, 255);
-    width: 100%;
-    height: 100%;
-    margin-top: -10px;
-    flex-direction: row;
-  }
-  .whole-cont {
-    display: flex;
-    flex-direction: column; 
-    background: rgb(232, 225, 255);
-    width: 100vw;
-    height: 100vh; 
-    overflow: hidden; 
-  }
-  .input-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-  }
-  .doc-title{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .typed-anim-cont{
-    display: flex;
-    flex-direction: row;
-  }
-  .doc-greet-text{
-    display: flex;
-    position: static;
-    flex-direction: column;
-    top:20px;
-    justify-content: center;
-  }
+.doc-nav-Lcont {
+  display: flex;
+  /* align-items: center; */
+  gap: 40px;
+  width: 100%;
+}
 
-  .doc-greet-text p{
-    position: relative;
-    bottom: 20px;
-  }
+.header-div {
+  background-color: rgb(2, 2, 5);
+}
 
-  .logout-btn-div{
-    display: flex;
-    position: absolute;
-    padding-left: 20px;
-    padding-bottom: 20px;
-    bottom: 0;
-  }
-  .prof {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    top: 29px;
-    left: 50px;
-    border: 2px solid #e0e0e0;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-    overflow: hidden; 
+.doc-title {
+  color: white;
+  margin-left: 40px;
+}
+
+.doc-search-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  padding-bottom: 20px;
+  width: 90%;
+}
+
+.main-top {
+  display: flex;
+  width: 100%;
+  height: 550px;
+  gap: 80px;
+  flex-direction: row;
+  background-color: rgb(232, 225, 255);
+  ;
+}
+
+.main-bottom {
+  display: flex;
+  /* background-color: rgb(232, 225, 255); */
+  width: 100%;
+  height: 100%;
+  margin-top: -10px;
+  flex-direction: row;
+}
+
+.whole-cont {
+  display: flex;
+  flex-direction: column;
+  /* background: rgb(232, 225, 255); */
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.input-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.doc-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.typed-anim-cont {
+  display: flex;
+  flex-direction: row;
+}
+
+.doc-greet-text {
+  display: flex;
+  position: static;
+  flex-direction: column;
+  top: 20px;
+  justify-content: center;
+}
+
+.doc-greet-text p {
+  position: relative;
+  bottom: 20px;
+}
+
+.logout-btn-div {
+  display: flex;
+  position: absolute;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  bottom: 0;
+}
+
+.prof {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 29px;
+  left: 50px;
+  border: 2px solid #e0e0e0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
 }
 
 .prof img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-  .btn-img{
-    display: flex;
-    gap: 20px;
-  }
-  #prof-2{
-      width: 50px;
-      height: 50px;
-  }
-  .other-btn-div{
-    display: flex;
-    flex-direction: column;
-    gap:50px;
-  }
-  .other-btn{
-    background: none;
-    border: none  ;
-    border-radius: none;
-    outline: none;
-    color: rgb(0, 0, 0);
-    /* border-bottom: 1px solid black; */
-  
-  }
-  #lout {
-    background: none;
-    color: #342828;
-    width: 80%;
-  }
-  
-  #lout:hover {
-    color: rgb(254, 120, 59);
-    border: none;
-  }
-  .nothing{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   color: white;
-  }
-  .doc-pat-count{
-    display: flex;
-    position: relative;
-    top:10px;
-    background: rgb(142, 197, 248);
-    flex-direction: column;
-    justify-content: center;
-    padding: 10px 10px 10px 10px;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    height: 180px;
-    border-radius: 15px;
-    color:rgb(255, 255, 255);
-    margin-left:20px;
-  }
-  .other-btn:focus {
-    outline: none;  
-    border: none;   
-    box-shadow: none; 
-  }
-  .other-btn:hover{
-    color: rgb(238, 95, 23);
-  }
-  aside{
-      display: flex;
-      gap:40px;
-      width: 20%;
-      height: 560px;
-  }
-  
-  main{
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap:100px;
-    height: 100vh;
-  }
-  .doc-greet{
-    display: flex;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    text-align: center;
-    gap:140px;
-    border-radius: 20px;
-    color: white;
-    background-color:rgb(142, 107, 255);
-    left: 50px;
-    top:10px;
-    width: 70%;
-    height: 100%;
-  }
-    .toggle-prof-div,.appion-div{
-      position: fixed; 
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.5); 
-      display: flex; 
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(2px); 
-      color:black;
-      z-index: 1000; }
-      .appion-div:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      }
-      .det-doc{
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap:40px;   
-          border-radius: 20px;
-          box-shadow: 2px 8px 16px rgba(0, 0, 0, 0.15);  
-          width: 30%;
-          height: 80%;   
-      }
-    .main-content-DS{
-      display: flex;
-      margin-left: 40px;
-      position: absolute;
-      top:120px;
-      width: 100%;
-      height: 80vh;
-    }
-  #doc-prof-btn{
-      background: none;
-      border: none;
-  
-  }
-    .welcome-div{
-      display: flex;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      background: white;
-      padding-top:50px;
-      border-radius: 15px;
-      width:100%;
-      height:83%;
-      margin-top:-10px;
-    }
-    .main-bottom {
-      display: flex;
-      flex-direction: row;
-      margin-left: 50px;
-      top:250px;
-      background-color: rgb(232, 225, 255); 
-    }
-    .list-container{
-      display: flex;
-      justify-content: center;
-      background-color: rgb(232, 225, 255);
-      position: relative;
-      bottom:60px;
-      justify-content: center;
-      flex-direction: row;
-      /* gap:40px; */
-      width: 90%;
-      height:82%;
-      border: 1px solid rgb(192, 189, 189);
-      border-radius: 15px;
-      margin-top: -10px;
-    }
-    #view,.appoin-btn{
-      color: white;
-      border-radius: 30px;
-      background-color:rgb(160, 131, 255);
-    }
-    #view:focus{
-      outline: none;
-    }
-    .list-div-Card {
-      display: flex;
-      flex-direction: column;
-      /* color: rgb(166, 166, 166); */
-      justify-content: center;
-      background-color: white;
-      align-items: center;
-      gap: 10px;
-      width:25%;
-      height:80%;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      /* backdrop-filter: blur(10px); Blur effect */
-      -webkit-backdrop-filter: blur(10px); /* Safari support */
-      border: 1px solid rgba(255, 255, 255, 0.3); /* Soft white border */
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      padding: 15px;
-      position: relative;
-      margin-top: 20px;
-      overflow: hidden;
-    }
 
-    .list-div-Card label{
-      margin-top: -5px;
-    }
-    
-    .list-div-Card:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
-      opacity: 0.4;
-      pointer-events: none; 
-      z-index: 1;
-    }
+.btn-img {
+  display: flex;
+  gap: 20px;
+}
 
-    .list-conatainer button{
-      margin-top: -10px;
-    }
-    
-    .list-div-Card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    }
-    
-    .list-div-Card * {
-      position: relative;
-      z-index: 2; 
-    }
-    .appion-div{
-      flex-direction: row;
-      gap: 30px;
-    }
-    .appion-container {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      min-height: 100vh;
-      justify-content: center;
-      align-items: center;
-    }
-    .appion-div:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    }
-    
-    .prof3 img {
-      border-radius: 50%;
-      width: 70px;
-      height: 70px;
-      margin-right: 15px;
-    }
-    
-    .appion-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .appion-content p {
-      font-size: 0.9rem;
-      color: #333;
-      margin: 5px 0;
-    }
-    
-    .button-group {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    
-    .appion-div button.appoin-btn {
-      background-color: #4a3df3;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 15px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    
-    .appion-div button.appoin-btn:hover {
-      background-color: #4a3df3;
-    }
-    .appion-div button.decline {
-      background-color: #ff4d44;
-    }
-    .appion-div button.decline:hover {
-      background-color: #D32F2F;
-    }
-    
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: none;
-      border: none;
-      color: #333;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    .close-btn:hover {
-      color: #FF3B30;
-    }
-    
-    .profile-img{
-      border-radius: 50%;
-      object-fit: cover;
-      cursor: pointer;
-    }
+#prof-2 {
+  width: 50px;
+  height: 50px;
+}
+
+.other-btn-div {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.other-btn {
+  background: none;
+  border: none;
+  border-radius: none;
+  outline: none;
+  color: rgb(0, 0, 0);
+  /* border-bottom: 1px solid black; */
+
+}
+
+#lout {
+  background: none;
+  color: #342828;
+  width: 80%;
+}
+
+#lout:hover {
+  color: rgb(254, 120, 59);
+  border: none;
+}
+
+.nothing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.doc-pat-count {
+  display: flex;
+  position: relative;
+  top: 50px;
+  right:250px;
+  background: rgb(142, 197, 248);
+  flex-direction: column;
+  justify-content: center;
+  /* padding: 10px 10px 10px 10px; */
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 480px;
+  height: 60%;
+  border-radius: 15px;
+  color: rgb(255, 255, 255);
+  margin-top:14px;
+}
+
+.other-btn:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.other-btn:hover {
+  color: rgb(238, 95, 23);
+}
+
+aside {
+  display: flex;
+  gap: 40px;
+  width: 20%;
+  height: 560px;
+}
+
+main {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 100px;
+  height: 100vh;
+}
+
+.doc-greet {
+  display: flex;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: center;
+  gap: 140px;
+  border-radius: 20px;
+  color: white;
+  background-color: rgb(142, 107, 255);
+  left: 50px;
+  top: 10px;
+  width: 40%;
+  height: 100%;
+}
+
+.toggle-prof-div,
+.appion-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+  color: black;
+  z-index: 1000;
+}
+
+.appion-div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.det-doc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  border-radius: 20px;
+  box-shadow: 2px 8px 16px rgba(0, 0, 0, 0.15);
+  width: 30%;
+  height: 80%;
+}
+
+.main-content-DS {
+  display: flex;
+  position: absolute;
+  top: 120px;
+  width: 100%;
+  height: 80vh;
+}
+
+#doc-prof-btn {
+  background: none;
+  border: none;
+
+}
+
+.welcome-div {
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: white;
+  padding-top: 50px;
+  border-radius: 15px;
+  width: 100%;
+  height: 83%;
+  margin-top: -10px;
+}
+
+.main-bottom {
+  display: flex;
+  flex-direction: row;
+  margin-left: 50px;
+  top: 250px;
+  /* background-color: rgb(232, 225, 255);  */
+}
+
+.list-container {
+  display: flex;
+  justify-content: center;
+  /* background-color: rgb(232, 225, 255); */
+  position: relative;
+  bottom: 60px;
+  justify-content: center;
+  flex-direction: row;
+  /* gap:40px; */
+  width: 90%;
+  height: 82%;
+  border: 1px solid rgb(192, 189, 189);
+  border-radius: 15px;
+  margin-top: -10px;
+}
+
+#view,
+.appoin-btn {
+  color: white;
+  border-radius: 30px;
+  background-color: rgb(160, 131, 255);
+}
+
+#view:focus {
+  outline: none;
+}
+
+.list-div-Card {
+  display: flex;
+  flex-direction: column;
+  /* color: rgb(166, 166, 166); */
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  gap: 10px;
+  width: 15%;
+  height: 80%;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  /* backdrop-filter: blur(10px); Blur effect */
+  -webkit-backdrop-filter: blur(10px);
+  /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* Soft white border */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 15px;
+  position: relative;
+  margin-top: 20px;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.list-div-Card label {
+  margin-top: -5px;
+}
+
+.list-div-Card:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.list-conatainer button {
+  margin-top: -10px;
+}
+
+.list-div-Card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.list-div-Card * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Remove any unnecessary blur effects and keep appointments section clear */
+.appointments {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.appion-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.prof3 img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.appion-content {
+  flex-grow: 1;
+}
+
+.appion-content p {
+  margin: 5px 0;
+  color: #333;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.appoin-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.appoin-btn:hover {
+  background-color: #45a049;
+}
+
+.appoin-btn.decline {
+  background-color: #f44336;
+}
+
+.appoin-btn.decline:hover {
+  background-color: #d32f2f;
+}
+
+h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+
+.prof3 img {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin-right: 15px;
+}
+
+
+.profile-img {
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.upcoming-patientcontainer {
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px; */
+  margin-top: 30px;
+}
+
+.upcoming-patient-btn {
+  background-color: #5bc0be;
+  /* Match the teal color of the second image */
+  color: black;
+  border: none;
+  border-radius: 20px;
+  padding: 18px 18px;
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.down-arrow {
+  margin-left: 25px;
+  font-size: 22px;
+}
+
+.patient-card {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 10px 20px;
+  width: 280px;
+  /* Adjusted width to match the second image */
+  height: 40%;
+}
+
+.patient-img-container {
+  margin-right: 10px;
+}
+
+
+.patient-profile-img {
+  border-radius: 50%;
+  margin-left: 12px;
+}
+
+.patient-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.patient-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.patient-time {
+  font-size: 14px;
+  color: #999;
+  margin: 5px 0 0 0;
+}
+
+.patient-time span {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 0 2px;
+  background-color: #eaf9f6;
+  border-radius: 8px;
+}
+
+.patient-age,
+.patient-gender {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 2px 0;
+}
+
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  /* Reduced gap for tighter layout */
+  margin-left: 75px
+}
+
+.date-display {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
+
+.day {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.date-display .date {
+  font-size: 2.5rem;
+  /* Adjusted size for consistency */
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+  /* Remove default margin */
+}
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.line {
+  border-left: 4px solid #00c4cc;
+  /* Matches the line in the image */
+  padding-left: 8px;
+  /* Reduced padding for tighter text alignment */
+}
+
+.welcome-message {
+  font-size: 1.2rem;
+  /* Slightly larger for emphasis */
+  color: #6e6e6e;
+  /* Light gray text */
+  margin: 0;
+  /* Remove unnecessary spacing */
+  line-height: 1.5rem;
+  /* Ensure proper spacing between lines */
+}
+
+.tod-appoin{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  margin-top: -30px;
+}
+
+.app-div{
+ display: flex;
+ margin: 5px;
+ background-color: white;
+ width: 280px;
+ height: 40%;
+ border-radius: 12px;
+ padding: 8px 10px 4px;
+ margin-left: -24px;
+}
+
+.app-content{
+ justify-content: center;
+ margin-top: -10px;
+}
+
+.scroll-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.more-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.more-button:hover {
+  background-color: #0056b3;
+}

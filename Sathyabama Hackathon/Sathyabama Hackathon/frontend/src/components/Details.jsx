@@ -26,6 +26,7 @@ const Details = () => {
     const displayWeight = isFromUserPage ? userData.weight :cart.weight || 'N/A';
     const displayBloodGroup = isFromUserPage ? userData.bloodgroup :cart.bloodgroup || 'N/A';
     const displayDoctorName = doctorName || name || 'N/A';
+
   
   
     const Navigate = useNavigate();

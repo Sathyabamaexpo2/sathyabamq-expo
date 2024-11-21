@@ -109,10 +109,17 @@ const getAppointmentsForDoctor = async (req, res) => {
     const { doctorName, doctorType } = req.params;
 
     try {
-        const appointments = await Appointment.find({
-            'appointments.doctorName': doctorName,
-            'appointments.doctorType': doctorType,
-        });
+        const appointments = await Appointment.find(
+            {
+                appointments: {
+                    $elemMatch: {
+                        doctorName: doctorName,
+                        doctorType: doctorType,
+                    },
+                },
+            },
+            { 'appointments.$': 1, email: 1 } 
+        );
 
         res.status(200).json({ appointments });
     } catch (error) {
@@ -120,6 +127,7 @@ const getAppointmentsForDoctor = async (req, res) => {
         res.status(500).json({ message: 'Error fetching appointments', error: error.message });
     }
 };
+
 
 const updateAppointmentStatus = async (req, res) => { 
     try {
