@@ -221,12 +221,7 @@ const Doctorside = () => {
               </div>
             </div>
           </nav>
-
-          <button
-            id="doc-prof-btn"
-            onClick={() => setToggleProfile((prev) => !prev)}
-          >
-            <div className="logout-btn-div">
+          <div className="logout-btn-div">
               <img src={power} alt="Logout" width={40} height={40} />
               <button
                 className="button-31"
@@ -234,7 +229,10 @@ const Doctorside = () => {
                 onClick={handleLogout}
               ></button>
             </div>
-
+          <button
+            id="doc-prof-btn"
+            onClick={() => setToggleProfile((prev) => !prev)}
+          >
             <img
               src={imageUrl}
               alt="Profile"
@@ -344,7 +342,9 @@ const Doctorside = () => {
             <div className="doc-pat-count">
             <button className="button-31" id="all" onClick={toggleOverlay}>View All</button>
               <h2>Total patients:</h2>
+              <div className="acc-count">
               <h3>{cartData.length}</h3>
+              </div>
             </div>
           </div>
           <div className="main-bottom">

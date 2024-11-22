@@ -9,6 +9,9 @@
 .header-div {
 background-color:#202020;
 height: 100px;
+display: flex;
+flex-direction: row;
+justify-content: space-around;
 color: white;
 }
 
@@ -30,9 +33,11 @@ color: white;
 .main-top {
   display: flex;
   width: 100%;
-  height: 350px;
+  background-color:hsl(179, 58%, 85%);;
+  height: 300px;
   gap: 80px;
   flex-direction: row;
+  margin-top:-20px;
 }
 
 .main-bottom {
@@ -40,7 +45,6 @@ color: white;
   /* background-color: rgb(232, 225, 255); */
   width: 100%;
   height: 800px;
-  margin-top: -10px;
   flex-direction: row;
 }
 
@@ -160,21 +164,24 @@ color: white;
   align-items: center;
   color: white;
 }
-
+.acc-count{
+  display: flex;
+  padding-bottom: 70px;
+}
 .doc-pat-count {
   display: flex;
   position: relative;
-  top: 0px;
+  top: 50px;
   right:50px;
-  background: rgb(142, 197, 248);
+  background: rgb(255, 255, 255);
   flex-direction: column;
   justify-content: center;
   /* padding: 10px 10px 10px 10px; */
   align-items: center;
   text-align:center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 220px;
-  height: 40%;
+  width: 210px;
+  height: 60%;
   border-radius: 15px;
   color: rgb(0, 0, 0);
   margin-top:14px;
@@ -322,6 +329,7 @@ main {
 }
 #all{
   color: black;
+  border-radius: 15px;
   background-color:  hsl(179, 61%, 46%);
 }
 .list-div-Card2{
@@ -337,10 +345,13 @@ main {
 .main-bottom {
   display: flex;
   flex-direction: row;
-  width: 70%;
+  width: 80%;
+  height: 100%;
+  padding-top: 60px;
   justify-content:space-evenly;
   margin-left: 50px;
   top: 100px;
+  margin-top: 10px;
 }
 
 .list-container {
@@ -382,19 +393,19 @@ main {
   background-color: white;
   align-items: center;
   gap: 10px;
-  width: 20%;
+  width: 50%;
   height: 80%;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   /* backdrop-filter: blur(10px); Blur effect */
-  /* -webkit-backdrop-filter: blur(10px); */
+  -webkit-backdrop-filter: blur(10px);
   /* Safari support */
   border: 1px solid rgba(255, 255, 255, 0.3);
   /* Soft white border */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 15px;
   position: relative;
-  margin-top: 20px;
+  margin-top: 120px;
   overflow: hidden;
   margin: 10px;
 }
