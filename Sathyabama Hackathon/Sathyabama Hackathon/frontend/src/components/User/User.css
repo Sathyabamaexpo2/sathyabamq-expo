@@ -47,7 +47,22 @@
   width:100%;
   background: rgb(232, 225, 255);
 }
+.close-chat-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
+.close-chat-btn:hover {
+  transform: scale(1.2);
+}
 .user-right {
   width: 25%;
   height: 100%;
