@@ -1,8 +1,17 @@
 .doc-nav-Lcont {
   display: flex;
   /* align-items: center; */
+  justify-content: space-between;
+  align-items: center;
   gap: 40px;
   width: 100%;
+}
+
+.doc-nav-Rcont {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Adjust spacing between Logout and Profile buttons */
 }
 
 .header-div {
@@ -11,7 +20,7 @@
 
 .doc-title {
   color: white;
-  margin-left: 40px;
+  margin-left: 40px;  
 }
 
 .doc-search-div {
@@ -31,7 +40,7 @@
   gap: 80px;
   flex-direction: row;
   background-color: rgb(232, 225, 255);
-  ;
+  
 }
 
 .main-bottom {
@@ -88,10 +97,13 @@
 
 .logout-btn-div {
   display: flex;
-  position: absolute;
-  padding-left: 20px;
-  padding-bottom: 20px;
-  bottom: 0;
+  align-items: center;
+  gap: 5px;
+  /* Spacing between the logout icon and button */
+}
+
+.logout-btn-div button{
+  color:white;
 }
 
 .prof {

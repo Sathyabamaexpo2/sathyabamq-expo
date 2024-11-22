@@ -185,14 +185,42 @@ const Details = () => {
   return (
     <>
       <div className="details-container">
-        <nav className="navbar">
-          <h1 style={{ fontSize: "26px" }}>
-            {/* <button className="back" onClick={HandleRedirection}>
-                            <img src={back} alt="Back" width={20} height={20} />
-                        </button> */}
-            MedX
-          </h1>
-        </nav>
+        <div className="header-div">
+          <header>
+            <nav>
+              <div className="doc-nav-Lcont">
+                <div className="doc-title">
+                  <h2>MedX</h2>
+                </div>
+                <div className="doc-nav-Rcont">
+                  <button
+                    id="doc-prof-btn"
+                    onClick={() => setToggleProfile((prev) => !prev)}
+                  >
+                    <img
+                      src={imageUrl}
+                      alt="Profile"
+                      width={60}
+                      height={60}
+                      className="profile-img"
+                    />
+                  </button>
+
+                  <div className="logout-btn-div">
+                    <img src={power} alt="Logout" width={40} height={40} />
+                    <button
+                      className="button-31"
+                      id="lout"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </header>
+        </div>
         <div className="left-container2">
           <div className="Det-prof">
             <img src={pat} alt="Profile" />
