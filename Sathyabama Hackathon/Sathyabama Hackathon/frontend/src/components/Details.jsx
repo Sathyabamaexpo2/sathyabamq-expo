@@ -3,6 +3,7 @@ import "./Details.css";
 import pat from "../assets/pat.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import power from "../assets/power-button.png";
 
 const Details = () => {
   const [togglePrescription, setPrescription] = useState(false);
@@ -13,11 +14,19 @@ const Details = () => {
 
   const [extractedText, setextractedText] = useState({});
 
+  const navigate = useNavigate();
+
   const isFromUserPage = Boolean(userData);
   const isFromDocPage = Boolean(cart);
 
   console.log("User Data:", userData);
   console.log("Appointment Data:", cart);
+
+  const image = "";
+
+  const imageUrl = image
+    ? `http://localhost:5000/api/user/${normalizePath(image)}`
+    : "";
 
   const displayName = isFromUserPage ? userData.name : cart.name || "N/A";
   const displayAge = isFromUserPage ? userData.age : cart.age || "N/A";
@@ -40,6 +49,10 @@ const Details = () => {
   const handlePopup = () => {
     setPrescription(!togglePrescription);
     fetchPrescriptions();
+  };
+
+  const handleLogout = () => {
+    navigate("/");
   };
 
   const handleFileChange = async (event) => {
