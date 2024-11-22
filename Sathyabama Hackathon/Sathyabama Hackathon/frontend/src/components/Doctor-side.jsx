@@ -219,6 +219,32 @@ const Doctorside = () => {
               <div className="doc-title">
                 <h2>MedX</h2>
               </div>
+              <div className="doc-nav-Rcont">
+                <button
+                  id="doc-prof-btn"
+                  onClick={() => setToggleProfile((prev) => !prev)}
+                >
+                  <img
+                    src={imageUrl}
+                    alt="Profile"
+                    width={60}
+                    height={60}
+                    className="profile-img"
+                  />
+                </button>
+
+                <div className="logout-btn-div">
+                  <img src={power} alt="Logout" width={40} height={40} />
+                  <button
+                    className="button-31"
+                    id="lout"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
+                
+              </div>
             </div>
           </nav>
           <div className="logout-btn-div">
@@ -241,6 +267,7 @@ const Doctorside = () => {
               className="profile-img"
             />
           </button>
+
         </header>
       </div>
 
