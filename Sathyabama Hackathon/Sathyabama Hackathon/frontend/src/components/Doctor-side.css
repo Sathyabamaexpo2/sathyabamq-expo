@@ -30,11 +30,8 @@ color: white;
 .main-top {
   display: flex;
   width: 100%;
-  position: relative;
-  bottom: 20px;
-  background-color: rgb(219, 238, 233);
-  height: 550px;
-  gap: 80px;  
+  height: 350px;
+  gap: 80px;
   flex-direction: row;
 }
 
@@ -167,20 +164,22 @@ color: white;
 .doc-pat-count {
   display: flex;
   position: relative;
-  top: 75px;
-  right:250px;
-  background: rgb(255, 255, 255);
+  top: 0px;
+  right:50px;
+  background: rgb(142, 197, 248);
   flex-direction: column;
   justify-content: center;
   /* padding: 10px 10px 10px 10px; */
   align-items: center;
   text-align:center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 700px;
-  height: 50%;
+  width: 220px;
+  height: 40%;
   border-radius: 15px;
   color: rgb(0, 0, 0);
   margin-top:14px;
+  
+
 }
 .count-div{
   display: flex;
@@ -383,12 +382,12 @@ main {
   background-color: white;
   align-items: center;
   gap: 10px;
-  width: 40%;
-  height: 100%;
+  width: 20%;
+  height: 80%;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   /* backdrop-filter: blur(10px); Blur effect */
-  -webkit-backdrop-filter: blur(10px);
+  /* -webkit-backdrop-filter: blur(10px); */
   /* Safari support */
   border: 1px solid rgba(255, 255, 255, 0.3);
   /* Soft white border */
@@ -519,6 +518,7 @@ h3 {
   align-items: flex-start;
   padding: 10px; */
   margin-top: 30px;
+  margin-left: -30px;
 }
 
 .upcoming-patient-btn {
@@ -620,7 +620,14 @@ h3 {
   font-weight: bold;
   color: #333;
 }
-
+.appoinments-container{
+  display: flex;
+  position: relative;
+  top:200px;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+}
 .date-display .date {
   font-size: 2.5rem;
   /* Adjusted size for consistency */
@@ -654,15 +661,21 @@ h3 {
   /* Ensure proper spacing between lines */
 }
 
-.tod-appoin{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.tod-appoin {
+  max-width: 450px;
+  margin: 0 auto;
   padding: 20px;
-  width: 100%;
-  height: 100%;
-  margin-top: -30px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: -30px; 
+  height: 50%;
+  margin-top: 40px;
+  align-items: center;
+  overflow: scroll;
+  overflow-x:hidden;
 }
+
 
 .app-div{
  display: flex;
@@ -672,9 +685,11 @@ h3 {
  height: 45%;
  border-radius: 12px;
  padding: 8px 10px 4px;
- position: relative;
- bottom: 40px;
- margin-left: -24px;
+}
+
+.appoin-title{
+  text-align: center;
+  margin-top: -10px;
 }
 
 .app-content{

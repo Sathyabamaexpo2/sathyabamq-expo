@@ -221,10 +221,20 @@ const Doctorside = () => {
               </div>
             </div>
           </nav>
+
           <button
             id="doc-prof-btn"
             onClick={() => setToggleProfile((prev) => !prev)}
           >
+            <div className="logout-btn-div">
+              <img src={power} alt="Logout" width={40} height={40} />
+              <button
+                className="button-31"
+                id="lout"
+                onClick={handleLogout}
+              ></button>
+            </div>
+
             <img
               src={imageUrl}
               alt="Profile"
@@ -247,7 +257,7 @@ const Doctorside = () => {
               <div className="welcome-container">
                 <div className="line">
                   <p className="welcome-message">
-                    Hi {name}, you have {appointments.length} meetings today
+                    Hi {name}, you have {cartData.length} meetings today
                   </p>
                 </div>
               </div>
@@ -280,67 +290,61 @@ const Doctorside = () => {
             )}
 
             <div className="tod-appoin">
-              <h2>Your Appointments</h2><br/>
-              {appointment ? (
-                <div className="app-div">
-                  <div className="prof3">
-                    <img src={pat} alt={appointment.username} width={60} />
+              <h2 className="appoin-title">Your Appointments</h2>
+              {appointments && appointments.length > 0 ? (
+                appointments.map((item) => (
+                  <div key={item.email}>
+                    {item.appointments.map((appointment) => (
+                      <div key={appointment.time} className="app-div">
+                        <div className="prof3">
+                          <img
+                            src={pat}
+                            alt={appointment.username}
+                            width={60}
+                          />
+                        </div>
+                        <div className="app-content">
+                          <p>{appointment.username}</p>
+                          <p>Time: {appointment.time}</p>
+                          <p>Status: {appointment.status}</p>
+                          <div className="button-group">
+                            {appointment.status !== "accepted" &&
+                              appointment.status !== "declined" && (
+                                <>
+                                  <button
+                                    className="appoin-btn"
+                                    onClick={() =>
+                                      acceptAppointmentAndAddPatient({
+                                        email: item.email,
+                                        appointment,
+                                      })
+                                    }
+                                  >
+                                    Accept
+                                  </button>
+                                  <button
+                                    className="appoin-btn decline"
+                                    onClick={() => handleDecline(appointment)}
+                                  >
+                                    Decline
+                                  </button>
+                                </>
+                              )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="app-content">
-                    <p>{appointment.username}</p>
-                    <p>Time: {appointment.time}</p>
-                    <p>Status: {appointment.status}</p>
-
-                    <div className="button-group">
-                      {appointment.status !== "accepted" &&
-                        appointment.status !== "declined" && (
-                          <>
-                            <button
-                              className="appoin-btn"
-                              onClick={() =>
-                                acceptAppointmentAndAddPatient({
-                                  email: appointments[0]?.email,
-                                  appointment,
-                                })
-                              }
-                            >
-                              Accept
-                            </button>
-                            <button
-                              className="appoin-btn decline"
-                              onClick={() => handleDecline(appointment)}
-                            >
-                              Decline
-                            </button>
-                          </>
-                        )}
-                    </div>
-                  </div>
-                </div>
+                ))
               ) : (
                 <p>No Appointments Available</p>
               )}
-
-              <div className="scroll-buttons">
-                {currentAppointmentIndex > 0 && (
-                  <button className="more-button" onClick={handleScrollUp}>
-                    Scroll Up
-                  </button>
-                )}
-                {currentAppointmentIndex <
-                  appointments[0]?.appointments?.length - 1 && (
-                  <button className="more-button" onClick={handleScrollDown}>
-                    Scroll Down
-                  </button>
-                )}
-              </div>
             </div>
+
             <div className="doc-pat-count">
             <button className="button-31" id="all" onClick={toggleOverlay}>View All</button>
               <h2>Total patients:</h2>
-              <div className="count-div">
-              <h3>{appointments.length}</h3>
-              </div>
+              <h3>{cartData.length}</h3>
             </div>
           </div>
           <div className="main-bottom">
