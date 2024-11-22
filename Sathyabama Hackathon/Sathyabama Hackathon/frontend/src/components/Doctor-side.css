@@ -5,6 +5,7 @@
   align-items: center;
   gap: 40px;
   width: 100%;
+
 }
 
 .doc-nav-Rcont {
@@ -15,12 +16,14 @@
 }
 
 .header-div {
-  background-color: rgb(2, 2, 5);
+background-color:#202020;
+height: 100px;
+color: white;
 }
 
 .doc-title {
   color: white;
-  margin-left: 40px;  
+  margin-left: 40px;
 }
 
 .doc-search-div {
@@ -40,14 +43,14 @@
   gap: 80px;
   flex-direction: row;
   background-color: rgb(232, 225, 255);
-  
+  ;
 }
 
 .main-bottom {
   display: flex;
   /* background-color: rgb(232, 225, 255); */
   width: 100%;
-  height: 100%;
+  height: 800px;
   margin-top: -10px;
   flex-direction: row;
 }
@@ -156,7 +159,7 @@
 
 #lout {
   background: none;
-  color: #342828;
+  color: #000000;
   width: 80%;
 }
 
@@ -182,16 +185,20 @@
   justify-content: center;
   /* padding: 10px 10px 10px 10px; */
   align-items: center;
+  text-align:center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 220px;
   height: 40%;
   border-radius: 15px;
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   margin-top:14px;
   
 
 }
-
+.count-div{
+  display: flex;
+  margin-bottom: 50px;
+}
 .other-btn:focus {
   outline: none;
   border: none;
@@ -290,13 +297,64 @@ main {
   height: 83%;
   margin-top: -10px;
 }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.overlay-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 100%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.overlay-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.close-button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+#all{
+  color: black;
+  background-color:  hsl(179, 61%, 46%);
+}
+.list-div-Card2{
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: 300px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 
 .main-bottom {
   display: flex;
   flex-direction: row;
+  width: 70%;
+  justify-content:space-evenly;
   margin-left: 50px;
-  top: 250px;
-  /* background-color: rgb(232, 225, 255);  */
+  top: 100px;
 }
 
 .list-container {
@@ -304,31 +362,35 @@ main {
   justify-content: center;
   /* background-color: rgb(232, 225, 255); */
   position: relative;
-  bottom: 60px;
-  justify-content: center;
+  bottom:130px;
+  justify-content:flex-start;
+  margin-left: 240px;
   flex-direction: row;
   /* gap:40px; */
   width: 90%;
   height: 82%;
-  border: 1px solid rgb(192, 189, 189);
-  border-radius: 15px;
-  margin-top: -10px;
 }
 
-#view,
 .appoin-btn {
   color: white;
   border-radius: 30px;
   background-color: rgb(160, 131, 255);
 }
-
-#view:focus {
+#view2,#view3{
+  color: rgb(0, 0, 0);
+  border-radius: 30px;
+  background-color:hsl(179, 61%, 46%);
+}
+#view2:focus {
   outline: none;
 }
-
+#line2{
+  height: 120px;
+}
 .list-div-Card {
   display: flex;
   flex-direction: column;
+  font-size: x-small;
   /* color: rgb(166, 166, 166); */
   justify-content: center;
   background-color: white;
@@ -339,7 +401,7 @@ main {
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   /* backdrop-filter: blur(10px); Blur effect */
-  -webkit-backdrop-filter: blur(10px);
+  /* -webkit-backdrop-filter: blur(10px); */
   /* Safari support */
   border: 1px solid rgba(255, 255, 255, 0.3);
   /* Soft white border */
@@ -474,7 +536,7 @@ h3 {
 }
 
 .upcoming-patient-btn {
-  background-color: #5bc0be;
+  background-color: hsl(179, 61%, 46%);
   /* Match the teal color of the second image */
   color: black;
   border: none;
@@ -634,7 +696,7 @@ h3 {
  margin: 5px;
  background-color: white;
  width: 280px;
- height: 40%;
+ height: 45%;
  border-radius: 12px;
  padding: 8px 10px 4px;
 }

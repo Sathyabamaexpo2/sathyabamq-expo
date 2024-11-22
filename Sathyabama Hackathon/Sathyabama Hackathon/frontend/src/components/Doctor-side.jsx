@@ -11,14 +11,15 @@ import appoin from "../assets/appoinment.png";
 import power from "../assets/power-button.png";
 import profile from "../assets/profile.png";
 import axios from "axios";
+import bg2 from "../assets/bg2.jpg"
 import { toast } from "react-hot-toast";
 import download from "../assets/download.png";
 
 const Doctorside = () => {
   const [cartData, setCartData] = useState({});
+  const [showOverlay, setShowOverlay] = useState(false);
   const [appointments, setAppointments] = useState([]);
   const [toggleProfile, setToggleProfile] = useState(false);
-  // const [toggleAppointment, setToggleAppointment] = useState(false);
   const { state } = useLocation();
   const {
     name = "No Name",
@@ -203,12 +204,14 @@ const Doctorside = () => {
     }
   };
 
-  console.log(appointments);
-
+  const toggleOverlay = () => {
+    setShowOverlay(!showOverlay);
+  };
   const appointment = appointments[0]?.appointments[currentAppointmentIndex];
 
   return (
-    <div className="whole-cont">
+    <div className="whole-cont-main">
+      <div className="whole-cont">
       <div className="header-div">
         <header>
           <nav>
@@ -248,28 +251,6 @@ const Doctorside = () => {
       </div>
 
       <div className="main-content-DS">
-        {/* <aside>
-            <div className="welcome-div">
-              <div className="other-btn-div">
-                <div className="btn-img">
-                  <img src={theme} alt="Theme" width={40} height={40} />
-                  <button className="other-btn">Theme</button>
-                </div>
-                <div className="btn-img">
-                  <img src={chat} alt="Chat" width={40} height={40} />
-                  <button className="other-btn">Chat</button>
-                </div>
-                <div className="btn-img">
-                  <img src={appoin} alt="Appointment" width={40} height={40} />
-                  <button className="other-btn" onClick={() => setToggleAppointment(prev => !prev)}>Appointment</button>
-                </div>
-              </div>
-              <div className="logout-btn-div">
-                <img src={power} alt="Logout" width={40} height={40} />
-                <button className="button-31" id="lout" onClick={handleLogout}>Logout</button>
-              </div>
-            </div>
-          </aside> */}
         <main>
           <div className="main-top">
             <div className="left">
@@ -285,20 +266,6 @@ const Doctorside = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="doc-greet">
-              <div className="prof">
-                <img src={imageUrl} alt="Doctor" width={125} />
-              </div>
-              <div className="doc-greet-text">
-                <div className="typed-anim-cont">
-                  <h2>Welcome,</h2>
-                  <h2 className="typed-text"><p>           </p></h2>
-                </div>
-                <p id="desig">{Specialized} Surgeon</p>
-              </div>
-            </div> */}
-
             {earliestAppointment && (
               <div className="upcoming-patientcontainer">
                 <button className="upcoming-patient-btn">
@@ -379,49 +346,90 @@ const Doctorside = () => {
             </div>
 
             <div className="doc-pat-count">
+            <button className="button-31" id="all" onClick={toggleOverlay}>View All</button>
               <h2>Total patients:</h2>
               <h3>{cartData.length}</h3>
             </div>
           </div>
           <div className="main-bottom">
-            <div className="list-container">
-              {cartData.length > 0 ? (
-                cartData.map((cart, index) => (
-                  <div key={`${index}`} className="list-div-Card">
-                    <div className="prof2">
-                      <img
-                        src={download}
-                        alt="Patient"
-                        width={40}
-                        height={40}
-                      />
-                    </div>
-                    <label>Name: {cart.name}</label>
-                    <label>Age: {cart.age}</label>
-                    <label>Email: {cart.email}</label>
-                    <label>Height: {cart.height}</label>
-                    <label>Weight: {cart.weight}</label>
-                    <button
-                      className="button-31"
-                      id="view"
-                      onClick={() =>
-                        navigate("/details", {
-                          state: {
-                            name,
-                            cart,
-                          },
-                        })
-                      }
-                    >
-                      View Details
-                    </button>
+            <div className="line" id="line2">
+            <h2 style={{color:"#6e6e6e"}}>Patient's Detail's</h2>
+            </div>
+      <div className="list-container">
+        {cartData.length > 0 ? (
+          cartData.slice(0, 5).map((cart, index) => (
+            <div key={index} className="list-div-Card">
+              <div className="prof2">
+                <img
+                  src={download}
+                  alt="Patient"
+                  width={40}
+                  height={40}
+                />
+              </div>
+              <label>Name: {cart.name}</label>
+              <label>Age: {cart.age}</label>
+              <label>Email: {cart.email}</label>
+              <label>Height: {cart.height}</label>
+              <label>Weight: {cart.weight}</label>
+              <button
+                className="button-31"
+                id="view2"
+                onClick={() =>
+                  navigate("/details", {
+                    state: { name: cart.name, cart },
+                  })
+                }
+              >
+                View Details
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>No Patients found.</p>
+        )}
+      </div>
+      {showOverlay && (
+        <div className="overlay">
+          <div className="overlay-content">
+            <h2>All Appointments</h2>
+            <button className="close-button" onClick={toggleOverlay}>
+              Close
+            </button>
+            <div className="overlay-list-container">
+              {cartData.map((cart, index) => (
+                <div key={index} className="list-div-Card2">
+                  <div className="prof2">
+                    <img
+                      src={download}
+                      alt="Patient"
+                      width={40}
+                      height={40}
+                    />
                   </div>
-                ))
-              ) : (
-                <p>No Patients found.</p>
-              )}
+                  <label>Name: {cart.name}</label>
+                  <label>Age: {cart.age}</label>
+                  <label>Email: {cart.email}</label>
+                  <label>Height: {cart.height}</label>
+                  <label>Weight: {cart.weight}</label>
+                  <button
+                    className="button-31"
+                    id="view3"
+                    onClick={() =>
+                      navigate("/details", {
+                        state: { name: cart.name, cart },
+                      })
+                    }
+                  >
+                    View Details
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+      )}
+    </div>
         </main>
         {toggleProfile && (
           <div className="toggle-prof-div">
@@ -442,6 +450,7 @@ const Doctorside = () => {
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );
