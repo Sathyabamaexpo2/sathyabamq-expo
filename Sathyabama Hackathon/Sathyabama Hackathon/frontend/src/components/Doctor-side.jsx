@@ -41,6 +41,9 @@ const Doctorside = () => {
 
   console.log(appointments);
 
+  const doctorName = appointments[0].doctorName;
+  console.log(doctorName);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -369,22 +372,29 @@ const Doctorside = () => {
                           height={40}
                         />
                       </div>
-                      <label>Name: {cart.name}</label>
-                      <label>Age: {cart.age}</label>
-                      <label>Email: {cart.email}</label>
-                      <label>Height: {cart.height}</label>
-                      <label>Weight: {cart.weight}</label>
-                      <button
-                        className="button-31"
-                        id="view2"
-                        onClick={() =>
-                          navigate("/details", {
-                            state: { name: cart.name, cart },
-                          })
-                        }
-                      >
-                        View Details
-                      </button>
+
+                      <div className="cart-details">
+                        <label>Name: {cart.name}</label>
+                        <label>Age: {cart.age}</label>
+                        <label>Email: {cart.email}</label>
+                        <label>Height: {cart.height}</label>
+                        <label>Weight: {cart.weight}</label>
+                        <button
+                          className="button-31"
+                          id="view2"
+                          onClick={() =>
+                            navigate("/details", {
+                              state: {
+                                name: cart.name,
+                                cart,
+                                doctorName: doctorName,
+                              },
+                            })
+                          }
+                        >
+                          View Details
+                        </button>
+                      </div>
                     </div>
                   ))
                 ) : (
@@ -419,7 +429,7 @@ const Doctorside = () => {
                             id="view3"
                             onClick={() =>
                               navigate("/details", {
-                                state: { name: cart.name, cart },
+                                state: { name: cart.name, cart, doctorName },
                               })
                             }
                           >

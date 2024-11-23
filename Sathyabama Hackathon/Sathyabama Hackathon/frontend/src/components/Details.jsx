@@ -37,7 +37,6 @@ const Details = () => {
   const displayBloodGroup = isFromUserPage
     ? userData.bloodgroup
     : cart.bloodgroup || "N/A";
-  const displayDoctorName = doctorName || name || "N/A";
 
   const Navigate = useNavigate();
   const [prescriptions, setPrescriptions] = useState([]);
@@ -66,6 +65,9 @@ const Details = () => {
   };
 
   console.log(displayEmail);
+
+  console.log(displayDoctorName);
+  console.log(displayName);
 
   const handleUpload = async () => {
     if (!file) {
@@ -120,12 +122,9 @@ const Details = () => {
     const fetchExtractedText = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/user/get-Text",
+          "http://localhost:5000/api/user/getText",
           {
-            params: {
-              doctorName: displayDoctorName,
-              patientName: displayName,
-            },
+            params: { doctorName, name },
           }
         );
 
