@@ -41,8 +41,12 @@ const Doctorside = () => {
 
   console.log(appointments);
 
-  const doctorName = appointments[0].doctorName;
-  console.log(doctorName);
+const doctorName =
+  appointments.length > 0 && appointments[0].appointments.length > 0
+    ? appointments[0].appointments[0].doctorName
+    : null;
+
+console.log(doctorName);
 
   useEffect(() => {
     const fetchData = async () => {

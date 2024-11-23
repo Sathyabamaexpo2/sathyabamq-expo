@@ -296,6 +296,7 @@ const User = () => {
             <img src={theme} alt="" width={40} height={40} />
             <button className="other-btn">Theme</button>
           </div> */}
+          
           <div className="btn-img">
             <img src={chat} alt="" width={40} height={40} />
             <button className="other-btn" onClick={BotTrigger}>

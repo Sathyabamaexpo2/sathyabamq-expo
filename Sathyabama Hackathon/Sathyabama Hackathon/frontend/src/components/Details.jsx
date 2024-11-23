@@ -10,7 +10,8 @@ const Details = () => {
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState("");
   const location = useLocation();
-  const { name, cart, userData, doctorName } = location.state || {};
+  const { name, cart, userData,doctorName
+  } = location.state || {};
 
   const [extractedText, setextractedText] = useState({});
 
@@ -65,8 +66,8 @@ const Details = () => {
   };
 
   console.log(displayEmail);
-
-  console.log(displayDoctorName);
+ 
+ const  displayDoctorName = doctorName;
   console.log(displayName);
 
   const handleUpload = async () => {
@@ -117,14 +118,14 @@ const Details = () => {
       console.error("Error fetching prescriptions:", error);
     }
   };
-
+console.log("doc"+displayDoctorName);
   useEffect(() => {
     const fetchExtractedText = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/user/getText",
+          "http://localhost:5000/api/user/get-Text",
           {
-            params: { doctorName, name },
+            params: { patientName:name,doctorName:displayDoctorName},
           }
         );
 
