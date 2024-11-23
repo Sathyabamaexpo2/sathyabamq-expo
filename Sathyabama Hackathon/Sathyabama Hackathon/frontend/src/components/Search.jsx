@@ -59,38 +59,43 @@ const Search = (props) => {
       if (!token) {
         throw new Error('No token found');
       }
-
-      const username = props.userData.name
   
-      const response = await axios.post('http://localhost:5000/api/user/bookAppointment', {
-        username:username,
-        doctorName: selectedDoctor.name,
-        doctorType: selectedDoctor.Specialized,
-        time: appointmentTime,
-        date: appointmentDate,
-        age:props.userData.age,
-        gender:props.userData.gender,
-        bloodgroup:props.userData.bloodgroup,
-        height:props.userData.height,
-        weight:props.userData.weight
-      }, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+      const username = props.userData.name;
+  
+      const response = await axios.post(
+        'http://localhost:5000/api/user/bookAppointment',
+        {
+          username,
+          doctorName: selectedDoctor.name,
+          doctorType: selectedDoctor.Specialized,
+          time: appointmentTime,
+          date: appointmentDate,
+          age: props.userData.age,
+          gender: props.userData.gender,
+          bloodgroup: props.userData.bloodgroup,
+          height: props.userData.height,
+          weight: props.userData.weight,
+          image: props.userData.image, // Send the image from props.userData
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         }
-      });
+      );
   
       toast.success('Appointment request sent to the doctor!');
   
       setSelectedDoctor(null);
       setAppointmentTime('');
       setAppointmentDate('');
-  
     } catch (error) {
       toast.error(`Error while sending the appointment request: ${error.message}`);
       console.error('Error:', error);
     }
   };
+  
   
   const handleDoctorClick = (doctor) => {
     setSelectedDoctor(doctor);

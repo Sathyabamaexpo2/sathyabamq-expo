@@ -16,6 +16,7 @@ const appointmentSchema = new Schema({
       height: { type: Number },
       weight: { type: Number },
       status: { type: String, default: 'pending' },
+      image:{filename:String,path:String}
     }
   ]
 });

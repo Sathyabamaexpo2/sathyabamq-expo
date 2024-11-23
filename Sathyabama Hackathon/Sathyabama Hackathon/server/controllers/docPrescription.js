@@ -164,7 +164,7 @@ const getText = async (req, res) => {
         const tablets = combinedText.match(/TAB[\s\w.]+/g)?.join(", ") || "No tablets found";
 
         // Extract last visit date
-        const lastVisitDate = combinedText.match(/Last Visit Date:(\d{2}-\d{2}-\d{4})/)?.[1] || "Not Available";
+        const lastVisitDate = combinedText.match(/Last Vist Date:(\d{2}-\d{2}-\d{4})/)?.[1] || "Not Available";
 
         // Check for keywords
         const monthlyOnce = combinedText.includes("MONTHLY ONCE") ? "Yes" : "No";

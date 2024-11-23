@@ -23,11 +23,6 @@ const Details = () => {
   console.log("User Data:", userData);
   console.log("Appointment Data:", cart);
 
-  const image = "";
-
-  const imageUrl = image
-    ? `http://localhost:5000/api/user/${normalizePath(image)}`
-    : "";
 
   const displayName = isFromUserPage ? userData.name : cart.name || "N/A";
   const displayAge = isFromUserPage ? userData.age : cart.age || "N/A";
@@ -38,6 +33,11 @@ const Details = () => {
   const displayBloodGroup = isFromUserPage
     ? userData.bloodgroup
     : cart.bloodgroup || "N/A";
+
+
+
+   const patimage=isFromUserPage ? userData.image:cart.image;
+
 
   const Navigate = useNavigate();
   const [prescriptions, setPrescriptions] = useState([]);
@@ -114,6 +114,7 @@ const Details = () => {
       );
       setPrescriptions(response.data);
       console.log("Response:", response.data);
+      console.log(prescriptions);
     } catch (error) {
       console.error("Error fetching prescriptions:", error);
     }
@@ -180,6 +181,7 @@ console.log("doc"+displayDoctorName);
     return filePath ? filePath.replace(/\\/g, "/") : "";
   };
 
+
   const getDownloadUrl = (filename) => {
     return `http://localhost:5000/api/user/uploads/${normalizePath(filename)}`;
   };
@@ -211,7 +213,7 @@ console.log("doc"+displayDoctorName);
                     onClick={() => setToggleProfile((prev) => !prev)}
                   >
                     <img
-                      src={imageUrl}
+                      src=""
                       alt="Profile"
                       width={60}
                       height={60}
@@ -236,7 +238,7 @@ console.log("doc"+displayDoctorName);
         </div>
         <div className="left-container2">
           <div className="Det-prof">
-            <img src={pat} alt="Profile" />
+            <img src={`http://localhost:5000/api/user/${normalizePath(patimage.path)}`} alt="Profile" height={100} width={100}/>
           </div>
           <div className="det-user">
             <div className="det-column">

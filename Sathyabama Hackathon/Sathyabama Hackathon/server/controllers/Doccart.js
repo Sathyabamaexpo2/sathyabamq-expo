@@ -1,43 +1,73 @@
-const Cartmodel = require('../models/Doccart.js');
+const Cart = require('../models/Doccart.js');
 const bcrypt = require('bcrypt');
 
 const AddPatient = async (req, res) => {
-    const { name, age, gender, bloodgroup, height, weight, email } = req.body;
+    const { name, age, gender, bloodgroup, height, weight, email, image } = req.body;
 
-    if (!name || !age || !gender || !bloodgroup || !height || !weight || !email) {
-        return res.status(400).json({ msg: "All fields are required." });
+
+    if (!name || !age || !gender || !bloodgroup || !height || !weight || !email || !image) {
+        return res.status(400).json({ msg: "All fields, including image, are required." });
     }
 
     try {
-        let exUser = await Cartmodel.findOne({ email: req.user.email });
-        
+
+        let exUser = await Cart.findOne({ email: req.user.email });
+
         if (!exUser) {
-            exUser = new Cartmodel({
+ 
+            exUser = new Cart({
                 email: req.user.email,
-                patients: [{ name, age, gender, bloodgroup, height, weight, email, visitCount: 1 }]
+                patients: [
+                    {
+                        name,
+                        age,
+                        gender,
+                        bloodgroup,
+                        height,
+                        weight,
+                        email,
+                        visitCount: 1,
+                        image,
+                    },
+                ],
             });
         } else {
-            const exPatient = exUser.patients.find(p => p.email === email);
+    
+            const exPatient = exUser.patients.find((p) => p.email === email);
+
             if (exPatient) {
+         
                 exPatient.visitCount += 1;
             } else {
-                exUser.patients.push({ name, age, gender, bloodgroup, height, weight, email, visitCount: 1 });
+      
+                exUser.patients.push({
+                    name,
+                    age,
+                    gender,
+                    bloodgroup,
+                    height,
+                    weight,
+                    email,
+                    visitCount: 1,
+                    image, 
+                });
             }
         }
 
         const savedCart = await exUser.save();
         res.status(200).json({
             msg: "Successfully added or updated!",
-            savedCart
+            savedCart,
         });
     } catch (err) {
         console.error("Error in AddPatient:", err);
         res.status(500).json({
             msg: "Server Error",
-            error: err.message
+            error: err.message,
         });
     }
 };
+
 
 const DisPat = async (req, res) => {
     try {
@@ -46,7 +76,7 @@ const DisPat = async (req, res) => {
             return res.status(400).json({ Msg: "User email is missing" });
         }
 
-        const cart = await Cartmodel.findOne({ email: email });
+        const cart = await Cart.findOne({ email: email });
         if (!cart) {
             return res.status(404).json({ Msg: "User does not exist or cart is empty" });
         }
@@ -62,7 +92,8 @@ const DisPat = async (req, res) => {
             height: p.height,
             weight: p.weight,
             email: p.email,
-            visitCount: p.visitCount
+            visitCount: p.visitCount,
+            image:p.image
         }));
 
         return res.status(200).json({

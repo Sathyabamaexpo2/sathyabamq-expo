@@ -8,7 +8,8 @@ const PatientSchema = new mongoose.Schema({
     height: { type: Number, required: true },
     weight: { type: Number, required: true },
     email: { type: String, required: true },
-    visitCount: { type: Number, default: 1 } // Added visitCount with a default of 1
+    visitCount: { type: Number, default: 1 },
+    image:{filename:String,path:String}
 });
 
 const cartSchema = new mongoose.Schema({

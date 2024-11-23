@@ -47,6 +47,7 @@ color: white;
   gap: 80px;
   flex-direction: row;
   margin-top:-20px;
+  justify-content: space-around;
   /* background-color: rgb(232, 225, 255); */
   
 }
@@ -345,6 +346,7 @@ main {
   cursor: pointer;
   border-radius: 5px;
   margin-bottom: 20px;
+  margin-left:120px;
 }
 #all{
   color: black;
@@ -412,8 +414,8 @@ main {
   background-color: white;
   align-items: center;
   gap: 10px;
-  width: 50%;
-  height: 80%;
+  width: 60%;
+  height: 82%;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   /* backdrop-filter: blur(10px); Blur effect */
@@ -695,28 +697,55 @@ h3 {
   max-width: 450px;
   margin: 0 auto;
   padding: 20px;
-  margin-left: -30px; 
-  height: 50%;
+  margin-left: 50px; 
+  height: 60%;
   margin-top: 40px;
   align-items: center;
-  overflow: scroll;
+  overflow-y:auto;
   overflow-x:hidden;
+  width:70%;
+}
+
+.tod-appoin::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.tod-appoin::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track background */
+  border-radius: 8px; /* Rounded track corners */
+}
+
+.tod-appoin::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, black, rgb(10, 10, 10)); /* Gradient for thumb */
+  border-radius: 8px; /* Rounded thumb corners */
+  border: 2px solid #f1f1f1; /* Space between thumb and track */
+}
+
+.tod-appoin::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg,  black, rgb(10, 10, 10)); /* Darker gradient on hover */
+}
+
+/* Style scrollbar corner (optional) */
+.tod-appoin::-webkit-scrollbar-corner {
+  background: #f1f1f1; /* Match track background */
 }
 
 
 .app-div{
  display: flex;
- margin: 5px;
+ margin: auto;
  background-color: white;
- width: 280px;
+ width: 300px;
  height: 35%;
  border-radius: 12px;
  padding: 8px 10px 4px;
+ justify-content: center;
+ margin-bottom: 20px;
 }
 
 .appoin-title{
   text-align: center;
-  margin-top: -10px;
+  margin-top: -20px;
 }
 
 .app-content{
@@ -743,3 +772,57 @@ h3 {
 .more-button:hover {
   background-color: #0056b3;
 }
+
+.profile{
+  /* width: 40%; */
+  height:50%;
+  margin: auto;
+  border-radius: 100px;
+}
+
+.cart-details{
+  height:50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+}
+
+
+.cart-details label{
+  font-size:20px;
+}
+
+.prof2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.prof2 img{
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.prof3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#lout{
+  color:rgb(255, 255, 255);
+}
+
+#lout:hover{
+  color:rgb(255, 255, 255);
+}
+
+.overlay-content h2{
+  text-align: center;
+}
+

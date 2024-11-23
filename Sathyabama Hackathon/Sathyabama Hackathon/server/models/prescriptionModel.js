@@ -4,12 +4,10 @@ const prescriptionSchema = new mongoose.Schema({
     doctorName: {
         type: String, 
         required: true,
-        unique: true, // Ensure doctorName is unique if this is a requirement
     },
     patientName: {
         type: String,
         required: true,
-        unique: true, // Ensure patientName is unique if this is a requirement
     },
     files: [{
         filename: {

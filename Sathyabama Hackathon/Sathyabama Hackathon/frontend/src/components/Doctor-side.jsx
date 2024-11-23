@@ -107,6 +107,7 @@ console.log(doctorName);
             height: appointment.height,
             weight: appointment.weight,
             email: email,
+            image:appointment.image
           },
           {
             headers: {
@@ -172,9 +173,13 @@ console.log(doctorName);
     return filePath ? filePath.replace(/\\/g, "/") : "";
   };
 
+  // const patimage=
+
   const imageUrl = image
     ? `http://localhost:5000/api/user/${normalizePath(image)}`
     : "";
+
+  // const patimageUrl=
 
   let earliestAppointment = null;
   let earliestTimeInMinutes = Infinity;
@@ -194,6 +199,7 @@ console.log(doctorName);
       }
     });
   });
+
 
   const [currentAppointmentIndex, setCurrentAppointmentIndex] = useState(0); // Track current appointment index
 
@@ -279,10 +285,10 @@ console.log(doctorName);
                   <div className="patient-card">
                     <div className="patient-img-container">
                       <img
-                        src={pat} // Use the correct image URL
+                        src={`http://localhost:5000/api/user/${normalizePath(earliestAppointment.image.path)}`}
                         alt={earliestAppointment.username}
-                        width={60}
-                        height={60}
+                        width={80}
+                        height={80}
                         className="patient-profile-img"
                       />
                     </div>
@@ -307,9 +313,10 @@ console.log(doctorName);
                         <div key={appointment.time} className="app-div">
                           <div className="prof3">
                             <img
-                              src={pat}
+                              src={`http://localhost:5000/api/user/${normalizePath(appointment.image.path)}`}
                               alt={appointment.username}
-                              width={60}
+                              width={100}
+                              height={100}
                             />
                           </div>
                           <div className="app-content">
@@ -368,19 +375,19 @@ console.log(doctorName);
                 {cartData.length > 0 ? (
                   cartData.slice(0, 5).map((cart, index) => (
                     <div key={index} className="list-div-Card">
+                     <div className="profile">
                       <div className="prof2">
                         <img
-                          src={download}
+                          src={`http://localhost:5000/api/user/${normalizePath(cart.image.path)}`}
                           alt="Patient"
-                          width={40}
-                          height={40}
                         />
                       </div>
+                      </div> 
 
                       <div className="cart-details">
                         <label>Name: {cart.name}</label>
                         <label>Age: {cart.age}</label>
-                        <label>Email: {cart.email}</label>
+                        <label>Gender: {cart.gender}</label>
                         <label>Height: {cart.height}</label>
                         <label>Weight: {cart.weight}</label>
                         <button
@@ -417,7 +424,7 @@ console.log(doctorName);
                         <div key={index} className="list-div-Card2">
                           <div className="prof2">
                             <img
-                              src={download}
+                              src={`http://localhost:5000/api/user/${normalizePath(cart.image.path)}`}
                               alt="Patient"
                               width={40}
                               height={40}
