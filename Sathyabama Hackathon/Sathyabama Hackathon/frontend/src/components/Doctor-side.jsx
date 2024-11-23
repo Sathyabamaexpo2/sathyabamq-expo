@@ -361,7 +361,7 @@ console.log(doctorName);
               </div>
             </div>
             <div className="main-bottom">
-              <div className="line" id="line2">
+            <div className="line" id="line2">
                 <h2 style={{ color: "#6e6e6e" }}>Patient's Detail's</h2>
               </div>
               <div className="list-container">
