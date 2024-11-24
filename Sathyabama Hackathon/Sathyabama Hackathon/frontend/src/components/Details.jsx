@@ -51,10 +51,7 @@ const Details = () => {
     fetchPrescriptions();
   };
 
-  const handleLogout = () => {
-    navigate("/");
-  };
-
+ 
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -207,31 +204,7 @@ console.log("doc"+displayDoctorName);
                 <div className="doc-title">
                   <h2>MedX</h2>
                 </div>
-                <div className="doc-nav-Rcont">
-                  <button
-                    id="doc-prof-btn"
-                    onClick={() => setToggleProfile((prev) => !prev)}
-                  >
-                    <img
-                      src=""
-                      alt="Profile"
-                      width={60}
-                      height={60}
-                      className="profile-img"
-                    />
-                  </button>
-
-                  <div className="logout-btn-div">
-                    <img src={power} alt="Logout" width={40} height={40} />
-                    <button
-                      className="button-31"
-                      id="lout"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </button>
-                  </div>
-                </div>
+               
               </div>
             </nav>
           </header>
@@ -255,10 +228,10 @@ console.log("doc"+displayDoctorName);
                             <p>Blood Pressure: 100 mmHg</p>
                             <p>Address: 10, Lijo St, Sundarapuram, Coimbatore-4</p> */}
             </div>
+            
           </div>
-        </div>
 
-        <div className="right-container2">
+          <div className="right-container2">
           <div className="Treatment-det">
             <div className="Tret">
               <h2>Treatment</h2>
@@ -290,6 +263,9 @@ console.log("doc"+displayDoctorName);
             </button>
           </div>
         </div>
+        </div>
+
+       
 
         {togglePrescription && (
           <div className="popup-prescription">
