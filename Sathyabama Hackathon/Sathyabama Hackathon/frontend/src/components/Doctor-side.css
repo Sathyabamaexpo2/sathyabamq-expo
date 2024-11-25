@@ -381,11 +381,10 @@ main {
   /* background-color: rgb(232, 225, 255); */
   position: relative;
   bottom:130px;
-  justify-content:flex-start;
   margin-left: 240px;
   flex-direction: row;
   /* gap:40px; */
-  width: 90%;
+  width: 100vw;
   height: 82%;
 }
 
@@ -414,7 +413,7 @@ main {
   background-color: white;
   align-items: center;
   gap: 10px;
-  width: 60%;
+  width: 80%;
   height: 82%;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -827,3 +826,127 @@ h3 {
   text-align: center;
 }
 
+
+
+
+
+/*Media Queries*/
+/* Mobile devices (320px - 480px) */
+@media screen and (max-width: 480px) {
+  .list-div-Card {
+    width: 85%;
+    margin: 10px auto;
+    padding: 15px;
+    height: auto;
+    min-height: 200px;
+    transform: none;
+  }
+
+  .list-container {
+    margin-left: 0;
+    width: 100%;
+    bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .app-div {
+    width: 85%;
+    height: auto;
+    min-height: 150px;
+    margin: 10px auto;
+  }
+}
+
+/* Tablets (481px - 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .list-div-Card {
+    width: 70%;
+    margin: 15px auto;
+    height: auto;
+    min-height: 220px;
+  }
+
+  .list-container {
+    margin-left: 0;
+    width: 100%;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .app-div {
+    width: 70%;
+    height: auto;
+    min-height: 160px;
+  }
+}
+
+/* Small laptops (769px - 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .list-div-Card {
+    width: 65%;
+    margin: 15px auto;
+    height: auto;
+    min-height: 240px;
+  }
+
+  .list-container {
+    margin-left: 120px;
+    bottom: 100px;
+    width: 90%;
+  }
+}
+
+/* Large screens (1025px and above) */
+@media screen and (min-width: 1025px) {
+  .list-div-Card {
+    width: 100%;
+    margin: 20px auto;
+    height: 60vh;
+    min-height: 160px;
+  }
+
+  .list-container {
+    margin-left: 240px;
+    bottom: 300px;
+    width: 100%;
+  }
+  .prof2{
+    width: 200px;
+    height: 20%;
+  }
+  .profile{
+    width: 100px;
+    height: 20px;
+  }
+
+}
+
+/* General card improvements */
+.list-div-Card {
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.list-div-Card:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+/* Fix for card content */
+.list-div-Card * {
+  max-width: 100%;
+}
+
+/* Ensure proper spacing for card content */
+.list-div-Card label,
+.list-div-Card p {
+  margin: 5px 0;
+  word-wrap: break-word;
+}
