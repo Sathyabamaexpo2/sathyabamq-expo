@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const cors=require('cors');
 const path = require('path');
 const appointmentRoutes = require('./routes/appointmentRoutes');
-const {checkAndUpdateAppointments} = require('./controllers/appointmentController');
+const {checkAndUpdateAppointments, deleteAppoinment} = require('./controllers/appointmentController');
 
 dotenv.config(); 
 connectDB(); 
@@ -38,9 +38,27 @@ app.get('/api/user/uploads/:filename', (req, res) => {
 app.use('/api/user', authRoutes);
 app.use('/api/user', appointmentRoutes);
 
+setTimeout(async () => {
+  try {
+    console.log("Testing old appointment deletion...");
+    const req = {
+      user: { email: "jeevan@gmail.com" },
+    };
+    const res = {
+      status: (code) => {
+        console.log(`Status code: ${code}`);
+        return res;
+      },
+      json: (data) => {
+        console.log("Response body:", data);
+      },
+    };
+    await deleteAppoinment(req, res);
 
-
-setInterval(checkAndUpdateAppointments, 24 * 60 * 60 * 1000);
+  } catch (error) {
+    console.error("Error during appointment deletion test:", error);
+  }
+}, 2000);
 
 
 const PORT = process.env.PORT || 5000;

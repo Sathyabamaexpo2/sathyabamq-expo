@@ -7,7 +7,7 @@ const userAuth = require("../middlewares/authMiddleware.js");
 const { userData } = require('../controllers/userDataController.js');
 const upload = require('../config/multerconfig.js');
 const { AddPatient, DisPat } = require('../controllers/Doccart.js');
-const {getPrescriptions,storePrescription, getText}=require('../controllers/docPrescription.js');
+const {getPrescriptions,storePrescription, getText, storeReport, getReports}=require('../controllers/docPrescription.js');
 
 const router=express.Router();
 
@@ -23,6 +23,9 @@ router.post('/verifyOtp', verifyOtp);
 router.post('/docprescription', upload.array('files'), storePrescription); 
 router.get('/getDocprescriptions',getPrescriptions);
 router.get('/searchDoctors', searchDoctors);
-router.get('/get-Text',getText);
+router.get('/get-Text', getText);
+router.post('/docreport', upload.array('files'), storeReport);
+router.get('/getReports',getReports);
+
 
 module.exports = router;

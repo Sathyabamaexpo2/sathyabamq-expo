@@ -2,10 +2,9 @@ const Prescription = require("../models/prescriptionModel");
 const fs = require("fs"); // For file system operations
 const pdfParse = require("pdf-parse"); // For extracting text from PDFs
 const { createWorker } = require("tesseract.js"); // For OCR
+const Report=require("../models/ReportModel");
 
-/**
- * Perform OCR using Tesseract.js
- */
+
 const performOCR = async (filePath) => {
     const worker = createWorker();
     try {
@@ -23,9 +22,7 @@ const performOCR = async (filePath) => {
     }
 };
 
-/**
- * Store prescription details along with uploaded files.
- */
+
 const storePrescription = async (req, res) => {
     const { DoctorName, PatientName } = req.body;
     const uploadedFiles = req.files || [req.files];
@@ -108,6 +105,36 @@ const storePrescription = async (req, res) => {
     }
 };
 
+const getReports = async (req, res) => {
+    const { doctorName, patientName } = req.query;
+
+    try {
+        const reports = await Report.find({
+            doctorName,
+            patientName,
+        });
+
+        if (!reports || reports.length === 0) {
+            return res.status(404).json({ message: "No reports found." });
+        }
+
+        const result = reports.map((report) => ({
+            doctorName: report.doctorName,
+            patientName: report.patientName,
+            files: report.files.map((file) => ({
+                filename: file.filename,
+                extractedText: file.extractedText || "No text extracted",
+            })),
+        }));
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error fetching reports:", error);
+        res.status(500).json({ message: "Error fetching reports", error: error.message });
+    }
+};
+
+
 /**
  * Get prescriptions for a specific doctor and patient.
  */
@@ -182,4 +209,107 @@ const getText = async (req, res) => {
     }
 };
 
-module.exports = { storePrescription, getPrescriptions, getText };
+
+const storeReport = async (req, res) => {
+    const { DoctorName, PatientName } = req.body;
+    const uploadedFiles = Array.isArray(req.files) ? req.files : [req.files];
+
+    console.log("Doctor Name:", DoctorName);
+    console.log("Patient Name:", PatientName);
+    console.log("Uploaded files:", uploadedFiles);
+
+    try {
+        let userReport = await Report.findOne({
+            doctorName: DoctorName,
+            patientName: PatientName,
+        });
+
+        if (!userReport) {
+            userReport = new Report({
+                doctorName: DoctorName,
+                patientName: PatientName,
+                files: [],
+            });
+        }
+
+        if (uploadedFiles.length > 0) {
+            uploadedFiles.forEach((file) => {
+                userReport.files.push({
+                    filename: file.filename,
+                    path: file.path,
+                });
+            });
+        }
+
+        await userReport.save();
+
+        let combinedText = "";
+
+        for (const file of uploadedFiles) {
+            const filePath = file.path.toLowerCase();
+
+            try {
+                let extractedText = "";
+
+                if (filePath.endsWith(".pdf")) {
+                    const fileBuffer = fs.readFileSync(filePath);
+                    const pdfData = await pdfParse(fileBuffer);
+                    extractedText = pdfData.text;
+                } else if (filePath.endsWith(".png") || filePath.endsWith(".jpg") || filePath.endsWith(".jpeg")) {
+                    extractedText = await performOCR(filePath);
+                }
+
+                combinedText += extractedText;
+
+                const fileIndex = userReport.files.findIndex(
+                    (f) => f.filename === file.filename
+                );
+                if (fileIndex !== -1) {
+                    userReport.files[fileIndex].extractedText = extractedText;
+                }
+
+                console.log();
+            } catch (error) {
+                console.error(`Error processing file ${file.filename}:`, error);
+            }
+        }
+
+
+        if (!combinedText) {
+            return res.status(404).json({ message: "No extracted text found in the report." });
+        }
+
+        const date = combinedText.match(/Date:\s*([\d\-\/]+)/)?.[1] || "Not Available";
+        const bloodSugarF = combinedText.match(/Blood Sugar\(F\):\s*([\d.]+)/)?.[1] || "Not Available";
+        const bloodSugarPP = combinedText.match(/Blood Sugar\(PP\):\s*([\d.]+)/)?.[1] || "Not Available";
+        const bloodUrea = combinedText.match(/Blood Urea:\s*([\d.]+)/)?.[1] || "Not Available";
+        const serumCreatine = combinedText.match(/Serum Creatine:\s*([\d.]+)/)?.[1] || "Not Available";
+
+     
+        userReport.extractedText = {
+            date,
+            bloodSugarF,
+            bloodSugarPP,
+            bloodUrea,
+            serumCreatine,
+        };
+        await userReport.save();
+
+   
+        res.status(200).json({
+            message: "Report stored successfully with extracted data",
+            date,
+            bloodSugarF,
+            bloodSugarPP,
+            bloodUrea,
+            serumCreatine,
+        });
+    } catch (error) {
+        console.error("Error processing request:", error);
+        res.status(500).json({ message: "Error processing request", error: error.message });
+    }
+};
+
+
+
+module.exports = { storePrescription, getPrescriptions, getText,storeReport, getReports};

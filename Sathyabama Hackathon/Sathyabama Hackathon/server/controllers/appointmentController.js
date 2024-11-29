@@ -77,6 +77,39 @@ const bookAppointment = async (req, res) => {
     }
   };
   
+const deleteAppoinment = async (req, res) => {
+  const email = "navi@gmail.com";
+  if (!email) {
+    return res.status(404).json({ message: 'Invalid Email' });
+  }
+
+  try {
+    const appointment = await Appointment.findOne({ email });
+    console.log("ApDate:" + appointment.appointments[0].date);
+    if (appointment) {
+      const CurrentDate = new Date();
+      const formatedCurrDate = CurrentDate.toISOString().split('T')[0];
+      console.log(formatedCurrDate);
+      console.log("ApDate:" + appointment.appointments[0].date);
+      const DBDate = new Date(appointment.appointments[0].date);
+      console.log("DB"+ DBDate)
+      if (formatedCurrDate > DBDate.toISOString().split('T')[0]) {
+        const DelAppointment = await Appointment.findByIdAndDelete(appointment._id);
+        if (!DelAppointment) {
+          return res.status(400).json({ message: 'Deletion failed' });
+        }
+        return res.status(200).json({ message: 'Deleted old appointment' });
+      } else {
+        return res.status(400).json({ message: 'Appointment date is not in the past' });
+      }
+    } else {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+  } catch (error) {
+    console.error('Error during appointment deletion:', error);
+    return res.status(500).json({ message: 'Error deleting appointment', error: error.message });
+  }
+};
 
 
   const getAppointmentById = async (req, res) => {
@@ -183,23 +216,24 @@ const updateAppointmentStatus = async (req, res) => {
     }
 };
 
-const checkAndUpdateAppointments = async () => {
-  try {
-    // Find all users' appointments
-    const appointments = await Appointment.find();
+// const checkAndUpdateAppointments = async () => {
+//   try {
+//     // Find all users' appointments
+//     const appointments = await Appointment.find();
 
-    // Loop through each user and check for expired appointments
-    for (let appointment of appointments) {
-      await appointment.checkExpiredAppointments();
-      console.log(`Expired appointments checked and updated for user ${appointment.email}`);
-    }
-  } catch (error) {
-    console.error("Error checking appointments:", error);
-  }
-};
-
-
+//     // Loop through each user and check for expired appointments
+//     for (let appointment of appointments) {
+//       await appointment.checkExpiredAppointments();
+//       console.log(`Expired appointments checked and updated for user ${appointment.email}`);
+//     }
+//   } catch (error) {
+//     console.error("Error checking appointments:", error);
+//   }
+// };
 
 
 
-module.exports = {bookAppointment,getAppointmentById,getAppointmentsForDoctor,updateAppointmentStatus,checkAndUpdateAppointments};
+
+
+module.exports = {bookAppointment,getAppointmentById,getAppointmentsForDoctor,updateAppointmentStatus,deleteAppoinment};
+

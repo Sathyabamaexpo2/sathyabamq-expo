@@ -414,7 +414,7 @@ main {
   align-items: center;
   gap: 10px;
   width: 80%;
-  height: 82%;
+  height: 52%;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   /* backdrop-filter: blur(10px); Blur effect */

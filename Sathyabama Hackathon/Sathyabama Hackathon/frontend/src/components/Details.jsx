@@ -10,8 +10,10 @@ const Details = () => {
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState("");
   const location = useLocation();
-  const { name, cart, userData,doctorName
-  } = location.state || {};
+  const { name, cart, userData, doctorName } = location.state || {};
+  const [reportFile, setReportFile] = useState("");
+  const [reportFileName, setReportFileName] = useState("");
+  const [reports, setReports] = useState([]);
 
   const [extractedText, setextractedText] = useState({});
 
@@ -23,7 +25,6 @@ const Details = () => {
   console.log("User Data:", userData);
   console.log("Appointment Data:", cart);
 
-
   const displayName = isFromUserPage ? userData.name : cart.name || "N/A";
   const displayAge = isFromUserPage ? userData.age : cart.age || "N/A";
   const displayEmail = isFromUserPage ? userData.email : cart.email || "N/A";
@@ -34,10 +35,7 @@ const Details = () => {
     ? userData.bloodgroup
     : cart.bloodgroup || "N/A";
 
-
-
-   const patimage=isFromUserPage ? userData.image:cart.image;
-
+  const patimage = isFromUserPage ? userData.image : cart.image;
 
   const Navigate = useNavigate();
   const [prescriptions, setPrescriptions] = useState([]);
@@ -46,12 +44,30 @@ const Details = () => {
     Navigate("/doctor");
   };
 
+  const fetchReports = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/user/getReports",
+        {
+          params: {
+            doctorName: displayDoctorName,
+            patientName: displayName,
+          },
+        }
+      );
+      setReports(response.data);
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error fetching reports:", error);
+    }
+  };
+
   const handlePopup = () => {
     setPrescription(!togglePrescription);
     fetchPrescriptions();
+    fetchReports();
   };
 
- 
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -62,9 +78,46 @@ const Details = () => {
     }
   };
 
+  const handleReportFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setReportFile(selectedFile);
+      setReportFileName(selectedFile.name);
+    } else {
+      setReportFileName("");
+    }
+  };
+
+  const handleReportUpload = async () => {
+    if (!reportFile) {
+      alert("Please select a report file to upload.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("DoctorName", displayDoctorName); // Replace with the appropriate variable
+    formData.append("PatientName", displayName); // Replace with the appropriate variable
+    formData.append("files", reportFile);
+
+    try {
+      await axios.post(
+        "http://localhost:5000/api/user/docreport", // Replace with your backend endpoint
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      alert("Report uploaded successfully!");
+      setReportFile(null);
+      setReportFileName("");
+    } catch (error) {
+      alert("Error uploading report: " + error.message);
+    }
+  };
+
   console.log(displayEmail);
- 
- const  displayDoctorName = doctorName;
+
+  const displayDoctorName = doctorName;
   console.log(displayName);
 
   const handleUpload = async () => {
@@ -116,14 +169,14 @@ const Details = () => {
       console.error("Error fetching prescriptions:", error);
     }
   };
-console.log("doc"+displayDoctorName);
+  console.log("doc" + displayDoctorName);
   useEffect(() => {
     const fetchExtractedText = async () => {
       try {
         const response = await axios.get(
           "http://localhost:5000/api/user/get-Text",
           {
-            params: { patientName:name,doctorName:displayDoctorName},
+            params: { patientName: name, doctorName: displayDoctorName },
           }
         );
 
@@ -178,7 +231,6 @@ console.log("doc"+displayDoctorName);
     return filePath ? filePath.replace(/\\/g, "/") : "";
   };
 
-
   const getDownloadUrl = (filename) => {
     return `http://localhost:5000/api/user/uploads/${normalizePath(filename)}`;
   };
@@ -204,14 +256,20 @@ console.log("doc"+displayDoctorName);
                 <div className="doc-title">
                   <h2>MedX</h2>
                 </div>
-               
               </div>
             </nav>
           </header>
         </div>
         <div className="left-container2">
           <div className="Det-prof">
-            <img src={`http://localhost:5000/api/user/${normalizePath(patimage.path)}`} alt="Profile" height={100} width={100}/>
+            <img
+              src={`http://localhost:5000/api/user/${normalizePath(
+                patimage.path
+              )}`}
+              alt="Profile"
+              height={100}
+              width={100}
+            />
           </div>
           <div className="det-user">
             <div className="det-column">
@@ -228,50 +286,51 @@ console.log("doc"+displayDoctorName);
                             <p>Blood Pressure: 100 mmHg</p>
                             <p>Address: 10, Lijo St, Sundarapuram, Coimbatore-4</p> */}
             </div>
-            
           </div>
 
           <div className="right-container2">
-          <div className="Treatment-det">
-            <div className="Tret">
-              <h2>Treatment</h2>
-              {/* <p>Diagnosis:{extractedText.diagnosis || "Fever"}</p> */}
-              <p>Last-Visit-Date:{extractedText.lastVisitDate || "N/A"}</p>
-              <p>Next Visit:{extractedText.monthlyOnce ? "Next week" : "No"}</p>
+            <div className="Treatment-det">
+              <div className="Tret">
+                <h2>Treatment</h2>
+                {/* <p>Diagnosis:{extractedText.diagnosis || "Fever"}</p> */}
+                <p>Last-Visit-Date:{extractedText.lastVisitDate || "N/A"}</p>
+                <p>
+                  Next Visit:{extractedText.monthlyOnce ? "Next week" : "No"}
+                </p>
+              </div>
+              <div className="sep-div"></div>
+              <div className="Tabet">
+                <h2>Tablets</h2>
+                <p>
+                  Medicines:{" "}
+                  {extractedText.tablets || "No medicines prescribed"}
+                </p>
+                <p>
+                  Admitted:
+                  <select
+                    value={
+                      extractedText.surgeryAdmitted === "Yes" ? "Yes" : "No"
+                    }
+                  >
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </p>
+              </div>
             </div>
-            <div className="sep-div"></div>
-            <div className="Tabet">
-              <h2>Tablets</h2>
-              <p>
-                Medicines: {extractedText.tablets || "No medicines prescribed"}
-              </p>
-              <p>
-                Admitted:
-                <select
-                  value={extractedText.surgeryAdmitted === "Yes" ? "Yes" : "No"}
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </p>
+            <div className="btn-div">
+              <button className="button-31" id="view" onClick={handlePopup}>
+                View Prescription
+              </button>
             </div>
           </div>
-
-          <div className="btn-div">
-            <button className="button-31" id="view" onClick={handlePopup}>
-              View Prescription
-            </button>
-          </div>
         </div>
-        </div>
-
-       
 
         {togglePrescription && (
           <div className="popup-prescription">
             <div className="content-pres">
               <div className="fetched-files">
-                <h3>Previous Prescriptions:</h3>
+                <h3> Your Prescriptions:</h3>
                 {prescriptions.map((prescription, index) => (
                   <div key={index} style={{ marginBottom: "20px" }}>
                     {prescription.files.map((file, fileIndex) => (
@@ -292,6 +351,30 @@ console.log("doc"+displayDoctorName);
                   </div>
                 ))}
               </div>
+
+              <div className="fetched-files">
+                <h3>Reports:</h3>
+                {reports.map((report, index) => (
+                  <div key={index} style={{ marginBottom: "20px" }}>
+                    {report.files.map((file, fileIndex) => (
+                      <div key={fileIndex}>
+                        <a
+                          onClick={() => handleDownload(file)}
+                          style={{
+                            cursor: "pointer",
+                            textDecoration: "underline",
+                            color: "teal",
+                            textAlign: "center",
+                          }}
+                        >
+                          {file.filename}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
               {isFromDocPage ? (
                 <div className="details-file-input-container">
                   <label
@@ -312,6 +395,22 @@ console.log("doc"+displayDoctorName);
                     Upload File
                   </button>
                   <span>{fileName || "No file chosen"}</span>
+
+                  <label htmlFor="report-upload" className="custom-file-upload">
+                    Upload Report
+                  </label>
+                  <input
+                    id="report-upload"
+                    type="file"
+                    accept=".png,.jpeg,.jpg,.pdf"
+                    onChange={handleReportFileChange}
+                    style={{ display: "none" }}
+                    required
+                  />
+                  <button onClick={handleReportUpload} disabled={!reportFile}>
+                    Upload Report
+                  </button>
+                  <span>{reportFileName || "No file chosen"}</span>
                 </div>
               ) : (
                 <p></p>

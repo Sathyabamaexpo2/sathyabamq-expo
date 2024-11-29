@@ -13,6 +13,13 @@
     margin-left: -20px;
 }
 
+.view-buttons{
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
 .count{
     background:#ffff;
     color: black;
@@ -260,5 +267,7 @@
 }
 
 .fetched-files a{
-   margin-left:55px
+ display: flex;
+ align-items: center;
+ justify-content: center;
 }
