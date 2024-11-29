@@ -2,7 +2,8 @@ const Prescription = require("../models/prescriptionModel");
 const fs = require("fs"); // For file system operations
 const pdfParse = require("pdf-parse"); // For extracting text from PDFs
 const { createWorker } = require("tesseract.js"); // For OCR
-const Report=require("../models/ReportModel");
+const Report = require("../models/ReportModel");
+const ExtractedText = require('../models/ExtractedText');
 
 
 const performOCR = async (filePath) => {
@@ -208,7 +209,7 @@ const getText = async (req, res) => {
         res.status(500).json({ message: "Error fetching prescription.", error: error.message });
     }
 };
-
+ 
 
 const storeReport = async (req, res) => {
     const { DoctorName, PatientName } = req.body;
@@ -268,24 +269,37 @@ const storeReport = async (req, res) => {
                     userReport.files[fileIndex].extractedText = extractedText;
                 }
 
-                console.log();
             } catch (error) {
                 console.error(`Error processing file ${file.filename}:`, error);
             }
         }
 
-
         if (!combinedText) {
             return res.status(404).json({ message: "No extracted text found in the report." });
         }
 
+        // Extract specific fields with cleaned text
         const date = combinedText.match(/Date:\s*([\d\-\/]+)/)?.[1] || "Not Available";
         const bloodSugarF = combinedText.match(/Blood Sugar\(F\):\s*([\d.]+)/)?.[1] || "Not Available";
         const bloodSugarPP = combinedText.match(/Blood Sugar\(PP\):\s*([\d.]+)/)?.[1] || "Not Available";
         const bloodUrea = combinedText.match(/Blood Urea:\s*([\d.]+)/)?.[1] || "Not Available";
         const serumCreatine = combinedText.match(/Serum Creatine:\s*([\d.]+)/)?.[1] || "Not Available";
 
-     
+        // Store extracted data in the ExtractedText model
+        const extractedTextData = new ExtractedText({
+            doctorName: DoctorName,
+            patientName: PatientName,
+            extractedText: combinedText,
+            date,
+            bloodSugarF,
+            bloodSugarPP,
+            bloodUrea,
+            serumCreatine,
+        });
+
+        await extractedTextData.save(); // Save to ExtractedText model
+
+        // Update userReport with matched data (optional, depending on your requirements)
         userReport.extractedText = {
             date,
             bloodSugarF,
@@ -295,7 +309,6 @@ const storeReport = async (req, res) => {
         };
         await userReport.save();
 
-   
         res.status(200).json({
             message: "Report stored successfully with extracted data",
             date,
@@ -304,11 +317,13 @@ const storeReport = async (req, res) => {
             bloodUrea,
             serumCreatine,
         });
+
     } catch (error) {
         console.error("Error processing request:", error);
         res.status(500).json({ message: "Error processing request", error: error.message });
     }
 };
+
 
 
 

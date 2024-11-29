@@ -38,27 +38,27 @@ app.get('/api/user/uploads/:filename', (req, res) => {
 app.use('/api/user', authRoutes);
 app.use('/api/user', appointmentRoutes);
 
-setTimeout(async () => {
-  try {
-    console.log("Testing old appointment deletion...");
-    const req = {
-      user: { email: "jeevan@gmail.com" },
-    };
-    const res = {
-      status: (code) => {
-        console.log(`Status code: ${code}`);
-        return res;
-      },
-      json: (data) => {
-        console.log("Response body:", data);
-      },
-    };
-    await deleteAppoinment(req, res);
+// setTimeout(async () => {
+//   try {
+//     console.log("Testing old appointment deletion...");
+//     const req = {
+//       user: { email: "jeevan@gmail.com" },
+//     };
+//     const res = {
+//       status: (code) => {
+//         console.log(`Status code: ${code}`);
+//         return res;
+//       },
+//       json: (data) => {
+//         console.log("Response body:", data);
+//       },
+//     };
+//     await deleteAppoinment(req, res);
 
-  } catch (error) {
-    console.error("Error during appointment deletion test:", error);
-  }
-}, 2000);
+//   } catch (error) {
+//     console.error("Error during appointment deletion test:", error);
+//   }
+// }, 2000);
 
 
 const PORT = process.env.PORT || 5000;
