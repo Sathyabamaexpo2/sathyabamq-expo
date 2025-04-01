@@ -43,7 +43,7 @@ color: white;
   display: flex;
   width: 100%;
   background-color:hsl(180, 31%, 93%);
-  height: 300px;
+  height: 270px;
   gap: 80px;
   flex-direction: row;
   margin-top:-20px;
@@ -199,7 +199,7 @@ color: white;
   height: 60%;
   border-radius: 15px;
   color: rgb(0, 0, 0);
-  margin-top:14px;
+  margin-top:25px;
   
 
 }
@@ -381,11 +381,12 @@ main {
   /* background-color: rgb(232, 225, 255); */
   position: relative;
   bottom:100px;
-  margin-left: 240px;
   flex-direction: row;
   /* gap:40px; */
   width: 100vw;
   height: 82%;
+  margin-top: -60px;
+  margin-left: 20px;
 }
 
 .appoin-btn {
@@ -403,31 +404,6 @@ main {
 }
 #line2{
   height: 120px;
-}
-.list-div-Card {
-  display: flex;
-  flex-direction: column;
-  font-size: x-small;
-  /* color: rgb(166, 166, 166); */
-  justify-content: center;
-  background-color: white;
-  align-items: center;
-  gap: 10px;
-  width: 80%;
-  height: 42%;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  /* backdrop-filter: blur(10px); Blur effect */
-  -webkit-backdrop-filter: blur(10px);
-  /* Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  /* Soft white border */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding: 15px;
-  position: relative;
-  margin-top: 120px;
-  overflow: hidden;
-  margin: 10px;
 }
 
 .list-div-Card label {
@@ -803,9 +779,10 @@ h3 {
 
 .prof2 img{
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 70px;
+  height:70px;
   object-fit: cover;
+  margin-top: 30px;
 }
 
 .prof3 {
@@ -832,7 +809,7 @@ h3 {
 
 /*Media Queries*/
 /* Mobile devices (320px - 480px) */
-@media screen and (max-width: 480px) {
+/* @media screen and (max-width: 480px) {
   .list-div-Card {
     width: 85%;
     margin: 10px auto;
@@ -860,7 +837,7 @@ h3 {
 }
 
 /* Tablets (481px - 768px) */
-@media screen and (min-width: 481px) and (max-width: 768px) {
+/* @media screen and (min-width: 481px) and (max-width: 768px) {
   .list-div-Card {
     width: 70%;
     margin: 15px auto;
@@ -885,7 +862,7 @@ h3 {
 }
 
 /* Small laptops (769px - 1024px) */
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+/* @media screen and (min-width: 769px) and (max-width: 1024px) {
   .list-div-Card {
     width: 65%;
     margin: 15px auto;
@@ -901,53 +878,29 @@ h3 {
 }
 
 /* Large screens (1025px and above) */
-@media screen and (min-width: 1025px) {
-  .list-div-Card {
-    width: 100%;
-    margin: 20px auto;
-    height: 55vh;
-    min-height: 160px;
-  }
 
-  .list-container {
-    margin-left: 240px;
-    bottom: 175px;
-    gap:20px;
-    width: 100%;
-  }
-  .prof2{
-    width: 200px;
-    height: 20%;
-  }
-  .profile{
-    width: 100px;
-    height: 20px;
-  }
 
-}
-
-/* General card improvements */
 .list-div-Card {
-  box-sizing: border-box;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-
-.list-div-Card:hover {
-  transform: scale(1.02);
-  transition: transform 0.3s ease;
-}
-
-/* Fix for card content */
-.list-div-Card * {
-  max-width: 100%;
-}
-
-/* Ensure proper spacing for card content */
-.list-div-Card label,
-.list-div-Card p {
-  margin: 5px 0;
-  word-wrap: break-word;
+  font-size: x-small;
+  /* color: rgb(166, 166, 166); */
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  gap: 10px;
+  width: 200px;
+  height: 40vh;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  /* backdrop-filter: blur(10px); Blur effect */
+  -webkit-backdrop-filter: blur(10px);
+  /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* Soft white border */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 15px;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
 }

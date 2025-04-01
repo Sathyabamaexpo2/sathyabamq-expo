@@ -4,6 +4,7 @@ import pat from "../assets/pat.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import power from "../assets/power-button.png";
+import PowerBIReport from "./dashboard/dash";
 
 const Details = () => {
   const [togglePrescription, setPrescription] = useState(false);
@@ -325,7 +326,9 @@ const Details = () => {
             </div>
           </div>
         </div>
-
+        <div className="dash-bord">
+          <PowerBIReport />
+        </div>
         {togglePrescription && (
           <div className="popup-prescription">
             <div className="content-pres">

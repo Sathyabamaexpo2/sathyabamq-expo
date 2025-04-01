@@ -1,0 +1,24 @@
+.QR-div{
+    display: flex;
+    /* padding-bottom: 100px;
+    padding-left: 300px; */
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-left: 220px;}
+
+.QR-div img{
+    width:450px;
+    height:450px;
+}
+
+.main-dash{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/* .main-dash h3{
+    padding-top: 170px;
+    padding-left: 300px;
+} */
